@@ -1,0 +1,87 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/13 13:27:31 by dlesieur          #+#    #+#             */
+/*   Updated: 2025/06/15 18:53:38 by dlesieur         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "push_swap.h"
+
+static void	lst_clear(t_list *lst)
+{
+	t_list	*curr;
+	t_list	*next;
+
+	if (!lst)
+		return ;
+	curr = lst;
+	while (curr)
+	{
+		next = curr->next;
+		free(curr);
+		curr = next;
+	}
+	lst = NULL;
+}
+
+void	cleanup_and_exit_with_error(t_ps *data)
+{
+	if (data)
+	{
+		if (data->a.stack)
+		{
+			free(data->a.stack);
+			data->a.stack = NULL;
+		}
+		if (data->b.stack)
+		{
+			free(data->b.stack);
+			data->b.stack = NULL;
+		}
+		lst_clear(data->op_list);
+	}
+	ft_putendl_fd("Error", 2);
+	exit(1);
+}
+
+void	checker_cleanup_and_exit_with_error(t_ps *data)
+{
+	if (data)
+	{
+		if (data->a.stack)
+		{
+			free(data->a.stack);
+			data->a.stack = NULL;
+		}
+		if (data->b.stack)
+		{
+			free(data->b.stack);
+			data->b.stack = NULL;
+		}
+		lst_clear(data->op_list);
+	}
+	ft_putendl_fd("Error", 2);
+	exit(255);
+}
+
+void	release_allocated_memory(t_ps *data)
+{
+	if (!data)
+		return ;
+	if (data->a.stack)
+	{
+		free(data->a.stack);
+		data->a.stack = NULL;
+	}
+	if (data->b.stack)
+	{
+		free(data->b.stack);
+		data->b.stack = NULL;
+	}
+	lst_clear(data->op_list);
+}
