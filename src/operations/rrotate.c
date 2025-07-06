@@ -6,9 +6,10 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 13:19:42 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/06 17:19:37 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/06 23:01:40 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 # include "ps.h"
 # include "stack.h"
@@ -21,20 +22,32 @@ static void reverse_rotate_stack(t_list **stack);
 void rra(t_ps *ps)
 {
     reverse_rotate_stack(&ps->stack_a);
-    ft_printf("rra\n");
+    
+    if (is_recording())
+        record_operation("rra");
+    else
+        ft_printf("rra\n");
 }
 
 void rrb(t_ps *ps)
 {
     reverse_rotate_stack(&ps->stack_b);
-    ft_printf("rrb\n");
+    
+    if (is_recording())
+        record_operation("rrb");
+    else
+        ft_printf("rrb\n");
 }
 
 void rrr(t_ps *ps)
 {
     reverse_rotate_stack(&ps->stack_a);
     reverse_rotate_stack(&ps->stack_b);
-    ft_printf("rrr\n");
+    
+    if (is_recording())
+        record_operation("rrr");
+    else
+        ft_printf("rrr\n");
 }
 
 static void reverse_rotate_stack(t_list **stack)

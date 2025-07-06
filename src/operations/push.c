@@ -6,14 +6,17 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 12:38:14 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/06 17:19:54 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/06 23:04:40 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ps.h"
+// External recorder functions (declare these in ps.h)
+extern void record_operation(const char *operation);
+extern int is_recording(void);
 
 /**
- * Generic push function that voids the top element from source to destination
+ * Generic push function that moves the top element from source to destination
  * @param source Pointer to the source stack head
  * @param dest Pointer to the destination stack head  
  * @param size_src Pointer to source stack size
@@ -26,7 +29,7 @@ static void push(t_list **source, t_list **dest, int *size_src, int *size_dest)
     if (!*source || *size_src == 0)
         return;
     
-    // Revoid from source
+    // Remove from source
     temp = *source;
     *source = (*source)->next;
     if (*source)
@@ -50,7 +53,11 @@ static void push(t_list **source, t_list **dest, int *size_src, int *size_dest)
 void pb(t_ps *ps)
 {
     push(&ps->stack_a, &ps->stack_b, &ps->size_a, &ps->size_b);
-    ft_printf("pb\n");
+    
+    if (is_recording())
+        record_operation("pb");
+    else
+        ft_printf("pb\n");
 }
 
 /**
@@ -59,5 +66,9 @@ void pb(t_ps *ps)
 void pa(t_ps *ps)
 {
     push(&ps->stack_b, &ps->stack_a, &ps->size_b, &ps->size_a);
-    ft_printf("pa\n");
+    
+    if (is_recording())
+        record_operation("pa");
+    else
+        ft_printf("pa\n");
 }

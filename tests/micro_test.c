@@ -2,18 +2,157 @@
 #include "stack.h"
 #include <string.h>
 #include <unistd.h>
+#include <stdlib.h>
 
-// Global variable to control visualization
-static int g_visual_mode = 1;
-static int g_delay = 200000; // 0.5 seconds default
+// Operation recording system
+typedef struct s_operation {
+    char *name;
+    struct s_operation *next;
+} t_operation;
 
-// Clear screen and show current state
-void show_frame(t_ps *ps, const char *operation)
+typedef struct s_recorder {
+    t_operation *operations;
+    t_operation *last;
+    int count;
+    int recording;
+} t_recorder;
+
+// Global recorder
+static t_recorder g_recorder = {NULL, NULL, 0, 0};
+
+// Initialize recorder
+void init_recorder(void)
 {
-    if (!g_visual_mode)
+    g_recorder.operations = NULL;
+    g_recorder.last = NULL;
+    g_recorder.count = 0;
+    g_recorder.recording = 1;
+}
+
+// Add operation to recording
+void record_operation(const char *operation)
+{
+    if (!g_recorder.recording)
         return;
     
-    // Clear screen (works on most terminals)
+    t_operation *new_op = malloc(sizeof(t_operation));
+    if (!new_op)
+        return;
+    
+    new_op->name = strdup(operation);
+    new_op->next = NULL;
+    
+    if (!g_recorder.operations)
+    {
+        g_recorder.operations = new_op;
+        g_recorder.last = new_op;
+    }
+    else
+    {
+        g_recorder.last->next = new_op;
+        g_recorder.last = new_op;
+    }
+    g_recorder.count++;
+}
+
+// Clean up recorder
+void cleanup_recorder(void)
+{
+    t_operation *current = g_recorder.operations;
+    while (current)
+    {
+        t_operation *next = current->next;
+        free(current->name);
+        free(current);
+        current = next;
+    }
+    g_recorder.operations = NULL;
+    g_recorder.last = NULL;
+    g_recorder.count = 0;
+}
+
+// Start/stop recording
+void start_recording(void)
+{
+    g_recorder.recording = 1;
+}
+
+void stop_recording(void)
+{
+    g_recorder.recording = 0;
+}
+
+// Modified operation functions that record themselves
+void recorded_sa(t_ps *ps)
+{
+    sa(ps);
+    record_operation("sa");
+}
+
+void recorded_sb(t_ps *ps)
+{
+    sb(ps);
+    record_operation("sb");
+}
+
+void recorded_ss(t_ps *ps)
+{
+    ss(ps);
+    record_operation("ss");
+}
+
+void recorded_pa(t_ps *ps)
+{
+    pa(ps);
+    record_operation("pa");
+}
+
+void recorded_pb(t_ps *ps)
+{
+    pb(ps);
+    record_operation("pb");
+}
+
+void recorded_ra(t_ps *ps)
+{
+    ra(ps);
+    record_operation("ra");
+}
+
+void recorded_rb(t_ps *ps)
+{
+    rb(ps);
+    record_operation("rb");
+}
+
+void recorded_rr(t_ps *ps)
+{
+    rr(ps);
+    record_operation("rr");
+}
+
+void recorded_rra(t_ps *ps)
+{
+    rra(ps);
+    record_operation("rra");
+}
+
+void recorded_rrb(t_ps *ps)
+{
+    rrb(ps);
+    record_operation("rrb");
+}
+
+void recorded_rrr(t_ps *ps)
+{
+    rrr(ps);
+    record_operation("rrr");
+}
+
+// Visualization functions
+void show_frame(t_ps *ps, const char *operation, int delay_ms)
+{
+    // Clear screen
     ft_printf("\033[2J\033[H");
     
     // Show operation
@@ -24,299 +163,332 @@ void show_frame(t_ps *ps, const char *operation)
     print_both_stacks(ps->stack_a, ps->stack_b);
     ft_printf("Size A: %d, Size B: %d\n", ps->size_a, ps->size_b);
     
-    // Small delay to see the movement
-    usleep(g_delay);
+    // Delay
+    if (delay_ms > 0)
+        usleep(delay_ms * 1000);
 }
 
-// Function pointer type for sorting algorithms
-typedef void (*sort_algorithm_t)(t_ps *ps);
-
-// Simple but effective sorting algorithm (your original)
-void visual_sort(t_ps *ps)
+// Execute a single operation for visualization
+void execute_operation_for_visual(t_ps *ps, const char *operation)
 {
-    show_frame(ps, "INITIAL STATE");
+    if (strcmp(operation, "sa") == 0)
+        sa(ps);
+    else if (strcmp(operation, "sb") == 0)
+        sb(ps);
+    else if (strcmp(operation, "ss") == 0)
+        ss(ps);
+    else if (strcmp(operation, "pa") == 0)
+        pa(ps);
+    else if (strcmp(operation, "pb") == 0)
+        pb(ps);
+    else if (strcmp(operation, "ra") == 0)
+        ra(ps);
+    else if (strcmp(operation, "rb") == 0)
+        rb(ps);
+    else if (strcmp(operation, "rr") == 0)
+        rr(ps);
+    else if (strcmp(operation, "rra") == 0)
+        rra(ps);
+    else if (strcmp(operation, "rrb") == 0)
+        rrb(ps);
+    else if (strcmp(operation, "rrr") == 0)
+        rrr(ps);
+}
+
+// Replay all recorded operations with visualization
+void replay_operations(t_ps *ps, int delay_ms)
+{
+    ft_printf("Replaying %d operations...\n", g_recorder.count);
+    ft_printf("Press Enter to start visualization...\n");
+    getchar();
     
-    // Simple selection sort approach - find minimum and put it at bottom of A
-    int operations_count = 0;
-    int max_operations = ps->size_a * ps->size_a * 2; // Safety limit
+    show_frame(ps, "INITIAL STATE", delay_ms);
     
-    while (!is_sorted(ps->stack_a) && operations_count < max_operations)
+    t_operation *current = g_recorder.operations;
+    int step = 1;
+    
+    while (current)
     {
-        int min_pos = find_min_position(ps->stack_a);
+        execute_operation_for_visual(ps, current->name);
         
-        // Move minimum to top of A
-        if (min_pos == 0)
+        char step_info[100];
+        snprintf(step_info, sizeof(step_info), "Step %d: %s", step, current->name);
+        show_frame(ps, step_info, delay_ms);
+        
+        current = current->next;
+        step++;
+    }
+    
+    if (is_sorted(ps->stack_a))
+        show_frame(ps, "SORTING COMPLETE - SUCCESS!", delay_ms);
+    else
+        show_frame(ps, "SORTING INCOMPLETE", delay_ms);
+    
+    ft_printf("\nVisualization complete. Operations count: %d\n", g_recorder.count);
+}
+
+// Function to create a copy of the push_swap structure for visualization
+t_ps *copy_ps_structure(t_ps *original)
+{
+    t_ps *copy = malloc(sizeof(t_ps));
+    if (!copy)
+        return NULL;
+    
+    copy->stack_a = NULL;
+    copy->stack_b = NULL;
+    copy->size_a = 0;
+    copy->size_b = 0;
+    copy->total_size = original->total_size;
+    
+    // Copy stack A
+    t_list *current = original->stack_a;
+    t_list *prev = NULL;
+    
+    while (current)
+    {
+        t_list *new_node = create_int_node(*(int *)current->content);
+        if (!new_node)
         {
-            // Minimum is at top, push to B
-            pb(ps);
-            show_frame(ps, "PB - Moving minimum to B");
+            // Cleanup on error
+            ft_lstclear(&copy->stack_a, free);
+            free(copy);
+            return NULL;
         }
-        else if (min_pos <= ps->size_a / 2)
+        
+        if (!copy->stack_a)
         {
-            // Minimum is in top half, rotate forward
-            ra(ps);
-            show_frame(ps, "RA - Rotating to bring minimum to top");
+            copy->stack_a = new_node;
+            prev = new_node;
         }
         else
         {
-            // Minimum is in bottom half, rotate backward
-            rra(ps);
-            show_frame(ps, "RRA - Rotating to bring minimum to top");
+            prev->next = new_node;
+            prev = new_node;
         }
         
-        operations_count++;
-        
-        // If A is empty or has only one element, start moving back from B
-        if (ps->size_a <= 1)
+        copy->size_a++;
+        current = current->next;
+    }
+    
+    // Copy stack B (if it exists)
+    current = original->stack_b;
+    prev = NULL;
+    
+    while (current)
+    {
+        t_list *new_node = create_int_node(*(int *)current->content);
+        if (!new_node)
         {
-            while (ps->size_b > 0)
-            {
-                pa(ps);
-                show_frame(ps, "PA - Moving sorted elements back to A");
-                operations_count++;
-            }
+            // Cleanup on error
+            ft_lstclear(&copy->stack_a, free);
+            ft_lstclear(&copy->stack_b, free);
+            free(copy);
+            return NULL;
+        }
+        
+        if (!copy->stack_b)
+        {
+            copy->stack_b = new_node;
+            prev = new_node;
+        }
+        else
+        {
+            prev->next = new_node;
+            prev = new_node;
+        }
+        
+        copy->size_b++;
+        current = current->next;
+    }
+    
+    return copy;
+}
+
+// Function type for algorithms
+typedef void (*algorithm_func_t)(t_ps *);
+
+// Example algorithm for testing - you can replace this with your actual algorithm
+void example_algorithm(t_ps *ps)
+{
+    // Simple example - just demonstrate recording
+    if (ps->size_a > 1)
+    {
+        recorded_pb(ps);
+        recorded_pa(ps);
+        if (ps->size_a > 2)
+        {
+            recorded_ra(ps);
+            recorded_ra(ps);
         }
     }
-    
-    // Move all remaining elements from B back to A (they should be in sorted order)
-    while (ps->size_b > 0 && operations_count < max_operations)
-    {
-        pa(ps);
-        show_frame(ps, "PA - Moving sorted elements back to A");
-        operations_count++;
-    }
-    
-    if (is_sorted(ps->stack_a))
-        show_frame(ps, "SORTING COMPLETE - SUCCESS!");
-    else
-        show_frame(ps, "SORTING INCOMPLETE - ALGORITHM NEEDS IMPROVEMENT");
 }
 
-// Example: Simple algorithm that pushes all to B then back to A
-void simple_algorithm(t_ps *ps)
+// Add this function to your micro_test.c file, after the other recorder functions
+
+// Check if recording is active
+int is_recording(void)
 {
-    show_frame(ps, "SIMPLE ALGORITHM - INITIAL STATE");
-    
-    int operations_count = 0;
-    int max_operations = ps->size_a * 4; // Safety limit
-    
-    // Push all elements to B
-    while (ps->size_a > 0 && operations_count < max_operations)
-    {
-        pb(ps);
-        show_frame(ps, "PB - Moving element to B");
-        operations_count++;
-    }
-    
-    // Push all elements back to A
-    while (ps->size_b > 0 && operations_count < max_operations)
-    {
-        pa(ps);
-        show_frame(ps, "PA - Moving element back to A");
-        operations_count++;
-    }
-    
-    if (is_sorted(ps->stack_a))
-        show_frame(ps, "SIMPLE ALGORITHM COMPLETE - SUCCESS!");
-    else
-        show_frame(ps, "SIMPLE ALGORITHM COMPLETE - NOT SORTED (as expected)");
+    return g_recorder.recording;
 }
 
-// Algorithm registry
-typedef struct {
-    const char *name;
-    sort_algorithm_t algorithm;
-    const char *description;
-} algorithm_info_t;
-
-static algorithm_info_t g_algorithms[] = {
-    {"visual", visual_sort, "Original visual sort (selection sort approach)"},
-    {"simple", simple_algorithm, "Simple algorithm that moves all to B then back to A"},
-    {"radix", radix_sort, "efficient sorting usign bit operations"},
-    {NULL, NULL, NULL}
-};
-
-// Function to list available algorithms
-void list_algorithms()
+// Update the run_algorithm_with_visualization function to use your original radix_sort
+void run_algorithm_with_visualization(t_ps *ps, void (*algorithm)(t_ps *), int delay_ms)
 {
-    ft_printf("Available algorithms:\n");
-    for (int i = 0; g_algorithms[i].name; i++)
+    // Create a copy for the algorithm to work on
+    t_ps *algo_copy = copy_ps_structure(ps);
+    if (!algo_copy)
     {
-        ft_printf("  %s%s%s - %s\n", 
-                  YELLOW, g_algorithms[i].name, RESET, 
-                  g_algorithms[i].description);
-    }
-}
-
-// Function to find algorithm by name
-sort_algorithm_t find_algorithm(const char *name)
-{
-    for (int i = 0; g_algorithms[i].name; i++)
-    {
-        if (strcmp(g_algorithms[i].name, name) == 0)
-            return g_algorithms[i].algorithm;
-    }
-    return NULL;
-}
-
-// Function to run any algorithm with visualization
-void run_algorithm(t_ps *ps, sort_algorithm_t algorithm)
-{
-    if (!algorithm)
-    {
-        ft_printf("Error: Algorithm not found\n");
+        ft_printf("Error: Could not create copy for algorithm\n");
         return;
     }
     
-    // Run the algorithm
-    algorithm(ps);
-}
-
-// Parse command line options
-void parse_options(int *argc, char ***argv, sort_algorithm_t *algorithm)
-{
-    *algorithm = visual_sort; // default
+    ft_printf("Running algorithm...\n");
     
-    for (int i = 1; i < *argc; i++)
+    // Initialize recorder
+    init_recorder();
+    start_recording();
+    
+    // Run the algorithm on the copy
+    algorithm(algo_copy);
+    
+    // Stop recording
+    stop_recording();
+    ft_printf("Algorithm is %s sorted\n", is_sorted(algo_copy->stack_a) ? "" : "not");
+    ft_printf("Algorithm completed. %d operations recorded.\n", g_recorder.count);
+    
+    // Clean up algorithm copy
+    ft_lstclear(&algo_copy->stack_a, free);
+    ft_lstclear(&algo_copy->stack_b, free);
+    free(algo_copy);
+    
+    // Ask user if they want to visualize
+    ft_printf("Do you want to visualize the operations? (y/n): ");
+    char choice;
+    scanf(" %c", &choice);
+    
+    if (choice == 'y' || choice == 'Y')
     {
-        if (strcmp((*argv)[i], "--help") == 0 || strcmp((*argv)[i], "-h") == 0)
+        // Create another copy for visualization
+        t_ps *visual_copy = copy_ps_structure(ps);
+        if (!visual_copy)
         {
-            ft_printf("Usage: %s [OPTIONS] <numbers>\n", (*argv)[0]);
-            ft_printf("OPTIONS:\n");
-            ft_printf("  -a, --algorithm ALGO  Choose sorting algorithm\n");
-            ft_printf("  -s, --silent         Run without visualization\n");
-            ft_printf("  -d, --delay MS       Set delay in microseconds (default: 500000)\n");
-            ft_printf("  -l, --list           List available algorithms\n");
-            ft_printf("  -h, --help           Show this help\n");
-            ft_printf("\nExample: %s -a bubble 64 34 3 32 5 1 89 12 7\n", (*argv)[0]);
-            exit(0);
+            ft_printf("Error: Could not create copy for visualization\n");
+            cleanup_recorder();
+            return;
         }
-        else if (strcmp((*argv)[i], "--list") == 0 || strcmp((*argv)[i], "-l") == 0)
-        {
-            list_algorithms();
-            exit(0);
-        }
-        else if (strcmp((*argv)[i], "--algorithm") == 0 || strcmp((*argv)[i], "-a") == 0)
-        {
-            if (i + 1 < *argc)
-            {
-                *algorithm = find_algorithm((*argv)[i + 1]);
-                if (!*algorithm)
-                {
-                    ft_printf("Error: Unknown algorithm '%s'\n", (*argv)[i + 1]);
-                    list_algorithms();
-                    exit(1);
-                }
-                // Remove algorithm arguments
-                for (int j = i; j < *argc - 2; j++)
-                {
-                    (*argv)[j] = (*argv)[j + 2];
-                }
-                *argc -= 2;
-                i--; // Adjust index after removal
-            }
-            else
-            {
-                ft_printf("Error: --algorithm requires an argument\n");
-                exit(1);
-            }
-        }
-        else if (strcmp((*argv)[i], "--silent") == 0 || strcmp((*argv)[i], "-s") == 0)
-        {
-            g_visual_mode = 0;
-            // Remove this argument
-            for (int j = i; j < *argc - 1; j++)
-            {
-                (*argv)[j] = (*argv)[j + 1];
-            }
-            (*argc)--;
-            i--;
-        }
-        else if (strcmp((*argv)[i], "--delay") == 0 || strcmp((*argv)[i], "-d") == 0)
-        {
-            if (i + 1 < *argc)
-            {
-                g_delay = ft_atoi((*argv)[i + 1]);
-                // Remove delay arguments
-                for (int j = i; j < *argc - 2; j++)
-                {
-                    (*argv)[j] = (*argv)[j + 2];
-                }
-                *argc -= 2;
-                i--;
-            }
-            else
-            {
-                ft_printf("Error: --delay requires an argument\n");
-                exit(1);
-            }
-        }
+        
+        // Replay operations with visualization
+        replay_operations(visual_copy, delay_ms);
+        
+        // Clean up visualization copy
+        ft_lstclear(&visual_copy->stack_a, free);
+        ft_lstclear(&visual_copy->stack_b, free);
+        free(visual_copy);
     }
+    
+    // Print operations list
+    ft_printf("\nOperations list:\n");
+    t_operation *current = g_recorder.operations;
+    int count = 1;
+    while (current)
+    {
+        ft_printf("%d: %s\n", count, current->name);
+        current = current->next;
+        count++;
+    }
+    
+    cleanup_recorder();
 }
 
+// Update the main function to use your original radix_sort
 int main(int argc, char **argv)
 {
     t_ps ps;
     t_list *node;
     int i;
-    sort_algorithm_t algorithm;
+    int delay_ms = 500; // Default delay
     
-    // Initialize the push_swap structure
+    // Initialize
     ps.stack_a = NULL;
     ps.stack_b = NULL;
     ps.size_a = 0;
     ps.size_b = 0;
     
-    // Parse command line options
-    parse_options(&argc, &argv, &algorithm);
-    
-    if (argc == 1)
+    // Parse arguments
+    if (argc < 2)
     {
-        ft_printf("Usage: %s [OPTIONS] <numbers>\n", argv[0]);
-        ft_printf("Use -h or --help for detailed usage information\n");
-        ft_printf("Example: %s -a visual 64 34 3 32 5 1 89 12 7\n", argv[0]);
-        return (1);
+        ft_printf("Usage: %s [--delay MS] <numbers>\n", argv[0]);
+        ft_printf("Example: %s --delay 300 64 34 3 32 5 1 89 12 7\n", argv[0]);
+        return 1;
     }
     
-    // Build stack A from command line arguments
+    // Check for delay option
+    int start_idx = 1;
+    if (argc > 2 && strcmp(argv[1], "--delay") == 0)
+    {
+        delay_ms = atoi(argv[2]);
+        start_idx = 3;
+    }
+    
+    // Build stack A
     i = argc - 1;
-    while (i >= 1)
+    while (i >= start_idx)
     {
         node = create_int_node(ft_atoi(argv[i]));
         if (!node)
-            return (1);
+            return 1;
         ft_lstadd_front(&ps.stack_a, node);
         ps.size_a++;
         i--;
     }
     ps.total_size = ps.size_a;
     
-    // Start the sorting with chosen algorithm
-    run_algorithm(&ps, algorithm);
+    // Run your original radix_sort with visualization
+    run_algorithm_with_visualization(&ps, radix_sort, delay_ms);
     
     // Cleanup
     ft_lstclear(&ps.stack_a, free);
     ft_lstclear(&ps.stack_b, free);
     
-    return (0);
+    return 0;
 }
+// Instructions for integrating with your existing code:
+/*
+TO USE THIS WITH YOUR EXISTING ALGORITHMS:
 
-// Utility functions to help with algorithm development
-void debug_print_stack(t_ps *ps, const char *message)
+1. Create a new function that uses recorded_ operations:
+
+```c
+void my_radix_sort_visualized(t_ps *ps)
 {
-    if (g_visual_mode)
-        show_frame(ps, message);
-    else
-        ft_printf("%s\n", message);
+    // Copy your radix sort logic here, but use recorded_ functions
+    // Instead of: pb(ps);  -> Use: recorded_pb(ps);
+    // Instead of: ra(ps);  -> Use: recorded_ra(ps);
+    // etc.
+    
+    // Example structure:
+    int max_bits = get_max_bits(ps->stack_a);
+    for (int bit = 0; bit < max_bits; bit++)
+    {
+        int size = ps->size_a;
+        for (int i = 0; i < size; i++)
+        {
+            if (should_push_to_b(ps->stack_a, bit))
+                recorded_pb(ps);  // Instead of pb(ps)
+            else
+                recorded_ra(ps);  // Instead of ra(ps)
+        }
+        while (ps->size_b > 0)
+            recorded_pa(ps);  // Instead of pa(ps)
+    }
 }
+```
 
-// Helper function to add your own algorithms
-void add_custom_algorithm(const char *name, sort_algorithm_t algorithm, const char *description)
-{
-    (void)algorithm;
-    (void)description;
-    // This is a simplified version - in a real implementation you'd want dynamic allocation
-    // For now, manually add to the g_algorithms array above
+2. Replace the example_algorithm call in main() with your function:
+   run_algorithm_with_visualization(&ps, my_radix_sort_visualized, delay_ms);
 
-    ft_printf("To add algorithm '%s': Add it to g_algorithms array in the source code\n", name);
-}
+3. Keep your original algorithm unchanged - this is just for visualization!
+
+This way you don't modify your original radix_sort function, and you avoid
+naming conflicts with existing functions in your codebase.
+*/

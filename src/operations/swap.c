@@ -16,20 +16,33 @@ static void swap(t_list *source, int size_src)
     source->next->content = temp;
 }
 
-void   sa(t_ps *ps)
+void sa(t_ps *ps)
 {
     swap(ps->stack_a, ps->size_a);
-    ft_printf("sa\n");
+    
+    if (is_recording())
+        record_operation("sa");
+    else
+        ft_printf("sa\n");
 }
 
-void   sb(t_ps *ps)
+void sb(t_ps *ps)
 {
     swap(ps->stack_b, ps->size_b);
-    ft_printf("sb\n");
+    
+    if (is_recording())
+        record_operation("sb");
+    else
+        ft_printf("sb\n");
 }
 
-void   ss(t_ps *ps)
+void ss(t_ps *ps)
 {
-    sa(ps);
-    sb(ps);
+    swap(ps->stack_a, ps->size_a);
+    swap(ps->stack_b, ps->size_b);
+    
+    if (is_recording())
+        record_operation("ss");
+    else
+        ft_printf("ss\n");
 }
