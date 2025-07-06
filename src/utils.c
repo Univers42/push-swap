@@ -6,7 +6,7 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 16:29:19 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/06 17:52:56 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/06 18:39:09 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,4 +163,100 @@ void ft_print_sub_banner(const char *title, const char *subtitle)
     if (subtitle)
         printf(">>> %s\n", subtitle);
     printf("\n");
+}
+
+// Function to check if stack is sorted
+int is_sorted(t_list *stack)
+{
+    if (!stack || !stack->next)
+        return (1);
+    
+    t_list *temp = stack;
+    while (temp->next)
+    {
+        if (*(int *)temp->content > *(int *)temp->next->content)
+            return (0);
+        temp = temp->next;
+    }
+    return (1);
+}
+
+// Function to get stack size
+int get_stack_size(t_list *stack)
+{
+    int size = 0;
+    t_list *temp = stack;
+    
+    while (temp)
+    {
+        size++;
+        temp = temp->next;
+    }
+    return (size);
+}
+
+// Function to get the minimum value in a stack
+int get_min_value(t_list *stack)
+{
+    if (!stack)
+        return (0);
+    
+    int min = *(int *)stack->content;
+    t_list *temp = stack->next;
+    
+    while (temp)
+    {
+        if (*(int *)temp->content < min)
+            min = *(int *)temp->content;
+        temp = temp->next;
+    }
+    return (min);
+}
+
+// Function to get the maximum value in a stack
+int get_max_value(t_list *stack)
+{
+    if (!stack)
+        return (0);
+    
+    int max = *(int *)stack->content;
+    t_list *temp = stack->next;
+    
+    while (temp)
+    {
+        if (*(int *)temp->content > max)
+            max = *(int *)temp->content;
+        temp = temp->next;
+    }
+    return (max);
+}
+
+// Function to find position of minimum value in stack
+int find_min_position(t_list *stack)
+{
+    if (!stack)
+        return (-1);
+    
+    int min = get_min_value(stack);
+    int pos = 0;
+    t_list *temp = stack;
+    
+    while (temp)
+    {
+        if (*(int *)temp->content == min)
+            return (pos);
+        temp = temp->next;
+        pos++;
+    }
+    return (-1);
+}
+
+// Helper function to create a node with integer content
+t_list *create_int_node(int value)
+{
+    int *content = malloc(sizeof(int));
+    if (!content)
+        return (NULL);
+    *content = value;
+    return (ft_lstnew(content));
 }

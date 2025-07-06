@@ -19,6 +19,9 @@ D_LIBFT := $(D_PROJECT)/libft
 D_SRCS := $(D_PROJECT)/src
 D_OPERATIONS := $(D_SRCS)/operations
 D_TESTS := $(D_PROJECT)/tests
+D_ALGOS := $(D_SRCS)/algorithms
+D_OPTIMIZATION := $(D_SRCS)/optimizations
+D_DEBUG := $(D_SRCS)/debug
 
 # SOURCES
 SRCS=	$(D_OPERATIONS)/push.c 		\
