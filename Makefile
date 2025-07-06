@@ -11,17 +11,32 @@ endef
 AR= ar rcs
 RM=rm -rf
 CC=cc
-CFLAGS=-Wall -Wextra -Werror -g -O3 -I./libft
+CFLAGS=-Wall -Wextra -Werror -g -O3 -I./libft -I./inc
 
 # PATH DIRECTORIES
 D_PROJECT :=.
 D_LIBFT := $(D_PROJECT)/libft
+D_SRCS := $(D_PROJECT)/src
+D_OPERATIONS := $(D_SRCS)/operations
+D_TESTS := $(D_PROJECT)/tests
 
 # SOURCES
-SRCS= main.c
+SRCS=	$(D_OPERATIONS)/push.c 		\
+		$(D_OPERATIONS)/rotate.c	\
+		$(D_OPERATIONS)/rrotate.c 	\
+		$(D_OPERATIONS)/swap.c		\
+		$(D_SRCS)/utils.c			\
+
+# SOURCES FOR EXECUTABLE (excluding main.c if it exists)
+EXEC_SRCS=	$(D_OPERATIONS)/push.c 		\
+			$(D_OPERATIONS)/rotate.c	\
+			$(D_OPERATIONS)/rrotate.c 	\
+			$(D_OPERATIONS)/swap.c		\
+			$(D_SRCS)/utils.c			\
 
 # IMPLICIT RULES CONVERSION OBJECTS
-OBJECTS=$(SRCS=.c:.o)
+OBJECTS=$(SRCS:.c=.o)
+EXEC_OBJECTS=$(EXEC_SRCS:.c=.o)
 
 # UTILS TARGETS
 
@@ -29,18 +44,19 @@ OBJECTS=$(SRCS=.c:.o)
 all: $(NAME) $(PS_PROG) clean
 
 $(NAME): build $(OBJECTS)
-	@$(AR) $(OBJECTS) $(NAME)
+	@$(AR) $(NAME) $(OBJECTS)
 
 # IMPLICIT RULE CONVERSION
 %.o : %.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 
-$(PS_PROG): 
-	@$(CC) $(CFLAGS) main.c -L./$(D_LIBFT) -lft -o $@
+# Alternative: Use the static library instead of individual object files
+$(PS_PROG): $(NAME)
+	@$(CC) $(CFLAGS) $(D_TESTS)/micro_test.c -L. -l:push_swap.a -L./$(D_LIBFT) -lft -o $@
 
 clean:
 	@$(call cmd_libs, $(D_LIBFT), clean)
-	@$(RM) $(OBJECTS)
+	@$(RM) $(OBJECTS) $(EXEC_OBJECTS)
 
 MAKEFLAGS = --no-print-directory
 
