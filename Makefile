@@ -29,17 +29,12 @@ SRCS=	$(D_OPERATIONS)/push.c 		\
 		$(D_OPERATIONS)/rrotate.c 	\
 		$(D_OPERATIONS)/swap.c		\
 		$(D_SRCS)/utils.c			\
-
-# SOURCES FOR EXECUTABLE (excluding main.c if it exists)
-EXEC_SRCS=	$(D_OPERATIONS)/push.c 		\
-			$(D_OPERATIONS)/rotate.c	\
-			$(D_OPERATIONS)/rrotate.c 	\
-			$(D_OPERATIONS)/swap.c		\
-			$(D_SRCS)/utils.c			\
+		$(D_SRCS)/push_swap.c		\
+		$(D_ALGOS)/radix.c			\
+		$(D_ALGOS)/simple_algos.c	\
 
 # IMPLICIT RULES CONVERSION OBJECTS
 OBJECTS=$(SRCS:.c=.o)
-EXEC_OBJECTS=$(EXEC_SRCS:.c=.o)
 
 # UTILS TARGETS
 

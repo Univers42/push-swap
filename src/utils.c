@@ -6,11 +6,12 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 16:29:19 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/06 18:39:09 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/06 21:16:05 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ps.h"
+
 // Find maximum width needed for a stack
 int find_max_width(t_list *stack)
 {
@@ -28,7 +29,7 @@ int find_max_width(t_list *stack)
     return max_width;
 }
 
-void    print_stack(t_list *stack, char name)
+void print_stack(t_list *stack, char name)
 {
     ft_printf("%s%s╔══ Stack %c ══╗%s\n", BOLD, CYAN, name, RESET);
     if (!stack)
@@ -46,8 +47,7 @@ void    print_stack(t_list *stack, char name)
     ft_printf("%s╚═════════════╝%s\n\n", CYAN, RESET);
 }
 
-
-// New function to count stack elements
+// Count stack elements
 int count_stack_elements(t_list *stack)
 {
     int count = 0;
@@ -59,7 +59,7 @@ int count_stack_elements(t_list *stack)
     return count;
 }
 
-void    print_both_stacks(t_list *stack_a, t_list *stack_b)
+void print_both_stacks(t_list *stack_a, t_list *stack_b)
 {
     int col_width_a = find_max_width(stack_a);
     int col_width_b = find_max_width(stack_b);

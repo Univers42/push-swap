@@ -6,34 +6,45 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 20:11:13 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/06 20:12:19 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/06 21:16:54 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "ps.h"
+#include "ps.h"
 
 /**
-the sort three algorithme is just an algorithm  that verify some conditons
-and permute the value if they are complied 
+the sort three algorithm is just an algorithm that verifies some conditions
+and permutes the values if they are complied 
  */
-void	sort_three(t_ps *ps)
+void sort_three(t_ps *ps)
 {
-	int	a = ps->a->content;
-	int	b = ps->a->next->content;
-	int	c = ps->a->next->next->content;
+    int a = *(int *)ps->stack_a->content;
+    int b = *(int *)ps->stack_a->next->content;
+    int c = *(int *)ps->stack_a->next->next->content;
 
-	if (a > b && b < c && a < c)
-		sa(ps);								// case: 2 1 3 → 1 2 3
-	else if (a > b && b > c)
-	{
-		sa(ps); rra(ps);					// case: 3 2 1 → 1 2 3
-	}
-	else if (a > b && b < c && a > c)
-		ra(ps);								// case: 2 1 3 → 1 3 2 → rra later maybe
-	else if (a < b && b > c && a < c)
-	{
-		sa(ps); ra(ps);						// case: 1 3 2 → 3 1 2 → rotate to 1 2 3
-	}
-	else if (a < b && b > c && a > c)
-		rra(ps);							// case: 2 3 1 → 1 2 3
+    if (a > b && b < c && a < c)
+        sa(ps);                             // case: 2 1 3 → 1 2 3
+    else if (a > b && b > c)
+    {
+        sa(ps); 
+        rra(ps);                            // case: 3 2 1 → 1 2 3
+    }
+    else if (a > b && b < c && a > c)
+        ra(ps);                             // case: 3 1 2 → 1 2 3
+    else if (a < b && b > c && a < c)
+    {
+        sa(ps); 
+        ra(ps);                             // case: 1 3 2 → 3 1 2 → rotate to 1 2 3
+    }
+    else if (a < b && b > c && a > c)
+        rra(ps);                            // case: 2 3 1 → 1 2 3
+}
+
+void sort_two(t_ps *ps)
+{
+    int a = *(int *)ps->stack_a->content;
+    int b = *(int *)ps->stack_a->next->content;
+    
+    if (a > b)
+        sa(ps);
 }
