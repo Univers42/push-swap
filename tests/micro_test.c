@@ -444,7 +444,7 @@ int main(int argc, char **argv)
     ps.total_size = ps.size_a;
     
     // Run your original radix_sort with visualization
-    run_algorithm_with_visualization(&ps, radix_sort, delay_ms);
+    run_algorithm_with_visualization(&ps, greedy_sort, delay_ms);
     
     // Cleanup
     ft_lstclear(&ps.stack_a, free);
