@@ -459,54 +459,53 @@ void run_algorithm_with_visualization(t_ps *ps, void (*algorithm)(t_ps *), int d
 }
 
 // Update the main function to use your original radix_sort
+#define MAX_INPUT 500
+
 int main(int argc, char **argv)
 {
     t_ps ps;
-    t_stack *node;
     int i;
     int delay_ms = 50; // Default delay
-    
-    // Initialize
-    ps.stack_a = NULL;
-    ps.stack_b = NULL;
-    ps.size_a = 0;
-    ps.size_b = 0;
-    
-    // Parse arguments
-    if (argc < 2)
-    {
-        ft_printf("Usage: %s [--delay MS] <numbers>\n", argv[0]);
-        ft_printf("Example: %s --delay 300 64 34 3 32 5 1 89 12 7\n", argv[0]);
-        return 1;
-    }
-    
-    // Check for delay option
+
+    // Initialize t_stack as array-based buffer
+    t_stack stack_buffer;
+    stack_buffer.top = 0;
+    stack_buffer.capacity = MAX_INPUT;
+    stack_buffer.bottom = 0;
+    stack_buffer.element_count = 0;
+    stack_buffer.size = 0;
+    stack_buffer.is_circular = false;
+    stack_buffer.next = NULL;
+    stack_buffer.prev = NULL;
+    // ...initialize other fields if needed...
+
+    // Parse arguments into stack_buffer.buffer
     int start_idx = 1;
     if (argc > 2 && strcmp(argv[1], "--delay") == 0)
     {
         delay_ms = atoi(argv[2]);
         start_idx = 3;
     }
-    
-    // Build stack A
-    i = argc - 1;
-    while (i >= start_idx)
+    int count = 0;
+    for (i = argc - 1; i >= start_idx && count < MAX_INPUT; i--)
     {
-        node = create_int_node(ft_atoi(argv[i]));
-        if (!node)
-            return 1;
-        ft_stkadd_front(&ps.stack_a, node);
-        ps.size_a++;
-        i--;
+        stack_buffer.buffer[count++] = ft_atoi(argv[i]);
     }
-    ps.total_size = ps.size_a;
+    stack_buffer.element_count = count;
+    stack_buffer.size = count;
 
-    // Run your original chunk_sort with visualization
+    // Set up ps to use the array-based stack
+    ps.stack_a = &stack_buffer;
+    ps.stack_b = NULL;
+    ps.size_a = count;
+    ps.size_b = 0;
+    ps.total_size = count;
+
+    // Now you can use ps.stack_a as an array-based stack in chunk algorithms
+
     run_algorithm_with_visualization(&ps, chunk_sort, delay_ms);
-    
-    // Cleanup
-    ft_stkclear(&ps.stack_a);
-    ft_stkclear(&ps.stack_b);
+
+    // No need to free stack_buffer as it's on the stack
 
     return 0;
 }

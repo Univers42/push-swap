@@ -265,7 +265,6 @@ t_stack *ft_new_node(int content)
     stack->target_pos = 0;
     stack->cost_a = 0;
     stack->cost_b = 0;
-    stack->stack = NULL;
     stack->top = 0;
     stack->capacity = 0;
     stack->bottom = 0;

@@ -13,6 +13,9 @@
 #ifndef STACK_H
 #define STACK_H
 #include "libft.h"
+
+#define BUFFER 500
+
 /**
  * full compatibility approach with the current t_stack structure,
  * all functions that use t_stack still work
@@ -32,7 +35,7 @@ typedef struct s_stack
     int target_pos;
     int cost_a;
     int cost_b;
-    int *stack;
+    int buffer[BUFFER];
     int top;
     int capacity;
     int bottom;
