@@ -24,6 +24,7 @@ int	main(int argc, char *argv[])
 	t_ps		data;
 	int			current_mode;
 
+	ft_memset(&data, 0, sizeof(t_ps));
 	current_mode = MODE;
 	debug_init(current_mode);
 	initialize_push_swap_data(&data, argc, argv);
