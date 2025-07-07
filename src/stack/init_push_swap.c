@@ -14,13 +14,13 @@
 
 void	initialize_push_swap_data(t_ps *data, int argc, char **argv)
 {
+	data->op_list = NULL;
 	if (argc <= 1)
 		cleanup_and_exit_with_error(data);
 	--argc;
 	allocate_and_init_stack(data, &data->a, argc);
 	allocate_and_init_stack(data, &data->b, argc);
 	populate_stack_with_ranks(data, &data->a, argc, ++argv);
-	data->op_list = NULL;
 	data->op_count = 0;
 	data->op_capacity = INITIAL_OP_CAPACITY;
 }

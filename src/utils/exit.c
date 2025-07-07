@@ -26,7 +26,6 @@ static void	lst_clear(t_list *lst)
 		free(curr);
 		curr = next;
 	}
-	lst = NULL;
 }
 
 void	cleanup_and_exit_with_error(t_ps *data)
@@ -43,7 +42,8 @@ void	cleanup_and_exit_with_error(t_ps *data)
 			free(data->b.stack);
 			data->b.stack = NULL;
 		}
-		lst_clear(data->op_list);
+		if (data->op_list)
+			lst_clear(data->op_list);
 	}
 	ft_putendl_fd("Error", 2);
 	exit(1);
@@ -63,7 +63,8 @@ void	checker_cleanup_and_exit_with_error(t_ps *data)
 			free(data->b.stack);
 			data->b.stack = NULL;
 		}
-		lst_clear(data->op_list);
+		if (data->op_list)
+			lst_clear(data->op_list);
 	}
 	ft_putendl_fd("Error", 2);
 	exit(255);
@@ -83,5 +84,6 @@ void	release_allocated_memory(t_ps *data)
 		free(data->b.stack);
 		data->b.stack = NULL;
 	}
-	lst_clear(data->op_list);
+	if (data->op_list)
+		lst_clear(data->op_list);
 }
