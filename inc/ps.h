@@ -6,7 +6,7 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 16:30:13 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/07 01:02:09 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/07 01:50:59 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,14 @@ t_list  *create_int_node(int value);
 // Add these declarations to your ps.h file
 
 // Recorder functions (only available when using micro_test.c)
-void record_operation(const char *operation);
-int is_recording(void);
-void init_recorder(void);
-void start_recording(void);
-void stop_recording(void);
-void cleanup_recorder(void);
+void    record_operation(const char *operation);
+int     is_recording(void);
+void    init_recorder(void);
+void    start_recording(void);
+void    stop_recording(void);
+void    cleanup_recorder(void);
 void	greedy_sort(t_ps *data);
+void	chunk_sort(t_ps *data);
 // Function pointer type for moves
 typedef void (*move)(t_ps *ps);
 

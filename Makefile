@@ -33,6 +33,7 @@ SRCS=	$(D_OPERATIONS)/push.c 		\
 		$(D_ALGOS)/radix.c			\
 		$(D_ALGOS)/simple_algos.c	\
 		$(D_ALGOS)/greedy.c			\
+		$(D_ALGOS)/chunk.c
 
 # IMPLICIT RULES CONVERSION OBJECTS
 OBJECTS=$(SRCS:.c=.o)
