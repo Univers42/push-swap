@@ -13,7 +13,7 @@
 #ifndef STACK_H
 # define STACK_H
 
-# include "libft.h"
+# include "../libft/libft.h"
 # include <limits.h>
 # include <stdbool.h>
 # include <stdlib.h>

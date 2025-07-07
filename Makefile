@@ -13,7 +13,7 @@
 # ================================ VARIABLES ================================ #
 
 CC					=	gcc
-CFLAGS				=	-Wall -Wextra -Werror -Iinclude -g3
+CFLAGS				=	-Wall -Wextra -Werror -Iinclude -g3 -I/libft -I/include/libft -I/include
 RM					=	rm -rf
 
 # Program names
@@ -21,13 +21,11 @@ PUSH_SWAP			=	push_swap
 CHECKER				=	checker
 
 # Library configuration
-LIBFT_DIR			=	include/libft
-LIBFT_FILE			=	$(LIBFT_DIR)/libft.a
+LIBFT_FILE			=	./libft/libft.a
 LIBS				=	$(LIBFT_FILE)
 
 # Include directories
-INCLUDES			=	-I include \
-						-I $(LIBFT_DIR)
+INCLUDES			=	-I include -I .
 
 CFLAGS				+=	$(INCLUDES)
 
@@ -97,25 +95,45 @@ $(OBJ_DIR)/%.o: src/%.c $(HEADERS)
 
 # Build libraries
 $(LIBFT_FILE):
-	@echo "📚 Building libft..."
-	@$(MAKE) --no-print-directory -C $(LIBFT_DIR)
+	@if [ -f "$(LIBFT_DIR)/Makefile" ]; then \
+		echo "📚 Building libft..."; \
+		$(MAKE) --no-print-directory -C $(LIBFT_DIR); \
+	else \
+		echo "No Makefile found in $(LIBFT_DIR), skipping libft build."; \
+	fi
 
 # Library cleanup
 lib_clean:
-	@$(MAKE) --no-print-directory -C $(LIBFT_DIR) clean
+	@if [ -f "$(LIBFT_DIR)/Makefile" ]; then \
+		if grep -q '^clean:' $(LIBFT_DIR)/Makefile; then \
+			$(MAKE) --no-print-directory -C $(LIBFT_DIR) clean; \
+		else \
+			echo "No 'clean' target in $(LIBFT_DIR)/Makefile, skipping."; \
+		fi \
+	else \
+		echo "No Makefile found in $(LIBFT_DIR), skipping lib_clean."; \
+	fi
 
 lib_fclean:
-	@$(MAKE) --no-print-directory -C $(LIBFT_DIR) fclean
+	@if [ -f "$(LIBFT_DIR)/Makefile" ]; then \
+		if grep -q '^fclean:' $(LIBFT_DIR)/Makefile; then \
+			$(MAKE) --no-print-directory -C $(LIBFT_DIR) fclean; \
+		else \
+			echo "No 'fclean' target in $(LIBFT_DIR)/Makefile, skipping."; \
+		fi \
+	else \
+		echo "No Makefile found in $(LIBFT_DIR), skipping lib_fclean."; \
+	fi
 
 # ============================== CLEANUP ================================== #
 
 # Clean object files
-clean: lib_clean
+clean:
 	@echo "🧹 Cleaning object files..."
 	@$(RM) $(OBJ_DIR)
 
 # Full clean
-fclean: clean lib_fclean
+fclean: clean
 	@echo "🗑️  Removing executables..."
 	@$(RM) $(PUSH_SWAP) $(CHECKER)
 
@@ -249,4 +267,6 @@ default: re
 
 debug: CFLAGS += "-DMODE=16"
 debug: re
+	@echo "🐛 Debug mode (chunk + debug)"
+	@echo "🐛 Debug mode (chunk + debug)"
 	@echo "🐛 Debug mode (chunk + debug)"

@@ -18,7 +18,7 @@
 # include "stack_utils.h"
 # include "algorithms.h"
 # include "optimizations.h"
-# include "libft.h"
+# include "../libft/libft.h"
 
 typedef struct s_queue	t_queue;
 typedef struct s_vector	t_vector;
