@@ -108,6 +108,8 @@ void    start_recording(void);
 void    stop_recording(void);
 void    cleanup_recorder(void);
 void    ft_stkclear(t_stack **stk);
+void ft_stkadd_back(t_stack **stk, t_stack *new_node);
+void ft_stkadd_front(t_stack **stk, t_stack *new_node);
 // Function pointer type for moves
 typedef void (*move)(t_ps *ps);
 

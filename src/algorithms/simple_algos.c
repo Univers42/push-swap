@@ -18,9 +18,12 @@ and permutes the values if they are complied
  */
 void sort_three(t_ps *ps)
 {
-    int a = *(int *)ps->stack_a->content;
-    int b = *(int *)ps->stack_a->next->content;
-    int c = *(int *)ps->stack_a->next->next->content;
+    if (!ps || !ps->stack_a || !ps->stack_a->next || !ps->stack_a->next->next)
+        return;
+
+    int a = ps->stack_a->value;
+    int b = ps->stack_a->next->value;
+    int c = ps->stack_a->next->next->value;
 
     if (a > b && b < c && a < c)
         sa(ps);                             // case: 2 1 3 → 1 2 3
@@ -42,8 +45,11 @@ void sort_three(t_ps *ps)
 
 void sort_two(t_ps *ps)
 {
-    int a = *(int *)ps->stack_a->content;
-    int b = *(int *)ps->stack_a->next->content;
+    if (!ps || !ps->stack_a || !ps->stack_a->next)
+        return;
+
+    int a = ps->stack_a->value;
+    int b = ps->stack_a->next->value;
     
     if (a > b)
         sa(ps);

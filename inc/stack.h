@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_CHECK_STACK_H
-#define FT_CHECK_STACK_H
+#ifndef STACK_H
+#define STACK_H
 #include "libft.h"
 /**
  * full compatibility approach with the current t_stack structure,
@@ -37,13 +37,11 @@ typedef struct s_stack
     int capacity;
     int bottom;
     int element_count;
-    struct s_stack *head;
-    struct s_stack *tail;
+    struct s_stack *next;
+    struct s_stack *prev;
     int size;
     bool is_circular;
-    struct s_stack *next;
 }               t_stack;
-
 
 int get_stack_size(t_stack*stack);
 int is_sorted(t_stack *stack);
@@ -51,4 +49,6 @@ int get_max_value(t_stack *stack);
 int get_min_value(t_stack *stack);
 int find_min_position(t_stack *stack);
 t_stack *create_int_node(int value);
+void    ft_stklast(t_stack *stk, t_stack **last);
+t_stack *ft_new_node(int content);
 #endif

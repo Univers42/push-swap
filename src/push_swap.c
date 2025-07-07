@@ -37,6 +37,7 @@ static void process_sorting(t_ps *data)
 {
     const char *sorted_status;
 
+    ft_printf("DEBUG: Entering process_sorting\n");
     if (is_sorted(data->stack_a))
         sorted_status = "✅ YES";
     else
@@ -44,7 +45,19 @@ static void process_sorting(t_ps *data)
     
     ft_printf("Initial state - Stack A size: %d, Is sorted: %s\n",
             get_stack_size(data->stack_a), sorted_status);
+
+    // Print stack contents for debugging
+    t_stack *tmp = data->stack_a;
+    int idx = 0;
+    while (tmp)
+    {
+        ft_printf("DEBUG: stack_a[%d] = %d\n", idx, tmp->value);
+        tmp = tmp->next;
+        idx++;
+    }
+
     run_sort_algo(data);
+
     ft_printf("Final state - Stack A size: %d, Is sorted: %s\n",
             get_stack_size(data->stack_a), 
             is_sorted(data->stack_a) ? "✅ YES" : "❌ NO");
@@ -67,26 +80,23 @@ static void setlement(t_ps *data)
 static void load_datas(t_ps *data, int argc, char **argv)
 {
     int i;
-    int *value;
-    t_list *new_node;
+    t_stack *new_node;
 
-    // Simple argument parsing - convert strings to integers
+    ft_printf("DEBUG: Starting to load datas\n");
     for (i = 1; i < argc; i++)
     {
-        value = malloc(sizeof(int));
-        if (!value)
-            exit(1); // Handle malloc failure
-        
-        *value = ft_atoi(argv[i]);
-        new_node = ft_lstnew(value);
+        int val = ft_atoi(argv[i]);
+        ft_printf("DEBUG: Creating node for argv[%d]=%s (int: %d)\n", i, argv[i], val);
+        new_node = create_int_node(val);
         if (!new_node)
         {
-            free(value);
+            ft_printf("ERROR: Failed to create node for value %d\n", val);
             exit(1);
         }
-        
-        ft_lstadd_back(&data->stack_a, new_node);
+        ft_stkadd_back(&data->stack_a, new_node);
         data->size_a++;
         data->total_size++;
+        ft_printf("DEBUG: Added node with value %d to stack_a (size now %d)\n", val, data->size_a);
     }
+    ft_printf("DEBUG: Finished loading datas. Stack A size: %d\n", data->size_a);
 }

@@ -12,26 +12,41 @@ void radix_sort(t_ps *data)
 {
     int total_size;
 
+    ft_printf("DEBUG: Entered radix_sort\n");
     if (!data || !data->stack_a)
+    {
+        ft_printf("DEBUG: radix_sort: data or stack_a is NULL\n");
         return;
+    }
 
     total_size = get_stack_size(data->stack_a);
+    ft_printf("DEBUG: radix_sort: total_size = %d\n", total_size);
 
     if (total_size <= 3)
     {
+        ft_printf("DEBUG: radix_sort: total_size <= 3, calling radix_handle_small_arrays\n");
         radix_handle_small_arrays(data);
         return;
     }
     if (is_sorted(data->stack_a))
+    {
+        ft_printf("DEBUG: radix_sort: stack is already sorted\n");
         return;
+    }
     // Normalize values to ranks (0, 1, 2, ..., n-1)
+    ft_printf("DEBUG: radix_sort: normalizing values\n");
     normalize_values(data);
     
     int max_bits = length_bit(total_size);
+    ft_printf("DEBUG: radix_sort: max_bits = %d\n", max_bits);
     for (int i = 0; i < max_bits; i++)
+    {
+        ft_printf("DEBUG: radix_sort: bit position %d\n", i);
         radix_sort_single_bit_pass(data, i);
+    }
 
     int min_pos = find_min_position_radix(data);
+    ft_printf("DEBUG: radix_sort: min_pos = %d\n", min_pos);
     turning_wheel(data, min_pos, get_stack_size(data->stack_a));
 }
 
@@ -102,16 +117,16 @@ static void turning_wheel(t_ps *data, int min_pos, int size_a)
 // Helper function to find minimum position for radix sort
 static int find_min_position_radix(t_ps *data)
 {
-    t_list *tmp = data->stack_a;
-    int min = *(int *)tmp->content;
+    t_stack *tmp = data->stack_a;
+    int min = tmp->value;
     int min_pos = 0;
     int i = 0;
 
     while (tmp)
     {
-        if (*(int *)tmp->content < min)
+        if (tmp->value < min)
         {
-            min = *(int *)tmp->content;
+            min = tmp->value;
             min_pos = i;
         }
         tmp = tmp->next;
@@ -128,7 +143,7 @@ static void radix_sort_single_bit_pass(t_ps *data, int bit_position)
 
     while (processed < total_elements)
     {
-        int normalized_value = get_normalized_value(data, *(int *)data->stack_a->content);
+        int normalized_value = get_normalized_value(data, data->stack_a->value);
         
         // Check if the bit at bit_position is 0
         if ((normalized_value & (1 << bit_position)) == 0)
@@ -148,7 +163,7 @@ static void radix_handle_small_arrays(t_ps *data)
 {
     int size = get_stack_size(data->stack_a);
 
-    if (size == 2 && *(int *)data->stack_a->content > *(int *)data->stack_a->next->content)
+    if (size == 2 && data->stack_a->value > data->stack_a->next->value)
         sa(data);
     else if (size == 3)
         sort_three(data);
@@ -160,14 +175,14 @@ static void normalize_values(t_ps *data)
     int size = get_stack_size(data->stack_a);
     int *values = malloc(sizeof(int) * size);
     int *sorted_values = malloc(sizeof(int) * size);
-    t_list *tmp = data->stack_a;
+    t_stack *tmp = data->stack_a;
     int i = 0;
 
     // Extract all values
     while (tmp)
     {
-        values[i] = *(int *)tmp->content;
-        sorted_values[i] = *(int *)tmp->content;
+        values[i] = tmp->value;
+        sorted_values[i] = tmp->value;
         tmp = tmp->next;
         i++;
     }
@@ -191,9 +206,9 @@ static void normalize_values(t_ps *data)
     i = 0;
     while (tmp)
     {
-        int original_value = *(int *)tmp->content;
+        int original_value = tmp->value;
         int rank = 0;
-        
+
         // Find the rank of this value
         for (int j = 0; j < size; j++)
         {
@@ -203,8 +218,8 @@ static void normalize_values(t_ps *data)
                 break;
             }
         }
-        
-        *(int *)tmp->content = rank;
+
+        tmp->value = rank;
         tmp = tmp->next;
         i++;
     }

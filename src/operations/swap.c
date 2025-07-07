@@ -5,15 +5,15 @@
  * , meaning making it point somehwere else, we use double pointer. 
  * If we just need to access modify waht it points to, use single pointer
  */
-static void swap(t_list *source, int size_src)
+static void swap(t_stack *source, int size_src)
 {
-    t_list *temp;
+    int temp;
 
     if (!source || !source->next || size_src == 0)
         return ;
-    temp = source->content;
-    source->content = source->next->content;
-    source->next->content = temp;
+    temp = source->value;
+    source->value = source->next->value;
+    source->next->value = temp;
 }
 
 void sa(t_ps *ps)

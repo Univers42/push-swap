@@ -10,8 +10,8 @@ endef
 #COMMAND
 AR= ar rcs
 RM=rm -rf
-CC=cc
-CFLAGS=-Wall -Wextra -Werror -g -O3 -I./libft -I./inc -ferror-limit=1
+CC=clang
+CFLAGS=-Wall -Wextra -Werror -g -O3 -I./libft -I./inc -ferror-limit=1 -fPIC
 
 # PATH DIRECTORIES
 D_PROJECT :=.
@@ -41,7 +41,7 @@ OBJECTS=$(SRCS:.c=.o)
 # UTILS TARGETS
 
 # DEFAULT TARGET build the static library
-all: $(NAME) $(PS_PROG) clean
+all: $(NAME) $(PS_PROG)
 
 $(NAME): build $(OBJECTS)
 	@$(AR) $(NAME) $(OBJECTS)
@@ -55,8 +55,7 @@ $(PS_PROG): $(NAME)
 	@$(CC) $(CFLAGS) $(D_TESTS)/micro_test.c -L. -l:push_swap.a -L./$(D_LIBFT) -lft -o $@
 
 clean:
-	@$(call cmd_libs, $(D_LIBFT), clean)
-	@$(RM) $(OBJECTS) $(EXEC_OBJECTS)
+	@$(RM) $(OBJECTS) $(EXEC_OBJECTS) $(PS_PROG)
 
 MAKEFLAGS = --no-print-directory
 

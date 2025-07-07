@@ -22,9 +22,9 @@ extern int is_recording(void);
  * @param size_src Pointer to source stack size
  * @param size_dest Pointer to destination stack size
  */
-static void push(t_list **source, t_list **dest, int *size_src, int *size_dest)
+static void push(t_stack **source, t_stack **dest, int *size_src, int *size_dest)
 {
-    t_list *temp;
+    t_stack *temp;
     
     if (!*source || *size_src == 0)
         return;

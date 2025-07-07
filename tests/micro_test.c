@@ -268,7 +268,8 @@ t_ps *copy_ps_structure(t_ps *original)
         copy->size_a++;
         current = current->next;
     }
-    
+    ft_printf("DEBUG: Finished copying stack_a (size %d)\n", copy->size_a);
+
     // Copy stack B (if it exists)
     current = original->stack_b;
     prev = NULL;
@@ -299,7 +300,8 @@ t_ps *copy_ps_structure(t_ps *original)
         copy->size_b++;
         current = current->next;
     }
-    
+    ft_printf("DEBUG: Finished copying stack_b (size %d)\n", copy->size_b);
+
     return copy;
 }
 
@@ -334,6 +336,7 @@ int is_recording(void)
 void run_algorithm_with_visualization(t_ps *ps, void (*algorithm)(t_ps *), int delay_ms)
 {
     // Create a copy for the algorithm to work on
+    ft_printf("DEBUG: Creating copy of ps structure for algorithm\n");
     t_ps *algo_copy = copy_ps_structure(ps);
     if (!algo_copy)
     {
@@ -341,21 +344,75 @@ void run_algorithm_with_visualization(t_ps *ps, void (*algorithm)(t_ps *), int d
         return;
     }
     
-    ft_printf("Running algorithm...\n");
+    ft_printf("DEBUG: Running algorithm...\n");
     
+    // Print initial stack state
+    t_stack *tmp = algo_copy->stack_a;
+    int idx = 0;
+    if (!tmp)
+        ft_printf("DEBUG: algo_copy->stack_a is NULL\n");
+    while (tmp)
+    {
+        ft_printf("DEBUG: algo_copy->stack_a[%d] = %d\n", idx, tmp->value);
+        tmp = tmp->next;
+        idx++;
+    }
+    tmp = algo_copy->stack_b;
+    idx = 0;
+    if (!tmp)
+        ft_printf("DEBUG: algo_copy->stack_b is NULL\n");
+    while (tmp)
+    {
+        ft_printf("DEBUG: algo_copy->stack_b[%d] = %d\n", idx, tmp->value);
+        tmp = tmp->next;
+        idx++;
+    }
+
     // Initialize recorder
+    ft_printf("DEBUG: Initializing recorder\n");
     init_recorder();
     start_recording();
     
     // Run the algorithm on the copy
+    ft_printf("DEBUG: Calling algorithm function pointer\n");
+    if (!algorithm)
+    {
+        ft_printf("ERROR: Algorithm function pointer is NULL\n");
+        return;
+    }
+    ft_printf("DEBUG: About to call chunk_sort (or your algorithm)\n");
     algorithm(algo_copy);
+    ft_printf("DEBUG: Algorithm function returned\n");
     
     // Stop recording
     stop_recording();
+    ft_printf("DEBUG: Algorithm completed. %d operations recorded.\n", g_recorder.count);
     ft_printf("Algorithm is %s sorted\n", is_sorted(algo_copy->stack_a) ? "" : "not");
-    ft_printf("Algorithm completed. %d operations recorded.\n", g_recorder.count);
     
+    // Print final stack state
+    tmp = algo_copy->stack_a;
+    idx = 0;
+    if (!tmp)
+        ft_printf("DEBUG: FINAL algo_copy->stack_a is NULL\n");
+    while (tmp)
+    {
+        ft_printf("DEBUG: FINAL algo_copy->stack_a[%d] = %d\n", idx, tmp->value);
+        tmp = tmp->next;
+        idx++;
+    }
+    tmp = algo_copy->stack_b;
+    idx = 0;
+    if (!tmp)
+        ft_printf("DEBUG: FINAL algo_copy->stack_b is NULL\n");
+    while (tmp)
+    {
+        ft_printf("DEBUG: FINAL algo_copy->stack_b[%d] = %d\n", idx, tmp->value);
+        tmp = tmp->next;
+        idx++;
+    }
+
     // Clean up algorithm copy
+    ft_printf("DEBUG: Cleaning up algo_copy\n");
     ft_stkclear(&algo_copy->stack_a);
     ft_stkclear(&algo_copy->stack_b);
     free(algo_copy);
@@ -367,6 +424,7 @@ void run_algorithm_with_visualization(t_ps *ps, void (*algorithm)(t_ps *), int d
     
     if (choice == 'y' || choice == 'Y')
     {
+        ft_printf("DEBUG: Creating copy of ps structure for visualization\n");
         // Create another copy for visualization
         t_ps *visual_copy = copy_ps_structure(ps);
         if (!visual_copy)
@@ -376,10 +434,12 @@ void run_algorithm_with_visualization(t_ps *ps, void (*algorithm)(t_ps *), int d
             return;
         }
         
+        ft_printf("DEBUG: Replaying operations with visualization...\n");
         // Replay operations with visualization
         replay_operations(visual_copy, delay_ms);
         
         // Clean up visualization copy
+        ft_printf("DEBUG: Cleaning up visual_copy\n");
         ft_stkclear(&visual_copy->stack_a);
         ft_stkclear(&visual_copy->stack_b);
         free(visual_copy);
@@ -395,7 +455,6 @@ void run_algorithm_with_visualization(t_ps *ps, void (*algorithm)(t_ps *), int d
         current = current->next;
         count++;
     }
-    
     cleanup_recorder();
 }
 
@@ -405,7 +464,7 @@ int main(int argc, char **argv)
     t_ps ps;
     t_stack *node;
     int i;
-    int delay_ms = 500; // Default delay
+    int delay_ms = 50; // Default delay
     
     // Initialize
     ps.stack_a = NULL;
@@ -436,19 +495,20 @@ int main(int argc, char **argv)
         node = create_int_node(ft_atoi(argv[i]));
         if (!node)
             return 1;
-        ft_lstadd_front(&ps.stack_a, node);
+        ft_stkadd_front(&ps.stack_a, node);
         ps.size_a++;
         i--;
     }
     ps.total_size = ps.size_a;
-    
-    // Run your original radix_sort with visualization
+
+    // Run your original chunk_sort with visualization
     run_algorithm_with_visualization(&ps, chunk_sort, delay_ms);
     
     // Cleanup
     ft_stkclear(&ps.stack_a);
     ft_stkclear(&ps.stack_b);
-    free  return 0;
+
+    return 0;
 }
 // Instructions for integrating with your existing code:
 /*

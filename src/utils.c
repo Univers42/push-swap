@@ -260,18 +260,27 @@ t_stack *ft_new_node(int content)
         return NULL;
 
     stack->value = content;
+    stack->index = 0;
+    stack->pos = 0;
+    stack->target_pos = 0;
+    stack->cost_a = 0;
+    stack->cost_b = 0;
+    stack->stack = NULL;
+    stack->top = 0;
+    stack->capacity = 0;
+    stack->bottom = 0;
+    stack->element_count = 0;
     stack->next = NULL;
+    stack->prev = NULL;
+    stack->size = 0;
+    stack->is_circular = false;
     return stack;
 }
 
 // Helper function to create a node with integer content
 t_stack *create_int_node(int value)
 {
-    int *content = malloc(sizeof(int));
-    if (!content)
-        return (NULL);
-    *content = value;
-    return (ft_new_node(*content));
+    return ft_new_node(value);
 }
 
 
@@ -281,10 +290,44 @@ void ft_stkclear(t_stack **stk)
 
     if (!stk || !*stk)
         return ;
-    while (stk)
+    while (*stk)
     {
         stk_temp = (*stk)->next;
         free(*stk);
         *stk = stk_temp;
     }
+}
+
+void ft_stkadd_back(t_stack **stk, t_stack *new_node)
+{
+    t_stack *temp;
+
+    if (!stk || !new_node)
+        return ;
+    if (!*stk)
+    {
+        *stk = new_node;
+        return ;
+    }
+    temp = *stk;
+    while (temp->next)
+        temp = temp->next;
+    temp->next = new_node;
+}
+
+void ft_stkadd_front(t_stack **stk, t_stack *new_node)
+{
+    if (!stk || !new_node)
+        return ;
+    new_node->next = *stk;
+    *stk = new_node;
+}
+
+void    ft_stklast(t_stack *stk, t_stack **last)
+{
+    if (!stk || !last)
+        return ;
+    while (stk->next)
+        stk = stk->next;
+    *last = stk;
 }

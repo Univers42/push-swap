@@ -17,7 +17,7 @@
 /**
  * Move the last element to the front (reverse rotate)
  */
-static void reverse_rotate_stack(t_list **stack);
+static void reverse_rotate_stack(t_stack **stack);
 
 void rra(t_ps *ps)
 {
@@ -50,10 +50,10 @@ void rrr(t_ps *ps)
         ft_printf("rrr\n");
 }
 
-static void reverse_rotate_stack(t_list **stack)
+static void reverse_rotate_stack(t_stack **stack)
 {
-    t_list *last;
-    t_list *second_last;
+    t_stack *last;
+    t_stack *second_last;
     
     if (!stack || !*stack || !(*stack)->next)
         return;

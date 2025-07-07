@@ -37,13 +37,17 @@ static void sort_one(t_ps *data, t_chunk *to_sort);
 static void sort_two_chunk(t_ps *data, t_chunk *to_sort);
 static void sort_three_chunk(t_ps *data, t_chunk *to_sort);
 static void chunk_split(t_ps *data, t_chunk *to_split, t_split_dest *dest);
-static int	calculate_next_down_index(t_stack *stk, int index);
-static int	calculate_next_up_index(t_stack *stk, int index);
-static void update_sizes(t_ps *data);
 static t_stack	*loc_to_stack(t_ps *data, t_loc loc);
+static void update_sizes(t_ps *data);
+//static int get_stack_element_at_position(t_stack *stk, int position);
+//static int get_current_stack_size(t_stack *stk);
+static int calculate_next_down_index(t_stack *stk, int index);
+static int calculate_next_up_index(t_stack *stk, int index);
+
 // Main chunk sort function
 void chunk_sort(t_ps *data)
 {
+    ft_printf("DEBUG: Entered chunk_sort\n");
     t_chunk chunk_all;
 
     if (!data || !data->stack_a)
@@ -66,6 +70,7 @@ void chunk_sort(t_ps *data)
 
 static void rec_chunk_sort(t_ps *data, t_chunk *to_sort)
 {
+    ft_printf("DEBUG: Entered rec_chunk_sort (size=%d, loc=%d)\n", to_sort ? to_sort->size : -1, to_sort ? to_sort->loc : -1);
     t_split_dest dest;
 
     if (!data || !to_sort || to_sort->size <= 0)
@@ -110,8 +115,8 @@ static int get_list_element_at_position(t_stack *list, int position)
         count++;
     }
     
-    if (current && current->content)
-        return (*(int *)current->content);
+    if (current && current->value)
+        return (current->value);
     return (0);
 }
 
@@ -128,35 +133,35 @@ static int get_list_size(t_stack *list)
     return (size);
 }
 
-int get_max_value_in_list(t_list *list)
+int get_max_value_in_list(t_stack *list)
 {
-    if (!list || !list->content)
+    if (!list || !list->value)
         return (0);
     
-    int max = *(int *)list->content;
-    t_list *current = list->next;
+    int max = list->value;
+    t_stack *current = list->next;
     
     while (current)
     {
-        if (current->content && *(int *)current->content > max)
-            max = *(int *)current->content;
+        if (current->value && current->value > max)
+            max = current->value;
         current = current->next;
     }
     return (max);
 }
 
-int get_min_value_in_list(t_list *list)
+int get_min_value_in_list(t_stack *list)
 {
-    if (!list || !list->content)
+    if (!list || !list->value)
         return (0);
     
-    int min = *(int *)list->content;
-    t_list *current = list->next;
+    int min = list->value;
+    t_stack *current = list->next;
     
     while (current)
     {
-        if (current->content && *(int *)current->content < min)
-            min = *(int *)current->content;
+        if (current->value && current->value < min)
+            min = current->value;
         current = current->next;
     }
     return (min);
@@ -198,10 +203,10 @@ static void sort_two_chunk(t_ps *data, t_chunk *to_sort)
     
     // Sort if first element is greater than second
     if (data->stack_a && data->stack_a->next && 
-        data->stack_a->content && data->stack_a->next->content)
+        data->stack_a->value && data->stack_a->next->value)
     {
-        int first = *(int *)data->stack_a->content;
-        int second = *(int *)data->stack_a->next->content;
+        int first = data->stack_a->value;
+        int second = data->stack_a->next->value;
         if (first > second)
         {
             sa(data);
@@ -345,12 +350,12 @@ static void easy_sort(t_ps *data, t_chunk *to_sort)
         return;
     while (to_sort->loc != TOP_A && to_sort->size > 0)
     {
-        if (data->stack_a && data->stack_a->content &&
-            *(int *)data->stack_a->content == chunk_value(data, to_sort, 1) + 1 
+        if (data->stack_a && data->stack_a->value &&
+            data->stack_a->value == chunk_value(data, to_sort, 1) + 1 
             && to_sort->size > 0)
             sort_one(data, to_sort);
-        else if (data->stack_a && data->stack_a->content &&
-            *(int *)data->stack_a->content == chunk_value(data, to_sort, 2) + 1 
+        else if (data->stack_a && data->stack_a->value &&
+            data->stack_a->value == chunk_value(data, to_sort, 2) + 1 
         	&& to_sort->size > 1)
             easy_sort_second(data, to_sort);
         else
@@ -378,13 +383,13 @@ static void handle_top_b(t_ps *data, t_chunk *to_sort)
     if (!data || !to_sort)
         return;
 
-    if (data->stack_b && data->stack_b->content)
+    if (data->stack_b && data->stack_b->value)
     {
         sb(data);
         pa(data);
-        if (data->stack_b && data->stack_b->content && 
-            data->stack_a && data->stack_a->content &&
-            *(int *)data->stack_b->content == *(int *)data->stack_a->content - 1)
+        if (data->stack_b && data->stack_b->value && 
+            data->stack_a && data->stack_a->value &&
+            data->stack_b->value == data->stack_a->value - 1)
         {
             pa(data);
             to_sort->size--;
@@ -399,13 +404,13 @@ static void handle_bottom_a(t_ps *data, t_chunk *to_sort)
         return ;
     rra(data);
     rra(data);
-    if (data->stack_a && data->stack_a->content)
+    if (data->stack_a && data->stack_a->value)
     {
         sa(data);
         
         if (data->stack_a && data->stack_a->next &&
-            data->stack_a->content && data->stack_a->next->content &&
-            *(int *)data->stack_a->content == *(int *)data->stack_a->next->content - 1)
+            data->stack_a->value && data->stack_a->next->value &&
+            data->stack_a->value == data->stack_a->next->value - 1)
             to_sort->size--;
         else
             ra(data);
@@ -419,12 +424,12 @@ static void handle_bottom_b(t_ps *data, t_chunk *to_sort)
         return;
     rrb(data);
     rrb(data);
-    if (data->stack_b && data->stack_b->content)
+    if (data->stack_b && data->stack_b->value)
     {
         pa(data);   
-        if (data->stack_b && data->stack_b->content && 
-            data->stack_a && data->stack_a->content &&
-            *(int *)data->stack_b->content == *(int *)data->stack_a->content - 1)
+        if (data->stack_b && data->stack_b->value && 
+            data->stack_a && data->stack_a->value &&
+            data->stack_b->value == data->stack_a->value - 1)
         {
             pa(data);
             to_sort->size--;
@@ -453,7 +458,7 @@ static void split_max_reduction(t_ps *data, t_chunk *max)
         }
     }
     
-    if (max->loc == TOP_A && data->stack_a && data->stack_a->content)
+    if (max->loc == TOP_A && data->stack_a && data->stack_a->value)
     {
         int first = get_list_element_at_position(data->stack_a, 1);
         int third = get_list_element_at_position(data->stack_a, 3);
@@ -484,18 +489,18 @@ static bool a_partly_sort(t_ps *data, int from)
     for (int i = 1; i < from && current; i++)
         current = current->next;
     
-    if (!current || !current->content)
+    if (!current || !current->value)
         return (true);
     
-    int prev_value = *(int *)current->content;
+    int prev_value = current->value;
     current = current->next;
     
     while (current)
     {
-        if (!current->content)
+        if (!current->value)
             return (false);
         
-        int current_value = *(int *)current->content;
+        int current_value = current->value;
         if (current_value != prev_value + 1)
             return (false);
         prev_value = current_value;
@@ -539,12 +544,12 @@ static void sort_three_chunk(t_ps *data, t_chunk *to_sort)
 
 static void sort_three_top_a(t_ps *data, t_chunk *to_sort, int max)
 {
-    if (!data || !to_sort || !data->stack_a || !data->stack_a->content)
+    if (!data || !to_sort || !data->stack_a || !data->stack_a->value)
         return;
 
-    int first = *(int *)data->stack_a->content;
-    int second = (data->stack_a->next && data->stack_a->next->content) ? 
-                 *(int *)data->stack_a->next->content : 0;
+    int first = data->stack_a->value;
+    int second = (data->stack_a->next && data->stack_a->next->value) ? 
+                 data->stack_a->next->value : 0;
 
     if (first == max)
     {
@@ -568,16 +573,16 @@ static void sort_three_top_a(t_ps *data, t_chunk *to_sort, int max)
 
 static void sort_three_top_b(t_ps *data, t_chunk *to_sort, int max)
 {
-    if (!data || !to_sort || !data->stack_b || !data->stack_b->content)
+    if (!data || !to_sort || !data->stack_b || !data->stack_b->value)
         return;
 
     pa(data);
     
-    if (data->stack_b && data->stack_b->content)
+    if (data->stack_b && data->stack_b->value)
     {
-        int first = *(int *)data->stack_b->content;
-        int second = (data->stack_b->next && data->stack_b->next->content) ? 
-                     *(int *)data->stack_b->next->content : 0;
+        int first = data->stack_b->value;
+        int second = (data->stack_b->next && data->stack_b->next->value) ? 
+                     data->stack_b->next->value : 0;
 
         if (first == max)
         {
@@ -607,11 +612,11 @@ static void sort_three_bottom_a(t_ps *data, t_chunk *to_sort, int max)
         return;
     rra(data);
     rra(data);
-    if (data->stack_a && data->stack_a->content)
+    if (data->stack_a && data->stack_a->value)
     {
-        int first = *(int *)data->stack_a->content;
-        int second = (data->stack_a->next && data->stack_a->next->content) ? 
-                     *(int *)data->stack_a->next->content : 0;
+        int first = data->stack_a->value;
+        int second = (data->stack_a->next && data->stack_a->next->value) ? 
+                     data->stack_a->next->value : 0;
         if (first == max)
         {
             sa(data);
@@ -641,11 +646,11 @@ static void sort_three_bottom_b(t_ps *data, t_chunk *to_sort, int max)
         return;
     rrb(data);
     rrb(data);
-    if (data->stack_b && data->stack_b->content)
+    if (data->stack_b && data->stack_b->value)
     {
-        int first = *(int *)data->stack_b->content;
-        int second = (data->stack_b->next && data->stack_b->next->content) ? 
-                     *(int *)data->stack_b->next->content : 0;
+        int first = data->stack_b->value;
+        int second = (data->stack_b->next && data->stack_b->next->value) ? 
+                     data->stack_b->next->value : 0;
 
         if (first == max)
         {
@@ -670,43 +675,88 @@ static void sort_three_bottom_b(t_ps *data, t_chunk *to_sort, int max)
     sort_two_chunk(data, to_sort);
 }
 
-// Helper functions for chunk operations
-int	chunk_max_value(t_ps *data, t_chunk *chunk)
+// Get the maximum value in a chunk
+static int chunk_max_value(t_ps *data, t_chunk *chunk)
 {
-	t_stack	*stk;
-	int		size;
-	int		max_value;
-	int		i;
+    t_stack *stk;
+    int     size;
+    int     max_value;
+    int     i;
 
-	stk = loc_to_stack(data, chunk->loc);
-	size = chunk->size;
-	max_value = 0;
-	i = 0;
-	if (chunk->loc == TOP_A || chunk->loc == TOP_B)
-		i = stk->top;
-	else if (chunk->loc == BOTTOM_A || chunk->loc == BOTTOM_B)
-		i = stk->bottom;
-	while (size--)
-	{
-		if (stk->stack[i] > max_value)
-			max_value = stk->stack[i];
-		if (chunk->loc == TOP_A || chunk->loc == TOP_B)
-			i = calculate_next_down_index(stk, i);
-		else if (chunk->loc == BOTTOM_A || chunk->loc == BOTTOM_B)
-			i = calculate_next_up_index(stk, i);
-	}
-	return (max_value);
-}
-
-static int chunk_value(t_ps *data, t_chunk *chunk, int position)
-{
-    if (!data || !chunk || position <= 0)
+    if (!data || !chunk || chunk->size <= 0)
         return (0);
-    if (chunk->loc == TOP_A || chunk->loc == BOTTOM_A)
-        return (get_list_element_at_position(data->stack_a, position));
-    else
-        return (get_list_element_at_position(data->stack_b, position));
+        
+    stk = loc_to_stack(data, chunk->loc);
+    
+    if (!stk || stk->element_count == 0)
+        return (0);
+        
+    size = chunk->size;
+    i = 0;
+    
+    // Start from the appropriate position based on location
+    if (chunk->loc == TOP_A || chunk->loc == TOP_B)
+        i = stk->top;
+    else if (chunk->loc == BOTTOM_A || chunk->loc == BOTTOM_B)
+        i = stk->bottom;
+    
+    // Initialize max_value with the first element
+    max_value = stk->stack[i];
+    
+    // Navigate through the chunk and find maximum
+    while (size--)
+    {
+        if (stk->stack[i] > max_value)
+            max_value = stk->stack[i];
+            
+        if (size > 0) // Don't move past the last element
+        {
+            if (chunk->loc == TOP_A || chunk->loc == TOP_B)
+                i = calculate_next_down_index(stk, i);
+            else if (chunk->loc == BOTTOM_A || chunk->loc == BOTTOM_B)
+                i = calculate_next_up_index(stk, i);
+        }
+    }
+    return (max_value);
 }
+
+// Get the nth value from a chunk (1-indexed)
+static int chunk_value(t_ps *data, t_chunk *chunk, int n)
+{
+    t_loc   loc;
+    t_stack *stk;
+    int     i;
+
+    if (!data || !chunk || n <= 0)
+        return (0);
+        
+    loc = chunk->loc;
+    stk = loc_to_stack(data, loc);
+    
+    if (!stk || stk->element_count == 0)
+        return (0);
+    
+    i = 0;
+    if (loc == TOP_A || loc == TOP_B)
+        i = stk->top;
+    else if (loc == BOTTOM_A || loc == BOTTOM_B)
+        i = stk->bottom;
+    
+    // Navigate to the nth element (1-indexed)
+    if (loc == TOP_A || loc == TOP_B)
+    {
+        while (--n > 0)
+            i = calculate_next_down_index(stk, i);
+    }
+    else if (loc == BOTTOM_A || loc == BOTTOM_B)
+    {
+        while (--n > 0)
+            i = calculate_next_up_index(stk, i);
+    }
+    
+    return (stk->stack[i]);
+}
+
 
 static int move_from_to(t_ps *data, t_loc from, t_loc to)
 {
@@ -762,44 +812,45 @@ static int move_from_to(t_ps *data, t_loc from, t_loc to)
     return (0); // Return 0 for failed move
 }
 
-int	get_stack_element_at_position(t_stack *stk, int position)
-{
-	int	target_index;
+//static int	get_stack_element_at_position(t_stack *stk, int position)
+//{
+//	int	target_index;
+//
+//	if (position <= 0 || stk->element_count == 0)
+//		return (0);
+//	if (position == 1)
+//		return (stk->stack[stk->top]);
+//	target_index = (stk->top + (position - 1)) % stk->capacity;
+//	return (stk->stack[target_index]);
+//}
 
-	if (position <= 0 || stk->element_count == 0)
-		return (0);
-	if (position == 1)
-		return (stk->stack[stk->top]);
-	target_index = (stk->top + (position - 1)) % stk->capacity;
-	return (stk->stack[target_index]);
+//static int	get_current_stack_size(t_stack *stk)
+//{
+//	if (!stk)
+//		return (0);
+//	return (stk->element_count);
+//}
+
+static int calculate_next_down_index(t_stack *stk, int index)
+{
+    if (index == stk->capacity - 1)
+        return (0);
+    return (index + 1);
 }
 
-int	get_current_stack_size(t_stack *stk)
+// Helper function to get the next index going up in a circular array  
+static int calculate_next_up_index(t_stack *stk, int index)
 {
-	if (!stk)
-		return (0);
-	return (stk->element_count);
+    if (index == 0)
+        return (stk->capacity - 1);
+    return (index - 1);
 }
 
-static int	calculate_next_up_index(t_stack *stk, int index)
+// Get the stack pointer based on location
+static t_stack *loc_to_stack(t_ps *data, t_loc loc)
 {
-	if (index == 0)
-		return (stk->capacity - 1);
-	return (index - 1);
-}
-
-static int	calculate_next_down_index(t_stack *stk, int index)
-{
-	if (index == stk->capacity - 1)
-		return (0);
-	return (index + 1);
-}
-
-
-static t_stack	*loc_to_stack(t_ps *data, t_loc loc)
-{
-	if (loc == TOP_A || loc == BOTTOM_A)
-		return (data->stack_a);
-	else
-		return (data->stack_b);
+    if (loc == TOP_A || loc == BOTTOM_A)
+        return (data->stack_a);
+    else
+        return (data->stack_b);
 }

@@ -31,10 +31,10 @@ static int	greedy_find_best_target(t_ps *data, int value, int size_a);
 static int	greedy_find_min_target(t_ps *data, int size_a);
 static int	greedy_calculate_total_cost(int cost_a, int cost_b, int pos_a, 
 		int pos_b, int size_a, int size_b);
-static int	find_min_value_in_stack(t_list *stack);
+static int	find_min_value_in_stack(t_stack *stack);
 static int	greedy_find_cheapest(t_greedy_node *nodes, int size);
 static int	greedy_find_min_pos(t_ps *data, int size_a, int min_value);
-static int	get_value_at_position(t_list *stack, int position);
+static int	get_value_at_position(t_stack *stack, int position);
 void	sort_three_simple(t_ps *data);
 
 /*
@@ -439,14 +439,14 @@ void	sort_three_simple(t_ps *data)
 
 /*
 ** find_min_value_in_stack - Find minimum value in a stack
-** @stack: pointer to stack (t_list)
+** @stack: pointer to stack (t_stack)
 **
 ** This function iterates through the entire stack to find the minimum
 ** value. It handles empty stacks by returning 0.
 **
 ** Return: minimum value in the stack, or 0 if stack is empty
 */
-static int	find_min_value_in_stack(t_list *stack)
+static int	find_min_value_in_stack(t_stack *stack)
 {
 	int		min_value;
 	int		stack_size;
@@ -616,7 +616,7 @@ static int	greedy_find_min_pos(t_ps *data, int size_a, int min_value)
 
 /*
 ** get_value_at_position - Get value at specific position in stack
-** @stack: pointer to stack (t_list)
+** @stack: pointer to stack (t_stack)
 ** @position: position to get value from (1-based)
 **
 ** This function retrieves the value at a specific position in the stack.
@@ -627,9 +627,9 @@ static int	greedy_find_min_pos(t_ps *data, int size_a, int min_value)
 must cast the value first into a pointer integer and then dereference it to
 comply modernn compiler
 */
-static int	get_value_at_position(t_list *stack, int position)
+static int	get_value_at_position(t_stack *stack, int position)
 {
-	t_list	*current;
+	t_stack	*current;
 	int		i;
 
 	if (!stack || position <= 0)
@@ -642,6 +642,6 @@ static int	get_value_at_position(t_list *stack, int position)
 		i++;
 	}
 	if (current)
-		return (*(int *)(current->content));
+		return (current->value);
 	return (0);
 }

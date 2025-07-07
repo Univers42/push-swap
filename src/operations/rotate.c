@@ -17,7 +17,7 @@
  * move all the element up above til the first element is found the ultimate one
  * @param 
  */
-static void rotate_stack(t_list **stack);
+static void rotate_stack(t_stack **stack);
 
 void ra(t_ps *ps)
 {
@@ -50,17 +50,19 @@ void rr(t_ps *ps)
         ft_printf("rr\n");
 }
 
-static void rotate_stack(t_list **stack)
+static void rotate_stack(t_stack **stack)
 {
-    t_list *first;
-    t_list *last;
+    t_stack *first;
+    t_stack *last;
     
     if (!stack || !*stack || !(*stack)->next)
         return;
     
     first = *stack;
-    last = ft_lstlast(*stack);
-    
+    last = NULL;
+    ft_stklast(*stack, &last);
+    if (!last)
+        return; // This should not happen, but just in case
     *stack = first->next;
     first->next = NULL;
     last->next = first;
