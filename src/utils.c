@@ -6,21 +6,21 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 16:29:19 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/06 21:16:05 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/07 13:46:13 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ps.h"
 
 // Find maximum width needed for a stack
-int find_max_width(t_list *stack)
+int find_max_width(t_stack *stack)
 {
     int max_width = 15; // Minimum width
     char temp_str[50];
     
     while (stack)
     {
-        sprintf(temp_str, "[%d]", *(int *)stack->content);
+        sprintf(temp_str, "[%d]", stack->value);
         int current_width = strlen(temp_str);
         if (current_width > max_width)
             max_width = current_width;
@@ -29,7 +29,7 @@ int find_max_width(t_list *stack)
     return max_width;
 }
 
-void print_stack(t_list *stack, char name)
+void print_stack(t_stack *stack, char name)
 {
     ft_printf("%s%s╔══ Stack %c ══╗%s\n", BOLD, CYAN, name, RESET);
     if (!stack)
@@ -41,14 +41,14 @@ void print_stack(t_list *stack, char name)
     while (stack)
     {
         ft_printf("%s║%s %s[%s%d%s]%s      %s║%s\n", 
-                  CYAN, RESET, YELLOW, BRIGHT_YELLOW, *(int *)stack->content, YELLOW, RESET, CYAN, RESET);
+                  CYAN, RESET, YELLOW, BRIGHT_YELLOW, stack->value, YELLOW, RESET, CYAN, RESET);
         stack = stack->next;
     }
     ft_printf("%s╚═════════════╝%s\n\n", CYAN, RESET);
 }
 
 // Count stack elements
-int count_stack_elements(t_list *stack)
+int count_stack_elements(t_stack *stack)
 {
     int count = 0;
     while (stack)
@@ -59,7 +59,7 @@ int count_stack_elements(t_list *stack)
     return count;
 }
 
-void print_both_stacks(t_list *stack_a, t_list *stack_b)
+void print_both_stacks(t_stack *stack_a, t_stack *stack_b)
 {
     int col_width_a = find_max_width(stack_a);
     int col_width_b = find_max_width(stack_b);
@@ -102,8 +102,8 @@ void print_both_stacks(t_list *stack_a, t_list *stack_b)
     ft_printf("+%s\n", RESET);
     
     // Print stack contents
-    t_list *temp_a = stack_a;
-    t_list *temp_b = stack_b;
+    t_stack *temp_a = stack_a;
+    t_stack *temp_b = stack_b;
     
     while (temp_a || temp_b)
     {
@@ -112,7 +112,7 @@ void print_both_stacks(t_list *stack_a, t_list *stack_b)
         if (temp_a)
         {
             char num_str[50];
-            sprintf(num_str, "[%d]", *(int *)temp_a->content);
+            sprintf(num_str, "[%d]", temp_a->value);
             int num_len = strlen(num_str);
             int padding = col_width_a - num_len;
             if (padding < 0) padding = 0;
@@ -132,7 +132,7 @@ void print_both_stacks(t_list *stack_a, t_list *stack_b)
         if (temp_b)
         {
             char num_str_b[50];
-            sprintf(num_str_b, "[%d]", *(int *)temp_b->content);
+            sprintf(num_str_b, "[%d]", temp_b->value);
             int num_len_b = strlen(num_str_b);
             int padding_b = col_width_b - num_len_b;
             if (padding_b < 0) padding_b = 0;
@@ -166,15 +166,15 @@ void ft_print_sub_banner(const char *title, const char *subtitle)
 }
 
 // Function to check if stack is sorted
-int is_sorted(t_list *stack)
+int is_sorted(t_stack *stack)
 {
     if (!stack || !stack->next)
         return (1);
     
-    t_list *temp = stack;
+    t_stack *temp = stack;
     while (temp->next)
     {
-        if (*(int *)temp->content > *(int *)temp->next->content)
+        if (temp->value > temp->next->value)
             return (0);
         temp = temp->next;
     }
@@ -182,10 +182,10 @@ int is_sorted(t_list *stack)
 }
 
 // Function to get stack size
-int get_stack_size(t_list *stack)
+int get_stack_size(t_stack *stack)
 {
     int size = 0;
-    t_list *temp = stack;
+    t_stack *temp = stack;
     
     while (temp)
     {
@@ -196,54 +196,54 @@ int get_stack_size(t_list *stack)
 }
 
 // Function to get the minimum value in a stack
-int get_min_value(t_list *stack)
+int get_min_value(t_stack *stack)
 {
     if (!stack)
         return (0);
     
-    int min = *(int *)stack->content;
-    t_list *temp = stack->next;
+    int min = stack->value;
+    t_stack *temp = stack->next;
     
     while (temp)
     {
-        if (*(int *)temp->content < min)
-            min = *(int *)temp->content;
+        if (temp->value < min)
+            min = temp->value;
         temp = temp->next;
     }
     return (min);
 }
 
 // Function to get the maximum value in a stack
-int get_max_value(t_list *stack)
+int get_max_value(t_stack *stack)
 {
     if (!stack)
         return (0);
     
-    int max = *(int *)stack->content;
-    t_list *temp = stack->next;
+    int max = stack->value;
+    t_stack *temp = stack->next;
     
     while (temp)
     {
-        if (*(int *)temp->content > max)
-            max = *(int *)temp->content;
+        if (temp->value > max)
+            max = temp->value;
         temp = temp->next;
     }
     return (max);
 }
 
 // Function to find position of minimum value in stack
-int find_min_position(t_list *stack)
+int find_min_position(t_stack *stack)
 {
     if (!stack)
         return (-1);
     
     int min = get_min_value(stack);
     int pos = 0;
-    t_list *temp = stack;
+    t_stack *temp = stack;
     
     while (temp)
     {
-        if (*(int *)temp->content == min)
+        if (temp->value == min)
             return (pos);
         temp = temp->next;
         pos++;
@@ -251,12 +251,40 @@ int find_min_position(t_list *stack)
     return (-1);
 }
 
+t_stack *ft_new_node(int content)
+{
+    t_stack *stack;
+
+    stack = malloc(sizeof(t_stack));
+    if (!stack)
+        return NULL;
+
+    stack->value = content;
+    stack->next = NULL;
+    return stack;
+}
+
 // Helper function to create a node with integer content
-t_list *create_int_node(int value)
+t_stack *create_int_node(int value)
 {
     int *content = malloc(sizeof(int));
     if (!content)
         return (NULL);
     *content = value;
-    return (ft_lstnew(content));
+    return (ft_new_node(*content));
+}
+
+
+void ft_stkclear(t_stack **stk)
+{
+    t_stack *stk_temp;
+
+    if (!stk || !*stk)
+        return ;
+    while (stk)
+    {
+        stk_temp = (*stk)->next;
+        free(*stk);
+        *stk = stk_temp;
+    }
 }

@@ -77,3 +77,10 @@ void big_sort(t_stack **a, t_stack **b)
 ### CHUNK SORTING
 ### DYNAMI PROGRAMMING FOR SMALL PARTS
 ### A* searchh or BFS on small stacks
+
+
+## BONUS
+
+### CHECKER CREATION
+
+### VIZUALIZER TERMINAL OF DATAS

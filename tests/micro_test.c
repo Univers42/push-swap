@@ -241,20 +241,19 @@ t_ps *copy_ps_structure(t_ps *original)
     copy->total_size = original->total_size;
     
     // Copy stack A
-    t_list *current = original->stack_a;
-    t_list *prev = NULL;
+    t_stack *current = original->stack_a;
+    t_stack *prev = NULL;
     
     while (current)
     {
-        t_list *new_node = create_int_node(*(int *)current->content);
+        t_stack *new_node = create_int_node(current->value);
         if (!new_node)
         {
             // Cleanup on error
-            ft_lstclear(&copy->stack_a, free);
+            ft_stkclear(&copy->stack_a);
             free(copy);
             return NULL;
         }
-        
         if (!copy->stack_a)
         {
             copy->stack_a = new_node;
@@ -276,12 +275,12 @@ t_ps *copy_ps_structure(t_ps *original)
     
     while (current)
     {
-        t_list *new_node = create_int_node(*(int *)current->content);
+        t_stack *new_node = create_int_node(current->value);
         if (!new_node)
         {
             // Cleanup on error
-            ft_lstclear(&copy->stack_a, free);
-            ft_lstclear(&copy->stack_b, free);
+            ft_stkclear(&copy->stack_a);
+            ft_stkclear(&copy->stack_b);
             free(copy);
             return NULL;
         }
@@ -357,8 +356,8 @@ void run_algorithm_with_visualization(t_ps *ps, void (*algorithm)(t_ps *), int d
     ft_printf("Algorithm completed. %d operations recorded.\n", g_recorder.count);
     
     // Clean up algorithm copy
-    ft_lstclear(&algo_copy->stack_a, free);
-    ft_lstclear(&algo_copy->stack_b, free);
+    ft_stkclear(&algo_copy->stack_a);
+    ft_stkclear(&algo_copy->stack_b);
     free(algo_copy);
     
     // Ask user if they want to visualize
@@ -381,8 +380,8 @@ void run_algorithm_with_visualization(t_ps *ps, void (*algorithm)(t_ps *), int d
         replay_operations(visual_copy, delay_ms);
         
         // Clean up visualization copy
-        ft_lstclear(&visual_copy->stack_a, free);
-        ft_lstclear(&visual_copy->stack_b, free);
+        ft_stkclear(&visual_copy->stack_a);
+        ft_stkclear(&visual_copy->stack_b);
         free(visual_copy);
     }
     
@@ -404,7 +403,7 @@ void run_algorithm_with_visualization(t_ps *ps, void (*algorithm)(t_ps *), int d
 int main(int argc, char **argv)
 {
     t_ps ps;
-    t_list *node;
+    t_stack *node;
     int i;
     int delay_ms = 500; // Default delay
     
@@ -447,10 +446,9 @@ int main(int argc, char **argv)
     run_algorithm_with_visualization(&ps, chunk_sort, delay_ms);
     
     // Cleanup
-    ft_lstclear(&ps.stack_a, free);
-    ft_lstclear(&ps.stack_b, free);
-    
-    return 0;
+    ft_stkclear(&ps.stack_a);
+    ft_stkclear(&ps.stack_b);
+    free  return 0;
 }
 // Instructions for integrating with your existing code:
 /*

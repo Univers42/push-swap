@@ -11,7 +11,7 @@ endef
 AR= ar rcs
 RM=rm -rf
 CC=cc
-CFLAGS=-Wall -Wextra -Werror -g -O3 -I./libft -I./inc
+CFLAGS=-Wall -Wextra -Werror -g -O3 -I./libft -I./inc -ferror-limit=1
 
 # PATH DIRECTORIES
 D_PROJECT :=.

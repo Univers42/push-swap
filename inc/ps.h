@@ -6,7 +6,7 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 16:30:13 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/07 01:50:59 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/07 13:46:43 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PS_H
 
 # include "libft.h"
+# include "stack.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -36,12 +37,34 @@
 
 typedef struct s_ps
 {
-    t_list  *stack_a;
-    t_list  *stack_b;
+    t_stack  *stack_a;
+    t_stack  *stack_b;
     int     size_a;
     int     size_b;
     int     total_size;
 }               t_ps;
+
+// Chunk algorithm types
+typedef enum e_loc
+{
+    TOP_A,
+    BOTTOM_A,
+    TOP_B,
+    BOTTOM_B
+} t_loc;
+
+typedef struct s_chunk
+{
+    t_loc loc;
+    int size;
+} t_chunk;
+
+typedef struct s_split_dest
+{
+    t_chunk min;
+    t_chunk mid;
+    t_chunk max;
+} t_split_dest;
 
 // Stack operations
 void    sa(t_ps *ps);
@@ -61,20 +84,21 @@ void    radix_sort(t_ps *data);
 void    sort_three(t_ps *ps);
 void    sort_two(t_ps *ps);
 void    run_sort_algo(t_ps *data);
+void    greedy_sort(t_ps *data);
+void    chunk_sort(t_ps *data);
 
 // Utility functions
-int     find_max_width(t_list *stack);
-void    print_both_stacks(t_list *stack_a, t_list *stack_b);
-void    print_stack(t_list *stack, char name);
-int     count_stack_elements(t_list *stack);
+int     find_max_width(t_stack *stack);
+void    print_both_stacks(t_stack *stack_a, t_stack *stack_b);
+void    print_stack(t_stack *stack, char name);
+int     count_stack_elements(t_stack *stack);
 void    ft_print_sub_banner(const char *title, const char *subtitle);
-int     is_sorted(t_list *stack);
-int     get_stack_size(t_list *stack);
-int     get_max_value(t_list *stack);
-int     get_min_value(t_list *stack);
-int     find_min_position(t_list *stack);
-t_list  *create_int_node(int value);
-// Add these declarations to your ps.h file
+int     is_sorted(t_stack *stack);
+int     get_stack_size(t_stack *stack);
+int     get_max_value(t_stack *stack);
+int     get_min_value(t_stack *stack);
+int     find_min_position(t_stack *stack);
+t_stack  *create_int_node(int value);
 
 // Recorder functions (only available when using micro_test.c)
 void    record_operation(const char *operation);
@@ -83,8 +107,7 @@ void    init_recorder(void);
 void    start_recording(void);
 void    stop_recording(void);
 void    cleanup_recorder(void);
-void	greedy_sort(t_ps *data);
-void	chunk_sort(t_ps *data);
+void    ft_stkclear(t_stack **stk);
 // Function pointer type for moves
 typedef void (*move)(t_ps *ps);
 
