@@ -31,21 +31,6 @@ void	increment_op_count(t_ps *data)
 		data->op_capacity *= 2;
 }
 
-void	display_operation_stats(t_ps *data)
-{
-	const char	*sorted_status;
-
-	if (verify_stack_is_sorted(data))
-		sorted_status = "✅ YES";
-	else
-		sorted_status = "❌ NO";
-	ft_printf("📊 Operation Statistics:\n");
-	ft_printf("   Total operations: %d\n", data->op_count);
-	ft_printf("   Operation capacity: %d\n", data->op_capacity);
-	ft_printf("   Stack A size: %d\n", get_current_stack_size(&data->a));
-	ft_printf("   Stack B size: %d\n", get_current_stack_size(&data->b));
-	ft_printf("   Is sorted: %s\n", sorted_status);
-}
 
 void	print_operations(t_list *head)
 {
