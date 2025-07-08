@@ -11,40 +11,38 @@
 /* ************************************************************************** */
 
 #include "ps.h"
-// External recorder functions (declare these in ps.h)
-extern void record_operation(const char *operation);
-extern int is_recording(void);
 
 /**
  * Generic push function that moves the top element from source to destination
- * @param source Pointer to the source stack head
- * @param dest Pointer to the destination stack head  
- * @param size_src Pointer to source stack size
- * @param size_dest Pointer to destination stack size
+ * @param source Source stack (array-based)
+ * @param dest Destination stack (array-based)
  */
-static void push(t_stack **source, t_stack **dest, int *size_src, int *size_dest)
+static void push(t_stack *source, t_stack *dest)
 {
-    t_stack *temp;
-    
-    if (!*source || *size_src == 0)
+    if (!source || !dest || source->element_count == 0)
         return;
     
-    // Remove from source
-    temp = *source;
-    *source = (*source)->next;
-    if (*source)
-        (*source)->prev = NULL;
+    // Check if destination has space
+    if (dest->element_count >= dest->capacity)
+        return;
     
-    // Add to destination
-    temp->next = *dest;
-    temp->prev = NULL;
-    if (*dest)
-        (*dest)->prev = temp;
-    *dest = temp;
+    // Get top element from source (index 0)
+    int value = source->stack[0];
     
-    // Update sizes
-    (*size_src)--;
-    (*size_dest)++;
+    // Shift all elements in source down by 1
+    for (int i = 0; i < source->element_count - 1; i++)
+        source->stack[i] = source->stack[i + 1];
+    
+    // Decrease source count
+    source->element_count--;
+    
+    // Shift all elements in destination up by 1
+    for (int i = dest->element_count; i > 0; i--)
+        dest->stack[i] = dest->stack[i - 1];
+    
+    // Add value to top of destination (index 0)
+    dest->stack[0] = value;
+    dest->element_count++;
 }
 
 /**
@@ -52,11 +50,14 @@ static void push(t_stack **source, t_stack **dest, int *size_src, int *size_dest
  */
 void pb(t_ps *ps)
 {
-    push(&ps->stack_a, &ps->stack_b, &ps->size_a, &ps->size_b);
+    push(&ps->stack_a, &ps->stack_b);
+    
+    if (ps->recording)
+        append_operation(ps, "pb");
     
     if (is_recording())
         record_operation("pb");
-    else
+    else if (!ps->recording)
         ft_printf("pb\n");
 }
 
@@ -65,10 +66,13 @@ void pb(t_ps *ps)
  */
 void pa(t_ps *ps)
 {
-    push(&ps->stack_b, &ps->stack_a, &ps->size_b, &ps->size_a);
+    push(&ps->stack_b, &ps->stack_a);
+    
+    if (ps->recording)
+        append_operation(ps, "pa");
     
     if (is_recording())
         record_operation("pa");
-    else
+    else if (!ps->recording)
         ft_printf("pa\n");
 }

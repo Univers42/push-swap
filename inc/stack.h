@@ -5,6 +5,190 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/07 18:00:00 by dlesieur          #+#    #+#             */
+/*   Updated: 2025/07/07 18:00:00 by dlesieur         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef STACK_H
+# define STACK_H
+
+# include <stdlib.h>
+
+// Array-based stack structure
+typedef struct s_stack
+{
+    int     *stack;         // Array of integers
+    int     element_count;  // Current number of elements
+    int     capacity;       // Maximum capacity
+    int     top;            // For circular buffer compatibility (always 0 for array)
+    int     bottom;         // For circular buffer compatibility (always element_count-1)
+}               t_stack;
+
+// Stack initialization and cleanup
+void    init_stack(t_stack *stack, int capacity);
+void    free_stack(t_stack *stack);
+
+// Stack operations
+int     get_stack_size(t_stack *stack);
+int     is_sorted(t_stack *stack);
+int     get_max_value(t_stack *stack);
+int     get_min_value(t_stack *stack);
+int     find_min_position(t_stack *stack);
+int     get_value_at_position(t_stack *stack, int position);
+
+// For chunk compatibility
+int     get_stack_element_at_position(t_stack *stk, int position);
+int     get_current_stack_size(t_stack *stk);
+int     calculate_next_up_index(t_stack *stk, int index);
+int     calculate_next_down_index(t_stack *stk, int index);
+
+#endif
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   stack.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/07 18:00:00 by dlesieur          #+#    #+#             */
+/*   Updated: 2025/07/07 18:00:00 by dlesieur         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef STACK_H
+# define STACK_H
+
+# include <stdlib.h>
+
+// Array-based stack structure
+typedef struct s_stack
+{
+    int     *stack;         // Array of integers
+    int     element_count;  // Current number of elements
+    int     capacity;       // Maximum capacity
+    int     top;            // For circular buffer compatibility (always 0 for array)
+    int     bottom;         // For circular buffer compatibility (always element_count-1)
+}               t_stack;
+
+// Stack initialization and cleanup
+void    init_stack(t_stack *stack, int capacity);
+void    free_stack(t_stack *stack);
+
+// Stack operations
+int     get_stack_size(t_stack *stack);
+int     is_sorted(t_stack *stack);
+int     get_max_value(t_stack *stack);
+int     get_min_value(t_stack *stack);
+int     find_min_position(t_stack *stack);
+int     get_value_at_position(t_stack *stack, int position);
+
+// For chunk compatibility
+int     get_stack_element_at_position(t_stack *stk, int position);
+int     get_current_stack_size(t_stack *stk);
+int     calculate_next_up_index(t_stack *stk, int index);
+int     calculate_next_down_index(t_stack *stk, int index);
+
+#endif
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   stack.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/07 18:00:00 by dlesieur          #+#    #+#             */
+/*   Updated: 2025/07/07 18:00:00 by dlesieur         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef STACK_H
+# define STACK_H
+
+# include <stdlib.h>
+
+// Array-based stack structure
+typedef struct s_stack
+{
+    int     *stack;         // Array of integers
+    int     element_count;  // Current number of elements
+    int     capacity;       // Maximum capacity
+    int     top;            // For circular buffer compatibility (always 0 for array)
+    int     bottom;         // For circular buffer compatibility (always element_count-1)
+}               t_stack;
+
+// Stack initialization and cleanup
+void    init_stack(t_stack *stack, int capacity);
+void    free_stack(t_stack *stack);
+
+// Stack operations
+int     get_stack_size(t_stack *stack);
+int     is_sorted(t_stack *stack);
+int     get_max_value(t_stack *stack);
+int     get_min_value(t_stack *stack);
+int     find_min_position(t_stack *stack);
+int     get_value_at_position(t_stack *stack, int position);
+
+// For chunk compatibility
+int     get_stack_element_at_position(t_stack *stk, int position);
+int     get_current_stack_size(t_stack *stk);
+int     calculate_next_up_index(t_stack *stk, int index);
+int     calculate_next_down_index(t_stack *stk, int index);
+
+#endif
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   stack.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/07 16:00:00 by dlesieur          #+#    #+#             */
+/*   Updated: 2025/07/07 16:00:00 by dlesieur         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef STACK_H
+# define STACK_H
+
+# include <stdlib.h>
+
+// Array-based stack structure
+typedef struct s_stack
+{
+    int     *stack;         // Array of integers
+    int     element_count;  // Current number of elements
+    int     capacity;       // Maximum capacity
+    int     top;            // For circular buffer compatibility (always 0 for array)
+    int     bottom;         // For circular buffer compatibility (always element_count-1)
+}               t_stack;
+
+// Stack initialization and cleanup
+void    init_stack(t_stack *stack, int capacity);
+void    free_stack(t_stack *stack);
+
+// Stack operations
+int     get_stack_size(t_stack *stack);
+int     is_sorted(t_stack *stack);
+int     get_max_value(t_stack *stack);
+int     get_min_value(t_stack *stack);
+int     find_min_position(t_stack *stack);
+int     get_value_at_position(t_stack *stack, int position);
+
+// For chunk compatibility
+int     get_stack_element_at_position(t_stack *stk, int position);
+int     get_current_stack_size(t_stack *stk);
+int     calculate_next_up_index(t_stack *stk, int index);
+int     calculate_next_down_index(t_stack *stk, int index);
+
+#endif
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   stack.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 16:30:17 by dlesieur          #+#    #+#             */
 /*   Updated: 2025/07/07 13:27:17 by dlesieur         ###   ########.fr       */
 /*                                                                            */
@@ -14,44 +198,35 @@
 #define STACK_H
 #include "libft.h"
 
-#define BUFFER 500
+#define MAX_STACK_SIZE 10000
 
 /**
- * full compatibility approach with the current t_stack structure,
- * all functions that use t_stack still work
- * we can access the underlying `t_stack` directly when needed
- * no breaking chnages to existing code
- * @note strategic use :
- * stck operation(push, pop, rotate)
- * when we need size tracking
- * when we want circular/linear flexibility
+ * Pure array-based stack implementation
+ * - stack: array of integers
+ * - top: index of the top element (0-based)
+ * - capacity: maximum capacity of the stack
+ * - element_count: current number of elements
  * 
+ * @note Stack grows from index 0 upwards
+ * Empty stack: element_count = 0
+ * Full stack: element_count = capacity
  */
 typedef struct s_stack
 {
-    int value;
-    int index;
-    int pos;
-    int target_pos;
-    int cost_a;
-    int cost_b;
-    int buffer[BUFFER];
-    int top;
-    int capacity;
-    int bottom;
-    int element_count;
-    struct s_stack *next;
-    struct s_stack *prev;
-    int size;
-    bool is_circular;
+    int *stack;           // Dynamic array of integers
+    int top;              // Index of top element
+    int capacity;         // Maximum capacity
+    int element_count;    // Current number of elements
 }               t_stack;
 
-int get_stack_size(t_stack*stack);
-int is_sorted(t_stack *stack);
-int get_max_value(t_stack *stack);
-int get_min_value(t_stack *stack);
-int find_min_position(t_stack *stack);
-t_stack *create_int_node(int value);
-void    ft_stklast(t_stack *stk, t_stack **last);
-t_stack *ft_new_node(int content);
+// Stack operations
+int     get_stack_size(t_stack *stack);
+int     is_sorted(t_stack *stack);
+int     get_max_value(t_stack *stack);
+int     get_min_value(t_stack *stack);
+int     find_min_position(t_stack *stack);
+int     get_value_at_position(t_stack *stack, int position);
+void    init_stack(t_stack *stack, int capacity);
+void    free_stack(t_stack *stack);
+
 #endif

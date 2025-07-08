@@ -10,22 +10,42 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
-# include "ps.h"
-# include "stack.h"
+#include "ps.h"
 
 /**
  * Move the last element to the front (reverse rotate)
+ * Last element becomes first element
+ * @param stack Array-based stack
  */
-static void reverse_rotate_stack(t_stack **stack);
+static void reverse_rotate_stack(t_stack *stack)
+{
+    int last;
+    int i;
+    
+    if (!stack || stack->element_count < 2)
+        return;
+    
+    // Save last element
+    last = stack->stack[stack->element_count - 1];
+    
+    // Shift all elements up by 1
+    for (i = stack->element_count - 1; i > 0; i--)
+        stack->stack[i] = stack->stack[i - 1];
+    
+    // Put last element at the beginning
+    stack->stack[0] = last;
+}
 
 void rra(t_ps *ps)
 {
     reverse_rotate_stack(&ps->stack_a);
     
+    if (ps->recording)
+        append_operation(ps, "rra");
+    
     if (is_recording())
         record_operation("rra");
-    else
+    else if (!ps->recording)
         ft_printf("rra\n");
 }
 
@@ -33,9 +53,12 @@ void rrb(t_ps *ps)
 {
     reverse_rotate_stack(&ps->stack_b);
     
+    if (ps->recording)
+        append_operation(ps, "rrb");
+    
     if (is_recording())
         record_operation("rrb");
-    else
+    else if (!ps->recording)
         ft_printf("rrb\n");
 }
 
@@ -44,24 +67,11 @@ void rrr(t_ps *ps)
     reverse_rotate_stack(&ps->stack_a);
     reverse_rotate_stack(&ps->stack_b);
     
+    if (ps->recording)
+        append_operation(ps, "rrr");
+    
     if (is_recording())
         record_operation("rrr");
-    else
+    else if (!ps->recording)
         ft_printf("rrr\n");
-}
-
-static void reverse_rotate_stack(t_stack **stack)
-{
-    t_stack *last;
-    t_stack *second_last;
-    
-    if (!stack || !*stack || !(*stack)->next)
-        return;
-    second_last = *stack;
-    while (second_last->next && second_last->next->next)
-        second_last = second_last->next;
-    last = second_last->next;
-    second_last->next = NULL;
-    last->next = *stack;
-    *stack = last;
 }

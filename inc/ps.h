@@ -22,27 +22,13 @@
 # include <stdbool.h>
 
 # define NEWLINE() (write(1,"\n",1))
+# define MAX_OPERATIONS 100000  // Maximum operations buffer size
 
-// Color definitions for printing
-//# define RESET "\033[0m"
-//# define BOLD "\033[1m"
-//# define DIM "\033[2m"
-//# define CYAN "\033[36m"
-//# define YELLOW "\033[33m"
-//# define BRIGHT_YELLOW "\033[93m"
-//# define BLUE "\033[34m"
-//# define BRIGHT_GREEN "\033[92m"
-//# define BRIGHT_MAGENTA "\033[95m"
-//# define MAGENTA "\033[35m"
+// Forward declaration of t_ps
+typedef struct s_ps t_ps;
 
-typedef struct s_ps
-{
-    t_stack  *stack_a;
-    t_stack  *stack_b;
-    int     size_a;
-    int     size_b;
-    int     total_size;
-}               t_ps;
+// Forward declaration for greedy algorithm
+typedef struct s_greedy_node t_greedy_node;
 
 // Chunk algorithm types
 typedef enum e_loc
@@ -66,6 +52,68 @@ typedef struct s_split_dest
     t_chunk max;
 } t_split_dest;
 
+// Add this enum for algorithm types
+typedef enum e_algo_type
+{
+	ALGO_CHUNK,
+	ALGO_GREEDY,
+	ALGO_K_SORT,
+	ALGO_RADIX,
+	ALGO_LIS,
+	ALGO_QUEUE
+}	t_algo_type;
+
+// Algorithm-specific context union
+typedef union u_algo_context
+{
+	struct {
+		int chunk_size;
+		int n_chunks;
+	} chunk;
+	
+	struct {
+		t_greedy_node *nodes;
+		int nodes_count;
+	} greedy;
+	
+	struct {
+		int k_value;
+		int range;
+	} k_sort;
+	
+	struct {
+		int max_bits;
+		int current_bit;
+	} radix;
+}	t_algo_context;
+
+// Algorithm state structure
+typedef struct s_algo_state
+{
+	t_algo_type		type;
+	t_algo_context	ctx;
+	void			(*sort_fn)(t_ps *);  // Now t_ps is forward declared
+}	t_algo_state;
+
+// Operations buffer structure
+typedef struct s_op_buffer
+{
+    char    **operations;   // Array of operation strings
+    int     count;          // Current number of operations
+    int     capacity;       // Maximum capacity
+}               t_op_buffer;
+
+// Main push_swap structure definition
+struct s_ps
+{
+    t_stack         stack_a;     // Array-based stack A
+    t_stack         stack_b;     // Array-based stack B
+    int             total_size;  // Total number of elements
+    t_algo_state    algo;        // Algorithm state
+    t_op_buffer     op_buffer;   // Operations buffer
+    bool            recording;   // Flag to enable/disable recording
+};
+
 // Stack operations
 void    sa(t_ps *ps);
 void    sb(t_ps *ps);
@@ -86,19 +134,31 @@ void    sort_two(t_ps *ps);
 void    run_sort_algo(t_ps *data);
 void    greedy_sort(t_ps *data);
 void    chunk_sort(t_ps *data);
+// Chunk-specific sort functions
+void	sort_three_top_a(t_ps *data, t_chunk *to_sort, t_stack *stk,
+		int max);
+void	sort_three_bottom_a(t_ps *data, t_chunk *to_sort, t_stack *stk, int max);
+void	sort_three_bottom_b(t_ps *data, t_chunk *to_sort, t_stack *stk, int max);
+void	sort_three_top_b(t_ps *data, t_chunk *to_sort, t_stack *stk, int max);
+
+// Chunk algorithm specific functions
+void    chunk_split(t_ps *data, t_chunk *to_split, t_split_dest *dest);
+void    split_max_reduction(t_ps *data, t_chunk *max);
+void    easy_sort(t_ps *data, t_chunk *to_sort);
+void    sort_three_complex(t_ps *data, t_chunk *to_sort);
+bool    a_partly_sort(t_ps *data, int from);
+void    chunk_to_the_top(t_ps *data, t_chunk *to_sort);
+bool    is_consecutive(int a, int b, int c, int d);
+t_stack *loc_to_stack(t_ps *data, t_loc loc);
+int     chunk_max_value(t_ps *data, t_chunk *chunk);
+int     chunk_value(t_ps *data, t_chunk *chunk, int n);
+int     move_from_to(t_ps *data, t_loc from, t_loc to);
 
 // Utility functions
 int     find_max_width(t_stack *stack);
 void    print_both_stacks(t_stack *stack_a, t_stack *stack_b);
 void    print_stack(t_stack *stack, char name);
-int     count_stack_elements(t_stack *stack);
 void    ft_print_sub_banner(const char *title, const char *subtitle);
-int     is_sorted(t_stack *stack);
-int     get_stack_size(t_stack *stack);
-int     get_max_value(t_stack *stack);
-int     get_min_value(t_stack *stack);
-int     find_min_position(t_stack *stack);
-t_stack  *create_int_node(int value);
 
 // Recorder functions (only available when using micro_test.c)
 void    record_operation(const char *operation);
@@ -107,10 +167,16 @@ void    init_recorder(void);
 void    start_recording(void);
 void    stop_recording(void);
 void    cleanup_recorder(void);
-void    ft_stkclear(t_stack **stk);
-void ft_stkadd_back(t_stack **stk, t_stack *new_node);
-void ft_stkadd_front(t_stack **stk, t_stack *new_node);
-// Function pointer type for moves
-typedef void (*move)(t_ps *ps);
+
+// Add algorithm registry functions
+void    init_algorithm(t_ps *data, int mode);
+void    run_algorithm(t_ps *data);
+
+// Buffer management functions
+void    init_op_buffer(t_op_buffer *buffer, int capacity);
+void    free_op_buffer(t_op_buffer *buffer);
+void    append_operation(t_ps *ps, const char *op);
+void    print_operations(t_ps *ps);
+void    clear_operations(t_ps *ps);
 
 #endif

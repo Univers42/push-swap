@@ -34,7 +34,6 @@ static int	greedy_calculate_total_cost(int cost_a, int cost_b, int pos_a,
 static int	find_min_value_in_stack(t_stack *stack);
 static int	greedy_find_cheapest(t_greedy_node *nodes, int size);
 static int	greedy_find_min_pos(t_ps *data, int size_a, int min_value);
-static int	get_value_at_position(t_stack *stack, int position);
 void	sort_three_simple(t_ps *data);
 
 /*
@@ -53,18 +52,18 @@ void	greedy_sort(t_ps *data)
 {
 	int	size;
 
-	size = get_stack_size(data->stack_a);
+	size = get_stack_size(&data->stack_a);
 	if (!data || size <= 3)
 	{
 		if (size == 3)
 			sort_three(data);
 		else if (size == 2
-			&& get_value_at_position(data->stack_a, 1)
-			> get_value_at_position(data->stack_a, 2))
+			&& get_value_at_position(&data->stack_a, 1)
+			> get_value_at_position(&data->stack_a, 2))
 			sa(data);
 		return ;
 	}
-	if (is_sorted(data->stack_a))
+	if (is_sorted(&data->stack_a))
 		return ;
 	greedy_push_to_b(data);
 	greedy_push_back_to_a(data);
@@ -85,18 +84,18 @@ static void	greedy_push_to_b(t_ps *data)
 	int	total_size;
 	int	current;
 
-	total_size = get_stack_size(data->stack_a);
+	total_size = get_stack_size(&data->stack_a);
 	if (total_size > 3)
 	{
 		pb(data);
 		pb(data);
 	}
-	while (get_stack_size(data->stack_a) > 3)
+	while (get_stack_size(&data->stack_a) > 3)
 	{
-		current = get_value_at_position(data->stack_a, 1);
+		current = get_value_at_position(&data->stack_a, 1);
 		greedy_push_element_strategically(data, current, total_size);
 	}
-	if (get_stack_size(data->stack_a) == 3)
+	if (get_stack_size(&data->stack_a) == 3)
 		sort_three(data);
 }
 
@@ -115,9 +114,9 @@ static void	greedy_push_back_to_a(t_ps *data)
 	int				size_b;
 	int				cheapest_idx;
 
-	while (get_stack_size(data->stack_b) > 0)
+	while (get_stack_size(&data->stack_b) > 0)
 	{
-		size_b = get_stack_size(data->stack_b);
+		size_b = get_stack_size(&data->stack_b);
 		nodes = malloc(sizeof(t_greedy_node) * size_b);
 		if (!nodes)
 			return ;
@@ -142,8 +141,8 @@ static void	greedy_final_rotation(t_ps *data)
 	int	min_pos;
 	int	size_a;
 
-	min_value = find_min_value_in_stack(data->stack_a);
-	size_a = get_stack_size(data->stack_a);
+	min_value = find_min_value_in_stack(&data->stack_a);
+	size_a = get_stack_size(&data->stack_a);
 	min_pos = greedy_find_min_pos(data, size_a, min_value);
 	greedy_rotate_to_top(data, min_pos, size_a);
 }
@@ -229,8 +228,8 @@ static void	greedy_execute_combined_and_remaining(t_ps *data, int moves_a,
 	bool	rotate_a_up;
 	bool	rotate_b_up;
 
-	size_a = get_stack_size(data->stack_a);
-	size_b = get_stack_size(data->stack_b);
+	size_a = get_stack_size(&data->stack_a);
+	size_b = get_stack_size(&data->stack_b);
 	rotate_a_up = (node->target_pos <= size_a / 2);
 	rotate_b_up = (node->index <= size_b / 2);
 	while (moves_a > 0 && moves_b > 0 && rotate_a_up == rotate_b_up)
@@ -293,7 +292,7 @@ static int	greedy_find_target_position(t_ps *data, int value)
 	int	size_a;
 	int	target_pos;
 
-	size_a = get_stack_size(data->stack_a);
+	size_a = get_stack_size(&data->stack_a);
 	target_pos = greedy_find_best_target(data, value, size_a);
 	if (target_pos == -1)
 		target_pos = greedy_find_min_target(data, size_a);
@@ -324,7 +323,7 @@ static int	greedy_find_best_target(t_ps *data, int value, int size_a)
 	i = 1;
 	while (i <= size_a)
 	{
-		current_value = get_value_at_position(data->stack_a, i);
+		current_value = get_value_at_position(&data->stack_a, i);
 		if (current_value > value && current_value < best_target)
 		{
 			best_target = current_value;
@@ -352,12 +351,12 @@ static int	greedy_find_min_target(t_ps *data, int size_a)
 	int	target_pos;
 	int	i;
 
-	min_value = find_min_value_in_stack(data->stack_a);
+	min_value = find_min_value_in_stack(&data->stack_a);
 	target_pos = 0;
 	i = 1;
 	while (i <= size_a)
 	{
-		if (get_value_at_position(data->stack_a, i) == min_value)
+		if (get_value_at_position(&data->stack_a, i) == min_value)
 		{
 			target_pos = i - 1;
 			break ;
@@ -414,11 +413,11 @@ void	sort_three_simple(t_ps *data)
 	int	second;
 	int	third;
 
-	if (get_stack_size(data->stack_a) != 3)
+	if (get_stack_size(&data->stack_a) != 3)
 		return ;
-	first = get_value_at_position(data->stack_a, 1);
-	second = get_value_at_position(data->stack_a, 2);
-	third = get_value_at_position(data->stack_a, 3);
+	first = get_value_at_position(&data->stack_a, 1);
+	second = get_value_at_position(&data->stack_a, 2);
+	third = get_value_at_position(&data->stack_a, 3);
 	if (first > second && second < third && first < third)
 		sa(data);
 	else if (first > second && second > third)
@@ -484,7 +483,7 @@ static void	greedy_push_element_strategically(t_ps *data, int current,
 	if (current <= total_size / 3)
 	{
 		pb(data);
-		if (get_stack_size(data->stack_b) > 1)
+		if (get_stack_size(&data->stack_b) > 1)
 			rb(data);
 	}
 	else if (current >= 2 * total_size / 3)
@@ -494,8 +493,8 @@ static void	greedy_push_element_strategically(t_ps *data, int current,
 	else
 	{
 		pb(data);
-		if (get_stack_size(data->stack_b) > 1
-			&& get_value_at_position(data->stack_b, 1) < total_size / 2)
+		if (get_stack_size(&data->stack_b) > 1
+			&& get_value_at_position(&data->stack_b, 1) < total_size / 2)
 			rb(data);
 	}
 }
@@ -515,11 +514,11 @@ static void	greedy_calculate_costs(t_ps *data, t_greedy_node *nodes, int size_b)
 	int	size_a;
 	int	i;
 
-	size_a = get_stack_size(data->stack_a);
+	size_a = get_stack_size(&data->stack_a);
 	i = 0;
 	while (i < size_b)
 	{
-		nodes[i].value = get_value_at_position(data->stack_b, i + 1);
+		nodes[i].value = get_value_at_position(&data->stack_b, i + 1);
 		nodes[i].index = i;
 		nodes[i].target_pos = greedy_find_target_position(data, nodes[i].value);
 		greedy_calculate_move_costs(&nodes[i], size_a, size_b);
@@ -604,7 +603,7 @@ static int	greedy_find_min_pos(t_ps *data, int size_a, int min_value)
 	i = 1;
 	while (i <= size_a)
 	{
-		if (get_value_at_position(data->stack_a, i) == min_value)
+		if (get_value_at_position(&data->stack_a, i) == min_value)
 		{
 			min_pos = i - 1;
 			break ;
@@ -612,36 +611,4 @@ static int	greedy_find_min_pos(t_ps *data, int size_a, int min_value)
 		i++;
 	}
 	return (min_pos);
-}
-
-/*
-** get_value_at_position - Get value at specific position in stack
-** @stack: pointer to stack (t_stack)
-** @position: position to get value from (1-based)
-**
-** This function retrieves the value at a specific position in the stack.
-** Position 1 is the top of the stack.
-**
-** Return: value at the specified position
-@note 
-must cast the value first into a pointer integer and then dereference it to
-comply modernn compiler
-*/
-static int	get_value_at_position(t_stack *stack, int position)
-{
-	t_stack	*current;
-	int		i;
-
-	if (!stack || position <= 0)
-		return (0);
-	current = stack;
-	i = 1;
-	while (current && i < position)
-	{
-		current = current->next;
-		i++;
-	}
-	if (current)
-		return (current->value);
-	return (0);
 }

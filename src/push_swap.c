@@ -28,8 +28,25 @@ int main(int argc, char **argv)
     setlement(&data);
     load_datas(&data, argc, argv);
     process_sorting(&data);
-    if (is_sorted(data.stack_a))
-        return (ft_putendl_fd("success !", 1), 0);
+    
+    // Check if sorted and only print success if truly sorted
+    if (is_sorted(&data.stack_a) && data.stack_b.element_count == 0)
+    {
+        ft_putendl_fd("success !", 1);
+    }
+    else
+    {
+        ft_putendl_fd("ERROR: Sorting failed!", 2);
+        // Print final state for debugging
+        ft_printf("Final state - Stack A has %d elements, Stack B has %d elements\n",
+                 data.stack_a.element_count, data.stack_b.element_count);
+    }
+    
+    // Clean up
+    free_stack(&data.stack_a);
+    free_stack(&data.stack_b);
+    free_op_buffer(&data.op_buffer);
+    
     return (EXIT_SUCCESS);
 }
 
@@ -38,65 +55,85 @@ static void process_sorting(t_ps *data)
     const char *sorted_status;
 
     ft_printf("DEBUG: Entering process_sorting\n");
-    if (is_sorted(data->stack_a))
+    
+    // Initial check
+    if (is_sorted(&data->stack_a))
         sorted_status = "✅ YES";
     else
         sorted_status = "❌ NO";
     
     ft_printf("Initial state - Stack A size: %d, Is sorted: %s\n",
-            get_stack_size(data->stack_a), sorted_status);
+            get_stack_size(&data->stack_a), sorted_status);
 
     // Print stack contents for debugging
-    t_stack *tmp = data->stack_a;
-    int idx = 0;
-    while (tmp)
+    ft_printf("DEBUG: Initial stack contents:\n");
+    for (int i = 0; i < data->stack_a.element_count; i++)
     {
-        ft_printf("DEBUG: stack_a[%d] = %d\n", idx, tmp->value);
-        tmp = tmp->next;
-        idx++;
+        ft_printf("  stack_a[%d] = %d\n", i, data->stack_a.stack[i]);
     }
 
     run_sort_algo(data);
 
-    ft_printf("Final state - Stack A size: %d, Is sorted: %s\n",
-            get_stack_size(data->stack_a), 
-            is_sorted(data->stack_a) ? "✅ YES" : "❌ NO");
+    // Final check with detailed output
+    ft_printf("\nDEBUG: Final stack contents:\n");
+    for (int i = 0; i < data->stack_a.element_count; i++)
+    {
+        ft_printf("  stack_a[%d] = %d\n", i, data->stack_a.stack[i]);
+        if (i > 0 && data->stack_a.stack[i-1] > data->stack_a.stack[i])
+        {
+            ft_printf("  ^^^ ERROR: Not sorted here! %d > %d\n", 
+                     data->stack_a.stack[i-1], data->stack_a.stack[i]);
+        }
+    }
+
+    ft_printf("\nFinal state - Stack A size: %d, Is sorted: %s\n",
+            get_stack_size(&data->stack_a), 
+            is_sorted(&data->stack_a) ? "✅ YES" : "❌ NO");
+    
+    // Additional verification
+    if (!is_sorted(&data->stack_a))
+    {
+        ft_printf("ERROR: Stack is NOT sorted after algorithm completion!\n");
+    }
 }
 
 void run_sort_algo(t_ps *data)
 {
-    radix_sort(data);
+    chunk_sort(data);
 }
 
 static void setlement(t_ps *data)
 {
-    data->stack_a = NULL;
-    data->stack_b = NULL;
-    data->size_a = 0;
-    data->size_b = 0;
     data->total_size = 0;
+    data->recording = false;  // Disable recording by default
+    
+    // Initialize array-based stacks with capacity 0 (will be set in load_datas)
+    init_stack(&data->stack_a, 0);
+    init_stack(&data->stack_b, 0);
+    
+    // Initialize operations buffer
+    init_op_buffer(&data->op_buffer, MAX_OPERATIONS);
 }
 
 static void load_datas(t_ps *data, int argc, char **argv)
 {
     int i;
-    t_stack *new_node;
+    int count = argc - 1;
 
     ft_printf("DEBUG: Starting to load datas\n");
+    
+    // Initialize stacks with proper capacity
+    init_stack(&data->stack_a, count);
+    init_stack(&data->stack_b, count);
+    
+    // Load numbers into stack A
     for (i = 1; i < argc; i++)
     {
         int val = ft_atoi(argv[i]);
-        ft_printf("DEBUG: Creating node for argv[%d]=%s (int: %d)\n", i, argv[i], val);
-        new_node = create_int_node(val);
-        if (!new_node)
-        {
-            ft_printf("ERROR: Failed to create node for value %d\n", val);
-            exit(1);
-        }
-        ft_stkadd_back(&data->stack_a, new_node);
-        data->size_a++;
-        data->total_size++;
-        ft_printf("DEBUG: Added node with value %d to stack_a (size now %d)\n", val, data->size_a);
+        ft_printf("DEBUG: Adding value %d to stack_a[%d]\n", val, data->stack_a.element_count);
+        data->stack_a.stack[data->stack_a.element_count++] = val;
     }
-    ft_printf("DEBUG: Finished loading datas. Stack A size: %d\n", data->size_a);
+    
+    data->total_size = data->stack_a.element_count;
+    ft_printf("DEBUG: Finished loading datas. Stack A size: %d\n", data->stack_a.element_count);
 }

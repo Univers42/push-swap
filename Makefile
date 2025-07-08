@@ -11,7 +11,7 @@ endef
 AR= ar rcs
 RM=rm -rf
 CC=clang
-CFLAGS=-Wall -Wextra -Werror -g -O3 -I./libft -I./inc -ferror-limit=1 -fPIC
+CFLAGS=-Wall -Wextra -Werror -g -O3 -I./libft -I./inc -ferror-limit=15 -fPIC
 
 # PATH DIRECTORIES
 D_PROJECT :=.
@@ -29,11 +29,15 @@ SRCS=	$(D_OPERATIONS)/push.c 		\
 		$(D_OPERATIONS)/rrotate.c 	\
 		$(D_OPERATIONS)/swap.c		\
 		$(D_SRCS)/utils.c			\
+		$(D_SRCS)/stack_utils.c		\
+		$(D_SRCS)/op_buffer.c		\
 		$(D_SRCS)/push_swap.c		\
+		$(D_SRCS)/recorder.c		\
 		$(D_ALGOS)/radix.c			\
 		$(D_ALGOS)/simple_algos.c	\
 		$(D_ALGOS)/greedy.c			\
-		$(D_ALGOS)/chunk.c
+		$(D_ALGOS)/chunk.c			\
+		$(D_ALGOS)/algorithm_registry.c
 
 # IMPLICIT RULES CONVERSION OBJECTS
 OBJECTS=$(SRCS:.c=.o)
@@ -50,12 +54,16 @@ $(NAME): build $(OBJECTS)
 %.o : %.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 
-# Alternative: Use the static library instead of individual object files
-$(PS_PROG): $(NAME)
-	@$(CC) $(CFLAGS) $(D_TESTS)/micro_test.c -L. -l:push_swap.a -L./$(D_LIBFT) -lft -o $@
+# Build push_swap executable
+push_swap: $(NAME)
+	@$(CC) $(CFLAGS) $(D_SRCS)/push_swap.c -L. -l:push_swap.a -L./$(D_LIBFT) -lft -o push_swap
+
+# Build micro_test executable
+micro_test: $(NAME)
+	@$(CC) $(CFLAGS) $(D_TESTS)/micro_test.c -L. -l:push_swap.a -L./$(D_LIBFT) -lft -o micro_test
 
 clean:
-	@$(RM) $(OBJECTS) $(EXEC_OBJECTS) $(PS_PROG)
+	@$(RM) $(OBJECTS) push_swap micro_test
 
 MAKEFLAGS = --no-print-directory
 
@@ -64,8 +72,12 @@ build:
 
 fclean: clean
 	@$(call cmd_libs, $(D_LIBFT), fclean)
-	@$(RM) $(NAME) $(PS_PROG)
+	@$(RM) $(NAME) push_swap micro_test
 
 re: fclean all
 
-.PHONY: re fclean clean build all
+# Additional targets for testing
+test: micro_test
+	./micro_test 3 2 1
+
+.PHONY: re fclean clean build all test push_swap micro_test

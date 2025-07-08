@@ -1,48 +1,58 @@
 #include "ps.h"
 
 /**
- * @note RULES OF THUMB, if we need to modify the pointer variable that was passed in
- * , meaning making it point somehwere else, we use double pointer. 
- * If we just need to access modify waht it points to, use single pointer
+ * Swap the first two elements of the stack
+ * @param stack Array-based stack
  */
-static void swap(t_stack *source, int size_src)
+static void swap(t_stack *stack)
 {
     int temp;
 
-    if (!source || !source->next || size_src == 0)
+    if (!stack || stack->element_count < 2)
         return ;
-    temp = source->value;
-    source->value = source->next->value;
-    source->next->value = temp;
+    
+    // Swap elements at index 0 and 1
+    temp = stack->stack[0];
+    stack->stack[0] = stack->stack[1];
+    stack->stack[1] = temp;
 }
 
 void sa(t_ps *ps)
 {
-    swap(ps->stack_a, ps->size_a);
+    swap(&ps->stack_a);
+    
+    if (ps->recording)
+        append_operation(ps, "sa");
     
     if (is_recording())
         record_operation("sa");
-    else
+    else if (!ps->recording)
         ft_printf("sa\n");
 }
 
 void sb(t_ps *ps)
 {
-    swap(ps->stack_b, ps->size_b);
+    swap(&ps->stack_b);
+    
+    if (ps->recording)
+        append_operation(ps, "sb");
     
     if (is_recording())
         record_operation("sb");
-    else
+    else if (!ps->recording)
         ft_printf("sb\n");
 }
 
 void ss(t_ps *ps)
 {
-    swap(ps->stack_a, ps->size_a);
-    swap(ps->stack_b, ps->size_b);
+    swap(&ps->stack_a);
+    swap(&ps->stack_b);
+    
+    if (ps->recording)
+        append_operation(ps, "ss");
     
     if (is_recording())
         record_operation("ss");
-    else
+    else if (!ps->recording)
         ft_printf("ss\n");
 }
