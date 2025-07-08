@@ -3,17 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   visualizer.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 00:00:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/06/16 00:00:00 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/08 18:38:28 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VISUALIZER_H
 # define VISUALIZER_H
 
-# include "push_swap.h"
+# include <stdbool.h>
+
+// Forward declarations to avoid circular dependencies
+typedef struct s_ps t_ps;
+typedef struct s_stack t_stack;
 
 // Operation tracking structure
 typedef struct s_operation

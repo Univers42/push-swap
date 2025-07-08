@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 14:20:48 by ugerkens          #+#    #+#             */
-/*   Updated: 2025/06/16 00:00:00 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/08 21:19:38 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ typedef struct s_algo_state
 	t_algo_type		type;
 	t_algo_context	ctx;
 	void			(*sort_fn)(t_ps *);
+	void			(*init_fn)(t_ps *);
 	const char		*name;
 }	t_algo_state;
 
@@ -147,7 +148,6 @@ typedef struct s_op_buffer
 	int		capacity;
 }	t_op_buffer;
 
-typedef struct s_stack t_stack;
 // Main push_swap structure
 struct s_ps
 {
@@ -172,25 +172,6 @@ void		allocate_and_init_stack(t_ps *data, t_stack *stk, int capacity);
 void		populate_stack_with_ranks(t_ps *data, t_stack *stk, int size, char **arg);
 void		convert_numbers_to_ranks(int *numbers, int *rank, int size);
 
-// Basic operations
-void		pa(t_ps *data);
-void		pb(t_ps *data);
-void		sa(t_ps *data);
-void		sb(t_ps *data);
-void		ss(t_ps *data);
-void		ra(t_ps *data);
-void		rb(t_ps *data);
-void		rr(t_ps *data);
-void		rra(t_ps *data);
-void		rrb(t_ps *data);
-void		rrr(t_ps *data);
-
-// Operation management
-void		save_op(t_ps *data, t_op op);
-void		increment_op_count(t_ps *data);
-void		print_operations(t_list *head);
-const char	*op_to_string(t_op op);
-t_op		op_from(t_list *node);
 
 // Parser functions
 bool		verify_stack_is_sorted(t_ps *data);
@@ -224,20 +205,42 @@ void		queue_sort(t_ps *data);
 void		sort_three_simple(t_ps *data);
 int			find_min_value_in_stack(t_stack *stack);
 
+// Basic operations (now properly declared)
+void		pa(t_ps *data);
+void		pb(t_ps *data);
+void		sa(t_ps *data);
+void		sb(t_ps *data);
+void		ss(t_ps *data);
+void		ra(t_ps *data);
+void		rb(t_ps *data);
+void		rr(t_ps *data);
+void		rra(t_ps *data);
+void		rrb(t_ps *data);
+void		rrr(t_ps *data);
+
+// Math utilities
+void		ft_swap(void *a, void *b, size_t size);
+void		quick_sort_int(int *arr, int low, int high);
+int			ft_sqrt(int nb);
+int			k_find_min_position(t_ps *data, int size_a, int min_value);
+void		k_rotate_max_to_top_b(t_ps *data, int max_position, int size_b);
+void		k_rotate_min_to_top(t_ps *data, int min_pos, int size_a);
+void		k_find_max_in_stack_b(t_ps *data, int *max_value, int *max_position,
+				int size_b);
+
 // Optimization functions
 void		post_sort_optimization(t_ps *data);
 void		eliminate_neutral_op(t_ps *data);
 void		merge_op(t_ps *data);
 t_op		neutral_op(t_op op);
 void		remove_op_from_list(t_list **list, t_list *to_remove);
+bool		op_on_same_stack(t_op ref, t_op to_check);
 
-// Math utilities
-void		ft_swap(void *a, void *b, size_t size);
-void		quick_sort_int(int *arr, int low, int high);
-int			ft_sqrt(int nb);
-int	k_find_min_position(t_ps *data, int size_a, int min_value);
-void	k_rotate_max_to_top_b(t_ps *data, int max_position, int size_b);
-void	k_rotate_min_to_top(t_ps *data, int min_pos, int size_a);
-void	k_find_max_in_stack_b(t_ps *data, int *max_value, int *max_position,
-		int size_b);
+// OPERATION TRACKING AND UTILITIES
+void		save_op(t_ps *data, t_op op);
+void		increment_op_count(t_ps *data);
+void		print_operations(t_list *head);
+const char	*op_to_string(t_op op);
+t_op		op_from(t_list *node);
+
 #endif

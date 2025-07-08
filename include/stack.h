@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stack.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 20:56:27 by ugerkens          #+#    #+#             */
-/*   Updated: 2025/06/16 00:00:00 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/08 18:38:28 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,6 @@
 # define STACK_H
 
 # include "push_swap.h"
-
-// Forward compatibility layer for stack operations
-void		push(t_stack *src, t_stack *dest);
-void		r_rotate(t_stack *stk);
-void		rotate(t_stack *stk);
-void		swap(t_stack *stk);
-
-// Remove op from list
-void		remove_op(t_list *to_delete);
 
 // Math utilities (avoid circular dependency)
 void		quick_sort_int(int *arr, int low, int high);
@@ -60,8 +51,5 @@ void		display_operation_stats(t_ps *data);
 void		print_operations(t_list *head);
 const char	*op_to_string(t_op op);
 t_op		op_from(t_list *node);
-
-
-void		remove_op(t_list *to_delete);
 
 #endif

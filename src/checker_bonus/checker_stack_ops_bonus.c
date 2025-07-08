@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   checker_stack_ops.c                                :+:      :+:    :+:   */
+/*   checker_stack_ops_bonus.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 23:15:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/06/15 23:13:29 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/08 19:06:58 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,4 +89,12 @@ void	checker_r_rotate(t_stack *stk)
 		stk->top = new_top;
 		stk->bottom = new_bottom;
 	}
+}
+
+// Stub function for checker - operations are not tracked
+void	save_op(t_ps *data, t_op op)
+{
+	(void)data;
+	(void)op;
+	// Checker doesn't track operations, so this is intentionally empty
 }

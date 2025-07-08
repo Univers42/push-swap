@@ -3,17 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   visualizer_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 00:00:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/06/16 00:00:00 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/08 20:08:22 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "push_swap.h"
 #include "visualizer.h"
+#include "checker_bonus.h"
 #include <unistd.h>
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
+
 
 // Global test context
 static t_test_context g_test_context = {0};
@@ -50,7 +54,7 @@ void record_operation(const char *operation)
     if (!new_op)
         return;
     
-    new_op->name = strdup(operation);
+    new_op->name = ft_strdup(operation);
     new_op->next = NULL;
     
     if (!ctx->operations)
@@ -74,7 +78,8 @@ void cleanup_recorder(void)
     while (current)
     {
         t_operation *next = current->next;
-        free(current->name);
+        if (current->name)
+            free(current->name);
         free(current);
         current = next;
     }
@@ -102,6 +107,114 @@ int is_recording(void)
     return ctx->is_recording;
 }
 
+void print_both_array_stacks(t_stack *stack_a, t_stack *stack_b)
+{
+    // Calculate dynamic widths based on content
+    int max_width_a = 10;  // Minimum width
+    int max_width_b = 10;  // Minimum width
+    
+    // Find maximum width needed for stack A
+    for (int i = 0; i < stack_a->element_count; i++)
+    {
+        char temp[20];
+        sprintf(temp, "[%d]", get_stack_element_at_position(stack_a, i + 1));
+        int len = strlen(temp);
+        if (len > max_width_a)
+            max_width_a = len;
+    }
+    
+    // Find maximum width needed for stack B
+    for (int i = 0; i < stack_b->element_count; i++)
+    {
+        char temp[20];
+        sprintf(temp, "[%d]", get_stack_element_at_position(stack_b, i + 1));
+        int len = strlen(temp);
+        if (len > max_width_b)
+            max_width_b = len;
+    }
+    
+    // Add some padding
+    max_width_a += 2;
+    max_width_b += 2;
+    
+    int total_width = max_width_a + max_width_b + 8; // 8 for borders and spacing
+    
+    // Top border
+    ft_printf("%s+", BOLD);
+    for (int i = 0; i < total_width; i++)
+        ft_printf("=");
+    ft_printf("+%s\n", RESET);
+    
+    // Header
+    ft_printf("%s|%s  %s🅰 Stack A%s", BLUE, RESET, BRIGHT_GREEN, RESET);
+    int header_padding = max_width_a - 9;  // 9 is length of "🅰 Stack A"
+    for (int i = 0; i < header_padding; i++)
+        ft_printf(" ");
+    
+    ft_printf("%s🅱 Stack B%s", BRIGHT_MAGENTA, RESET);
+    header_padding = max_width_b - 9;  // 9 is length of "🅱 Stack B"
+    for (int i = 0; i < header_padding; i++)
+        ft_printf(" ");
+    ft_printf("  %s|%s\n", BLUE, RESET);
+    
+    // Separator
+    ft_printf("%s+", BLUE);
+    for (int i = 0; i < total_width; i++)
+        ft_printf("=");
+    ft_printf("+%s\n", RESET);
+    
+    // Stack contents
+    int max_elements = (stack_a->element_count > stack_b->element_count) ? 
+                       stack_a->element_count : stack_b->element_count;
+    
+    for (int i = 0; i < max_elements; i++)
+    {
+        ft_printf("%s|%s  ", BLUE, RESET);
+        
+        // Stack A element
+        if (i < stack_a->element_count)
+        {
+            int value = get_stack_element_at_position(stack_a, i + 1);
+            ft_printf("%s[%d]%s", BRIGHT_YELLOW, value, RESET);
+            char temp[20];
+            sprintf(temp, "[%d]", value);
+            int padding = max_width_a - strlen(temp);
+            for (int j = 0; j < padding; j++)
+                ft_printf(" ");
+        }
+        else
+        {
+            for (int j = 0; j < max_width_a; j++)
+                ft_printf(" ");
+        }
+        
+        // Stack B element
+        if (i < stack_b->element_count)
+        {
+            int value = get_stack_element_at_position(stack_b, i + 1);
+            ft_printf("%s[%d]%s", BRIGHT_MAGENTA, value, RESET);
+            char temp[20];
+            sprintf(temp, "[%d]", value);
+            int padding = max_width_b - strlen(temp);
+            for (int j = 0; j < padding; j++)
+                ft_printf(" ");
+        }
+        else
+        {
+            for (int j = 0; j < max_width_b; j++)
+                ft_printf(" ");
+        }
+        
+        ft_printf("  %s|%s\n", BLUE, RESET);
+    }
+    
+    // Bottom border
+    ft_printf("%s+", BLUE);
+    for (int i = 0; i < total_width; i++)
+        ft_printf("=");
+    ft_printf("+%s\n", RESET);
+}
+
 void show_frame(t_ps *ps, const char *operation)
 {
     t_test_context *ctx = get_test_context();
@@ -113,95 +226,17 @@ void show_frame(t_ps *ps, const char *operation)
     ft_printf("Size A: %d, Size B: %d\n", 
         ps->a.element_count, ps->b.element_count);
     if (ctx->delay_ms > 0)
-        usleep(ctx->delay_ms * 1000);
-}
-
-void print_both_array_stacks(t_stack *stack_a, t_stack *stack_b)
-{
-    int max_elements;
-    int i;
-
-    ft_printf("╔════════════╦════════════╗\n");
-    ft_printf("║  Stack A   ║  Stack B   ║\n");
-    ft_printf("╠════════════╬════════════╣\n");
-    
-    max_elements = stack_a->element_count;
-    if (stack_b->element_count > max_elements)
-        max_elements = stack_b->element_count;
-    
-    i = 0;
-    while (i < max_elements)
-    {
-        ft_printf("║ ");
-        if (i < stack_a->element_count)
-            ft_printf("%4d       ", get_stack_element_at_position(stack_a, i + 1));
-        else
-            ft_printf("           ");
-        ft_printf("║ ");
-        if (i < stack_b->element_count)
-            ft_printf("%4d       ", get_stack_element_at_position(stack_b, i + 1));
-        else
-            ft_printf("           ");
-        ft_printf("║\n");
-        i++;
-    }
-    ft_printf("╚════════════╩════════════╝\n");
+        usleep(ctx->delay_ms * 100);
 }
 
 void execute_operation_for_visual(t_ps *ps, const char *op)
 {
-    if (strcmp(op, "sa") == 0) sa(ps);
-    else if (strcmp(op, "sb") == 0) sb(ps);
-    else if (strcmp(op, "ss") == 0) ss(ps);
-    else if (strcmp(op, "pa") == 0) pa(ps);
-    else if (strcmp(op, "pb") == 0) pb(ps);
-    else if (strcmp(op, "ra") == 0) ra(ps);
-    else if (strcmp(op, "rb") == 0) rb(ps);
-    else if (strcmp(op, "rr") == 0) rr(ps);
-    else if (strcmp(op, "rra") == 0) rra(ps);
-    else if (strcmp(op, "rrb") == 0) rrb(ps);
-    else if (strcmp(op, "rrr") == 0) rrr(ps);
+    // Use checker operations instead of main operations
+    t_op operation = string_to_op(op);
+    if (operation != OP_NULL)
+        execute_checker_operation(ps, operation);
 }
-
-t_ps *create_ps_copy(t_ps *original)
-{
-    t_ps *copy = malloc(sizeof(t_ps));
-    if (!copy)
-        return NULL;
-    
-    // Initialize stacks
-    copy->a.stack = malloc(sizeof(int) * original->a.capacity);
-    copy->b.stack = malloc(sizeof(int) * original->b.capacity);
-    if (!copy->a.stack || !copy->b.stack)
-    {
-        if (copy->a.stack) free(copy->a.stack);
-        if (copy->b.stack) free(copy->b.stack);
-        free(copy);
-        return NULL;
-    }
-    
-    copy->a.capacity = original->a.capacity;
-    copy->b.capacity = original->b.capacity;
-    copy->a.top = original->a.top;
-    copy->b.top = original->b.top;
-    copy->a.bottom = original->a.bottom;
-    copy->b.bottom = original->b.bottom;
-    copy->a.element_count = original->a.element_count;
-    copy->b.element_count = original->b.element_count;
-    
-    // Copy stack data
-    for (int i = 0; i < original->a.capacity; i++)
-        copy->a.stack[i] = original->a.stack[i];
-    for (int i = 0; i < original->b.capacity; i++)
-        copy->b.stack[i] = original->b.stack[i];
-    
-    copy->total_size = original->total_size;
-    copy->recording = false;
-    copy->op_list = NULL;
-    copy->op_count = 0;
-    
-    return copy;
-}
+  
 
 void free_stack(t_stack *stack)
 {
@@ -214,22 +249,16 @@ void free_stack(t_stack *stack)
 
 bool is_sorted(t_stack *stack)
 {
+    int i;
+    
     if (stack->element_count <= 1)
         return true;
     
-    for (int i = 0; i < stack->element_count - 1; i++)
+    for (i = 0; i < stack->element_count - 1; i++)
     {
         if (get_stack_element_at_position(stack, i + 1) > 
             get_stack_element_at_position(stack, i + 2))
             return false;
     }
     return true;
-}
-
-void run_algorithm_with_visualization(t_ps *ps, void (*algorithm)(t_ps *))
-{
-    // Implementation would go here - simplified for compilation
-    (void)ps;
-    (void)algorithm;
-    ft_printf("Algorithm visualization not implemented yet\n");
 }

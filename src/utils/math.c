@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   math.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 00:00:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/06/16 00:00:00 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/08 14:56:41 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	ft_sqrt(int nb)
 	return (sqrt_val - 1);
 }
 
+//already have it normallly into the lib
 void	quick_sort_int(int *arr, int low, int high)
 {
 	int	pivot;

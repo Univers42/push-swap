@@ -3,301 +3,254 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+         #
+#    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/07/27 14:02:06 by ugerkens          #+#    #+#              #
-#    Updated: 2025/06/16 00:00:00 by dlesieur         ###   ########.fr        #
+#    Created: 2025/07/08 13:37:35 by codespace         #+#    #+#              #
+#    Updated: 2025/07/08 19:06:59 by codespace        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# ================================ VARIABLES ================================ #
+# DEFINES AND MACROS CONFIGURATIONS
+define cmd_build
+	$(MAKE) -C $(1) $(2)
+endef
 
-CC					=	gcc
-CFLAGS				=	-Wall -Wextra -Werror -Iinclude -g3 -I/libft -I/include/libft -I/include
+# COMMANDS AND FLAGS
+CC					=	cc
+CFLAGS				=	-Wall -Wextra -Werror -I./include -I./libft -g3 -O3
 RM					=	rm -rf
+AR					=	ar rcs
 
-# Program names
+# PROGRAM NAMES
 PUSH_SWAP			=	push_swap
 CHECKER				=	checker
+NAME				=	$(PUSH_SWAP)
 
-# Library configuration
-LIBFT_FILE			=	./libft/libft.a
-LIBS				=	$(LIBFT_FILE)
+# DIRECTORIES
+D_PROJECT			=	.
+D_LIBFT				=	$(D_PROJECT)/libft
+D_SRC				=	$(D_PROJECT)/src
+D_ALGORITHMS		=	$(D_SRC)/algorithms
+D_CHUNK				=	$(D_ALGORITHMS)/chunk
+D_GREEDY			=	$(D_ALGORITHMS)/greedy
+D_K					=	$(D_ALGORITHMS)/k
+D_LIS				=	$(D_ALGORITHMS)/lis
+D_RADIX				=	$(D_ALGORITHMS)/radix
+D_QUEUE				=	$(D_ALGORITHMS)/queue
+D_PERMUTATIONS		=	$(D_ALGORITHMS)/permutations
+D_CHECKER_BONUS		=	$(D_SRC)/checker_bonus
+D_OPERATIONS		=	$(D_SRC)/operations
+D_OPTIMIZATIONS		=	$(D_SRC)/optimizations
+D_PUSH_SWAP			=	$(D_SRC)/push_swap
+D_STACK				=	$(D_SRC)/stack
+D_UTILS				=	$(D_SRC)/utils
+D_PARSER			=	$(D_SRC)/parser
+D_ALG_HELPERS		=	$(D_SRC)/algorithm_helpers
 
-# Include directories
-INCLUDES			=	-I include -I .
+# SOURCE FILES
+CHUNK_SRCS			=	$(D_CHUNK)/chunk_sort.c \
+						$(D_CHUNK)/chunk_split.c \
+						$(D_CHUNK)/sort.c \
+						$(D_CHUNK)/helpers.c
 
-CFLAGS				+=	$(INCLUDES)
+GREEDY_SRCS			=	$(D_GREEDY)/greedy.c \
+						$(D_GREEDY)/execution.c \
+						$(D_GREEDY)/helpers.c \
+						$(D_GREEDY)/position.c \
+						$(D_GREEDY)/simple.c
 
-# ============================= SOURCE FILES =============================== #
+K_SRCS				=	$(D_K)/final.c \
+						$(D_K)/helpers.c \
+						$(D_K)/helpers2.c \
+						$(D_K)/rotation.c \
+						$(D_K)/sort.c
 
-# Find all C files recursively in src directory (excluding debug, bonus, and removed files)
-PUSH_SWAP_SRCS		=	$(shell find src -name "*.c" | grep -v checker_bonus | grep -v debug | grep -v singleton.c | grep -v replay.c | grep -v recorder.c | grep -v visualizer)
+LIS_SRCS			=	$(D_LIS)/rotation.c \
+						$(D_LIS)/sort.c \
+						$(D_LIS)/helpers.c \
+						$(D_LIS)/utils2.c
 
-CHECKER_SRCS		=	src/checker_bonus/checker_bonus.c \
-						src/checker_bonus/checker_init.c \
-						src/checker_bonus/checker_operations.c \
-						src/checker_bonus/checker_stack_ops.c \
-						src/checker_bonus/string_to_op.c \
-						src/stack/init_push_swap.c \
-						src/stack/convert_stack.c \
-						src/push_swap/parser.c \
-						src/push_swap/parser_utils.c \
-						src/push_swap/collector_data.c \
-						src/push_swap/op_utils.c \
-						src/utils/get.c \
-						src/utils/check.c \
-						src/utils/exit.c
+RADIX_SRCS			=	$(D_RADIX)/helpers.c \
+						$(D_RADIX)/radix.c
 
-# ================================ OBJECTS ================================== #
+QUEUE_SRCS			=	$(D_QUEUE)/queue_sort.c
 
-# Object directories
+PERM_SRCS			=	$(D_PERMUTATIONS)/easy_perm.c \
+						$(D_PERMUTATIONS)/one_perm.c \
+						$(D_PERMUTATIONS)/three_perm.c \
+						$(D_PERMUTATIONS)/two_perm.c
+
+OPERATIONS_SRCS		=	$(D_OPERATIONS)/push.c \
+						$(D_OPERATIONS)/rotate.c \
+						$(D_OPERATIONS)/rrotate.c \
+						$(D_OPERATIONS)/swap.c
+
+OPTIMIZATIONS_SRCS	=	$(D_OPTIMIZATIONS)/fsm.c \
+						$(D_OPTIMIZATIONS)/fusops.c \
+						$(D_OPTIMIZATIONS)/redox.c \
+						$(D_OPTIMIZATIONS)/remops.c
+
+STACK_SRCS			=	$(D_STACK)/cv_stack.c
+
+UTILS_SRCS			=	$(D_UTILS)/check.c \
+						$(D_UTILS)/exit.c \
+						$(D_UTILS)/get.c \
+						$(D_UTILS)/math.c
+
+PUSH_SWAP_SRCS		=	$(D_PUSH_SWAP)/main.c \
+						$(D_PUSH_SWAP)/helpers.c \
+						$(D_PUSH_SWAP)/init.c \
+						$(D_PUSH_SWAP)/unit_ctrl.c \
+						$(D_PUSH_SWAP)/goinfre.c
+
+PARSER_SRCS			=	$(D_PARSER)/helpers.c \
+						$(D_PARSER)/parser.c
+
+ALG_HELPERS_SRCS	=	$(D_ALG_HELPERS)/chunk_utils.c \
+						$(D_ALG_HELPERS)/move.c
+
+# COMMON SOURCES (shared by all algorithms - NO algorithm-specific files)
+COMMON_SRCS			=	$(OPERATIONS_SRCS) \
+						$(OPTIMIZATIONS_SRCS) \
+						$(STACK_SRCS) \
+						$(UTILS_SRCS) \
+						$(PUSH_SWAP_SRCS) \
+						$(PARSER_SRCS) \
+						$(ALG_HELPERS_SRCS) \
+						$(PERM_SRCS)
+
+# ALGORITHM-SPECIFIC BUILDS (include ALL algorithms for proper linking)
+CHUNK_ALL_SRCS		=	$(COMMON_SRCS) $(CHUNK_SRCS) $(GREEDY_SRCS) $(K_SRCS) $(LIS_SRCS) $(RADIX_SRCS) $(QUEUE_SRCS)
+GREEDY_ALL_SRCS		=	$(COMMON_SRCS) $(GREEDY_SRCS) $(CHUNK_SRCS) $(K_SRCS) $(LIS_SRCS) $(RADIX_SRCS) $(QUEUE_SRCS)
+K_ALL_SRCS			=	$(COMMON_SRCS) $(K_SRCS) $(CHUNK_SRCS) $(GREEDY_SRCS) $(LIS_SRCS) $(RADIX_SRCS) $(QUEUE_SRCS)
+LIS_ALL_SRCS		=	$(COMMON_SRCS) $(LIS_SRCS) $(CHUNK_SRCS) $(GREEDY_SRCS) $(K_SRCS) $(RADIX_SRCS) $(QUEUE_SRCS)
+RADIX_ALL_SRCS		=	$(COMMON_SRCS) $(RADIX_SRCS) $(CHUNK_SRCS) $(GREEDY_SRCS) $(K_SRCS) $(LIS_SRCS) $(QUEUE_SRCS)
+QUEUE_ALL_SRCS		=	$(COMMON_SRCS) $(QUEUE_SRCS) $(CHUNK_SRCS) $(GREEDY_SRCS) $(K_SRCS) $(LIS_SRCS) $(RADIX_SRCS)
+
+# BONUS SOURCES
+CHECKER_SRCS		=	$(D_CHECKER_BONUS)/checker_bonus.c \
+						$(D_CHECKER_BONUS)/init_bonus.c \
+						$(D_CHECKER_BONUS)/ops_bonus.c \
+						$(D_CHECKER_BONUS)/op_wrap_bonus.c \
+						$(D_CHECKER_BONUS)/ops_wrap2_bonus.c \
+						$(D_CHECKER_BONUS)/checker_stack_ops_bonus.c \
+						$(D_CHECKER_BONUS)/strop_bonus.c \
+						$(D_CHECKER_BONUS)/parser_bonus.c \
+						$(D_CHECKER_BONUS)/replay_bonus.c \
+						$(D_CHECKER_BONUS)/singleton_bonus.c \
+						$(D_STACK)/cv_stack.c \
+						$(D_UTILS)/check.c \
+						$(D_UTILS)/exit.c \
+						$(D_UTILS)/get.c \
+						$(D_UTILS)/math.c \
+						$(D_PARSER)/helpers.c
+
+# OBJECT FILES
 OBJ_DIR				=	obj
+CHUNK_OBJS			=	$(CHUNK_ALL_SRCS:%.c=$(OBJ_DIR)/%.o)
+GREEDY_OBJS			=	$(GREEDY_ALL_SRCS:%.c=$(OBJ_DIR)/%.o)
+K_OBJS				=	$(K_ALL_SRCS:%.c=$(OBJ_DIR)/%.o)
+LIS_OBJS			=	$(LIS_ALL_SRCS:%.c=$(OBJ_DIR)/%.o)
+RADIX_OBJS			=	$(RADIX_ALL_SRCS:%.c=$(OBJ_DIR)/%.o)
+QUEUE_OBJS			=	$(QUEUE_ALL_SRCS:%.c=$(OBJ_DIR)/%.o)
+CHECKER_OBJS		=	$(CHECKER_SRCS:%.c=$(OBJ_DIR)/%.o)
 
-# Object files with proper source mapping
-PUSH_SWAP_OBJS		=	$(PUSH_SWAP_SRCS:src/%.c=$(OBJ_DIR)/%.o)
-CHECKER_OBJS		=	$(CHECKER_SRCS:src/%.c=$(OBJ_DIR)/%.o)
+# DEFAULT TARGET (chunk algorithm)
+all: build_libft $(PUSH_SWAP)
 
-# Header dependencies
-HEADERS				=	$(shell find include -name "*.h")
+# Main targets
+$(PUSH_SWAP): $(CHUNK_OBJS)
+	$(CC) $(CFLAGS) $(CHUNK_OBJS) -L$(D_LIBFT) -lft -o $(PUSH_SWAP)
 
-# ================================= RULES =================================== #
+chunk: build_libft
+	$(CC) $(CFLAGS) -DALGORITHM=ALGO_CHUNK $(CHUNK_ALL_SRCS) -L$(D_LIBFT) -lft -o $(PUSH_SWAP)
 
-.PHONY: all clean fclean re bonus both test chunk greedy k_sort radix lis queue help
+greedy: build_libft
+	$(CC) $(CFLAGS) -DALGORITHM=ALGO_GREEDY $(GREEDY_ALL_SRCS) -L$(D_LIBFT) -lft -o $(PUSH_SWAP)
 
-# Default target
-all: $(PUSH_SWAP)
+k_sort: build_libft
+	$(CC) $(CFLAGS) -DALGORITHM=ALGO_K_SORT $(K_ALL_SRCS) -L$(D_LIBFT) -lft -o $(PUSH_SWAP)
+
+lis: build_libft
+	$(CC) $(CFLAGS) -DALGORITHM=ALGO_LIS $(LIS_ALL_SRCS) -L$(D_LIBFT) -lft -o $(PUSH_SWAP)
+
+radix: build_libft
+	$(CC) $(CFLAGS) -DALGORITHM=ALGO_RADIX $(RADIX_ALL_SRCS) -L$(D_LIBFT) -lft -o $(PUSH_SWAP)
+
+queue: build_libft
+	$(CC) $(CFLAGS) -DALGORITHM=ALGO_QUEUE $(QUEUE_ALL_SRCS) -L$(D_LIBFT) -lft -o $(PUSH_SWAP)
+
+# Debug versions
+chunk_debug: build_libft
+	$(CC) $(CFLAGS) -DALGORITHM=ALGO_CHUNK -DDEBUG=1 $(CHUNK_ALL_SRCS) -L$(D_LIBFT) -lft -o $(PUSH_SWAP)
+
+greedy_debug: build_libft
+	$(CC) $(CFLAGS) -DALGORITHM=ALGO_GREEDY -DDEBUG=1 $(GREEDY_ALL_SRCS) -L$(D_LIBFT) -lft -o $(PUSH_SWAP)
+
+k_sort_debug: build_libft
+	$(CC) $(CFLAGS) -DALGORITHM=ALGO_K_SORT -DDEBUG=1 $(K_ALL_SRCS) -L$(D_LIBFT) -lft -o $(PUSH_SWAP)
+
+lis_debug: build_libft
+	$(CC) $(CFLAGS) -DALGORITHM=ALGO_LIS -DDEBUG=1 $(LIS_ALL_SRCS) -L$(D_LIBFT) -lft -o $(PUSH_SWAP)
+
+radix_debug: build_libft
+	$(CC) $(CFLAGS) -DALGORITHM=ALGO_RADIX -DDEBUG=1 $(RADIX_ALL_SRCS) -L$(D_LIBFT) -lft -o $(PUSH_SWAP)
+
+queue_debug: build_libft
+	$(CC) $(CFLAGS) -DALGORITHM=ALGO_QUEUE -DDEBUG=1 $(QUEUE_ALL_SRCS) -L$(D_LIBFT) -lft -o $(PUSH_SWAP)
 
 # Bonus target
-bonus: $(CHECKER)
+bonus: build_libft $(CHECKER)
 
-# Both programs
-both: $(PUSH_SWAP) $(CHECKER)
+$(CHECKER): $(CHECKER_OBJS)
+	$(CC) $(CFLAGS) $(CHECKER_OBJS) -L$(D_LIBFT) -lft -o $(CHECKER)
 
-# Push swap program
-$(PUSH_SWAP): $(LIBS) $(PUSH_SWAP_OBJS)
-	@echo "🔗 Linking $(PUSH_SWAP)..."
-	@$(CC) $(CFLAGS) $(PUSH_SWAP_OBJS) $(LIBS) -o $@
-	@echo "✅ $(PUSH_SWAP) compiled successfully! 🎉"
+# Visualization versions
+visualize: build_libft
+	$(CC) $(CFLAGS) -DALGORITHM=ALGO_CHUNK -DVISUALIZE=1 $(CHUNK_ALL_SRCS) $(D_CHECKER_BONUS)/visualizer_bonus.c -L$(D_LIBFT) -lft -o $(PUSH_SWAP)
 
-# Checker program
-$(CHECKER): $(LIBS) $(CHECKER_OBJS)
-	@echo "🔗 Linking $(CHECKER)..."
-	@$(CC) $(CFLAGS) $(CHECKER_OBJS) $(LIBS) -o $@
-	@echo "✅ $(CHECKER) compiled successfully! 🎉"
+checker_visual: build_libft
+	$(CC) $(CFLAGS) -DVISUALIZE=1 $(CHECKER_SRCS) $(D_CHECKER_BONUS)/visualizer_bonus.c -L$(D_LIBFT) -lft -o $(CHECKER)
 
 # Object compilation rule
-$(OBJ_DIR)/%.o: src/%.c $(HEADERS)
+$(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)
-	@echo "🔨 Compiling $<..."
-	@$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
-# ============================== LIBRARIES ================================== #
+# Build libft
+build_libft:
+	$(call cmd_build, $(D_LIBFT), all)
 
-# Build libraries
-$(LIBFT_FILE):
-	@if [ -f "$(LIBFT_DIR)/Makefile" ]; then \
-		echo "📚 Building libft..."; \
-		$(MAKE) --no-print-directory -C $(LIBFT_DIR); \
-	else \
-		echo "No Makefile found in $(LIBFT_DIR), skipping libft build."; \
-	fi
-
-# ============================== CLEANUP ================================== #
-
-# Clean object files
+# Clean targets
 clean:
-	@echo "🧹 Cleaning object files..."
-	@$(RM) $(OBJ_DIR)
+	$(RM) $(OBJ_DIR)
 
-# Full clean
 fclean: clean
-	@echo "🗑️  Removing executables..."
-	@$(RM) $(PUSH_SWAP) $(CHECKER)
+	$(RM) $(PUSH_SWAP) $(CHECKER)
+	$(call cmd_build, $(D_LIBFT), fclean)
 
-# Rebuild everything
 re: fclean all
 
-# ============================== ALGORITHM MODES ============================== #
+# Utility targets
+test: $(PUSH_SWAP)
+	@echo "Testing with small array: 3 1 2"
+	@./$(PUSH_SWAP) 3 1 2
 
-# Algorithm compilation modes
-chunk: CFLAGS += -DALGORITHM=ALGO_CHUNK
-chunk: re
-
-greedy: CFLAGS += -DALGORITHM=ALGO_GREEDY
-greedy: re
-
-k_sort: CFLAGS += -DALGORITHM=ALGO_K_SORT
-k_sort: re
-
-radix: CFLAGS += -DALGORITHM=ALGO_RADIX
-radix: re
-
-lis: CFLAGS += -DALGORITHM=ALGO_LIS
-lis: re
-
-queue: CFLAGS += -DALGORITHM=ALGO_QUEUE
-queue: re
-
-# ============================== VISUALIZATION MODE ============================== #
-
-# Visualization mode
-visual: CFLAGS += -DVISUALIZE=1
-visual: re
-
-# Algorithm + Visualization modes
-chunk_visual: CFLAGS += -DALGORITHM=ALGO_CHUNK -DVISUALIZE=1
-chunk_visual: re
-
-greedy_visual: CFLAGS += -DALGORITHM=ALGO_GREEDY -DVISUALIZE=1
-greedy_visual: re
-
-k_sort_visual: CFLAGS += -DALGORITHM=ALGO_K_SORT -DVISUALIZE=1
-k_sort_visual: re
-
-radix_visual: CFLAGS += -DALGORITHM=ALGO_RADIX -DVISUALIZE=1
-radix_visual: re
-
-lis_visual: CFLAGS += -DALGORITHM=ALGO_LIS -DVISUALIZE=1
-lis_visual: re
-
-queue_visual: CFLAGS += -DALGORITHM=ALGO_QUEUE -DVISUALIZE=1
-queue_visual: re
-
-# Checker with visualization
-checker_visual: CFLAGS += -DVISUALIZE=1
-checker_visual: $(CHECKER)
-	@echo "✅ Checker with visualization enabled!"
-
-# ================================ TESTING ================================== #
-
-# Run tests
-test: $(PUSH_SWAP) $(CHECKER)
-	@if [ -f "test_push_swap.sh" ]; then \
-		echo "🧪 Running tests..."; \
-		chmod +x test_push_swap.sh; \
-		./test_push_swap.sh; \
-	else \
-		echo "❌ Test script not found"; \
-	fi
-
-# ============================== UTILITIES ================================== #
-
-# Show help
 help:
-	@echo "🎯 Available targets:"
-	@echo "   all          - Build push_swap (default)"
-	@echo "   bonus        - Build checker"
-	@echo "   both         - Build both programs"
-	@echo "   clean        - Remove object files"
-	@echo "   fclean       - Remove object files and executables"
-	@echo "   re           - Rebuild everything"
-	@echo "   chunk        - Build with chunk algorithm"
-	@echo "   greedy       - Build with greedy algorithm"
-	@echo "   k_sort       - Build with k-sort algorithm"
-	@echo "   radix        - Build with radix algorithm"
-	@echo "   lis          - Build with LIS algorithm"
-	@echo "   queue        - Build with queue algorithm"
-	@echo "   test         - Run test suite"
-	@echo "   help         - Show this help message"
-	@if [ -f "test_checker.sh" ]; then \
-		echo "🧪 Running checker testing suite..."; \
-		chmod +x test_checker.sh; \
-		./test_checker.sh; \
-	else \
-		echo "❌ Checker test script not found"; \
-	fi
+	@echo "Available targets:"
+	@echo "  all          - Build default (chunk algorithm)"
+	@echo "  chunk        - Build with chunk algorithm"
+	@echo "  greedy       - Build with greedy algorithm"
+	@echo "  k_sort       - Build with k-sort algorithm"
+	@echo "  lis          - Build with LIS algorithm"
+	@echo "  radix        - Build with radix algorithm"
+	@echo "  queue        - Build with queue algorithm"
+	@echo "  bonus        - Build checker"
+	@echo "  *_debug      - Build debug versions"
+	@echo "  visualize    - Build with visualization"
+	@echo "  test         - Quick test"
+	@echo "  clean        - Remove object files"
+	@echo "  fclean       - Remove all built files"
+	@echo "  re           - Rebuild everything"
 
-# Run memory leak tests
-test-leaks: $(PUSH_SWAP)
-	@if [ -f "leak_test.sh" ]; then \
-		echo "🧪 Running leak tests..."; \
-		chmod +x leak_test.sh; \
-		./leak_test.sh; \
-	else \
-		echo "❌ Leak test script not found"; \
-	fi
-
-# ============================== UTILITIES ================================== #
-
-# Show help
-help:
-	@echo "🎯 Available targets:"
-	@echo "   all          - Build push_swap (default)"
-	@echo "   bonus        - Build checker"
-	@echo "   both         - Build both programs"
-	@echo "   clean        - Remove object files"
-	@echo "   fclean       - Remove object files and executables"
-	@echo "   re           - Rebuild everything"
-	@echo "   debug        - Build with debug symbols and sanitizer"
-	@echo "   test         - Run basic test suite"
-	@echo "   test-algos   - Run comprehensive algorithm testing suite"
-	@echo "   test-checker - Run comprehensive checker testing suite"
-	@echo "   test-leaks   - Run memory leak tests"
-	@echo "   list-sources - Show source files that will be compiled"
-	@echo "   info         - Show compilation information"
-	@echo "   help         - Show this help message"
-	@echo "   checker_visual - Build checker with visualization"
-
-# ============================== ALGORITHM MODES ============================== #
-
-# Algorithm-only modes (evaluation - just print operations)
-chunk: CFLAGS += "-DMODE=0"
-chunk: re
-	@echo "📦 Chunk algorithm (evaluation mode)"
-
-greedy: CFLAGS += "-DMODE=1"
-greedy: re
-	@echo "🧠 Greedy algorithm (evaluation mode)"
-
-k_sort: CFLAGS += "-DMODE=4"
-k_sort: re
-	@echo "📊 K-Sort algorithm (evaluation mode)"
-
-radix: CFLAGS += "-DMODE=8"
-radix: re
-	@echo "🔢 Radix algorithm (evaluation mode)"
-
-lis: CFLAGS += "-DMODE=12"
-lis: re
-	@echo "🔗 LIS algorithm (evaluation mode)"
-
-queue: CFLAGS += "-DMODE=5"
-queue: re
-	@echo "🚛 Queue algorithm (evaluation mode)"
-
-# Algorithm + Debug modes (simple debug ON/OFF)
-chunk_debug: CFLAGS += "-DMODE=16"
-chunk_debug: re
-	@echo "📦 Chunk algorithm + debug mode"
-
-greedy_debug: CFLAGS += "-DMODE=17"
-greedy_debug: re
-	@echo "🧠 Greedy algorithm + debug mode"
-
-k_sort_debug: CFLAGS += "-DMODE=20"
-k_sort_debug: re
-	@echo "📊 K-Sort algorithm + debug mode"
-
-radix_debug: CFLAGS += "-DMODE=24"
-radix_debug: re
-	@echo "🔢 Radix algorithm + debug mode"
-
-lis_debug: CFLAGS += "-DMODE=28"
-lis_debug: re
-	@echo "🔗 LIS algorithm + debug mode"
-
-queue_debug: CFLAGS += "-DMODE=21"
-queue_debug: re
-	@echo "🚛 Queue algorithm + debug mode"
-
-# Default modes
-default: CFLAGS += "-DMODE=0"
-default: re
-	@echo "📦 Default mode (chunk + evaluation)"
-
-debug: CFLAGS += "-DMODE=16"
-debug: re
-	@echo "🐛 Debug mode (chunk + debug)"
-	@echo "🐛 Debug mode (chunk + debug)"
-	@echo "🐛 Debug mode (chunk + debug)"
+.PHONY: all chunk greedy k_sort lis radix queue bonus clean fclean re build_libft test help visualize checker_visual chunk_debug greedy_debug k_sort_debug lis_debug radix_debug queue_debug

@@ -3,16 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   push.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 21:08:41 by ugerkens          #+#    #+#             */
-/*   Updated: 2025/06/14 23:55:22 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/08 19:11:45 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "stack.h"
 
-void	push(t_stack *src, t_stack *dest)
+static void	push(t_stack *src, t_stack *dest);
+
+void	pa(t_ps *data)
+{
+	push(&data->b, &data->a);
+	save_op(data, OP_PA);
+}
+
+void	pb(t_ps *data)
+{
+	push(&data->a, &data->b);
+	save_op(data, OP_PB);
+}
+
+static void	push(t_stack *src, t_stack *dest)
 {
 	int	new_dest_top;
 	int	new_src_top;
@@ -30,16 +44,4 @@ void	push(t_stack *src, t_stack *dest)
 	src->element_count--;
 	if (dest->element_count == 1)
 		dest->bottom = new_dest_top;
-}
-
-void	pa(t_ps *data)
-{
-	push(&data->b, &data->a);
-	save_op(data, OP_PA);
-}
-
-void	pb(t_ps *data)
-{
-	push(&data->a, &data->b);
-	save_op(data, OP_PB);
 }

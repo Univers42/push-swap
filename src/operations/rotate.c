@@ -3,16 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   rotate.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 21:08:52 by ugerkens          #+#    #+#             */
-/*   Updated: 2025/06/14 23:55:21 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/08 14:52:38 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "stack.h"
 
-void	rotate(t_stack *stk)
+static void	rotate(t_stack *stk);
+
+void	ra(t_ps *data)
+{
+	rotate(&data->a);
+	save_op(data, OP_RA);
+}
+
+void	rb(t_ps *data)
+{
+	rotate(&data->b);
+	save_op(data, OP_RB);
+}
+
+void	rr(t_ps *data)
+{
+	rotate(&data->a);
+	rotate(&data->b);
+	save_op(data, OP_RR);
+}
+
+static void	rotate(t_stack *stk)
 {
 	int	new_top;
 	int	new_bottom;
@@ -33,23 +54,4 @@ void	rotate(t_stack *stk)
 		stk->bottom = new_bottom;
 		stk->top = new_top;
 	}
-}
-
-void	ra(t_ps *data)
-{
-	rotate(&data->a);
-	save_op(data, OP_RA);
-}
-
-void	rb(t_ps *data)
-{
-	rotate(&data->b);
-	save_op(data, OP_RB);
-}
-
-void	rr(t_ps *data)
-{
-	rotate(&data->a);
-	rotate(&data->b);
-	save_op(data, OP_RR);
 }

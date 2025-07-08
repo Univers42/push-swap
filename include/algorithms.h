@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   algorithms.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 17:13:26 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/06/16 00:00:00 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/08 18:38:25 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,16 @@
 # define ALGORITHMS_H
 
 # include "push_swap.h"
+
+# if VISUALIZE == 1
+#  include "visualizer.h"
+# endif
+
+// Stub implementation when visualization is disabled
+typedef struct s_dummy_context
+{
+	int	dummy;
+}	t_dummy_context;
 
 // Chunk-based sorting
 void		rec_chunk_sort(t_ps *data, t_chunk *to_sort);
@@ -31,7 +41,7 @@ void		chunk_to_the_top(t_ps *data, t_chunk *to_sort);
 
 // Pattern recognition
 void		easy_sort(t_ps *data, t_chunk *to_sort);
-void		split_max_reduction(t_ps *data, t_chunk *max);
+void		redox(t_ps *data, t_chunk *max);
 bool		a_partly_sort(t_ps *data, int from);
 bool		is_consecutive(int a, int b, int c, int d);
 
@@ -158,5 +168,14 @@ void		queue_sort(t_ps *data);
 
 // Main utilities
 void		print_algorithm_name(int mode);
+
+// Algorithm implementations
+void		chunk_sort(t_ps *data);
+void		greedy_sort(t_ps *data);
+void		k_sort(t_ps *data);
+void		radix_sort(t_ps *data);
+void		lis_sort(t_ps *data);
+void		queue_sort(t_ps *data);
+
 
 #endif
