@@ -6,35 +6,35 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 23:22:18 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/06/15 23:22:20 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/06/16 00:00:00 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include "debugger.h"
 
-#ifndef MODE
-# define MODE MODE_DEFAULT
+#ifndef ALGORITHM
+# define ALGORITHM ALGO_CHUNK
 #endif
-
-static void	main_process_sorting(t_ps *data, int current_mode);
 
 int	main(int argc, char *argv[])
 {
-	t_ps		data;
-	int			current_mode;
+	t_ps	data;
 
 	ft_memset(&data, 0, sizeof(t_ps));
-	current_mode = MODE;
-	debug_init(current_mode);
 	initialize_push_swap_data(&data, argc, argv);
-	main_process_sorting(&data, current_mode);
+	data.total_size = get_current_stack_size(&data.a);
+	
+	if (!verify_stack_is_sorted(&data))
+	{
+		select_algorithm(&data, ALGORITHM);
+		execute_algorithm(&data);
+		post_sort_optimization(&data);
+		print_operations(data.op_list);
+	}
+	
 	release_allocated_memory(&data);
-	exit(EXIT_SUCCESS);
+	return (0);
 }
-
-static void	main_process_sorting(t_ps *data, int current_mode)
-{
 	const char	*sorted_status;
 
 	if (has_debug_mode(current_mode))

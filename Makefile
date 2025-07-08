@@ -6,7 +6,7 @@
 #    By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/27 14:02:06 by ugerkens          #+#    #+#              #
-#    Updated: 2025/06/15 23:13:30 by dlesieur         ###   ########.fr        #
+#    Updated: 2025/06/16 00:00:00 by dlesieur         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,8 +31,9 @@ CFLAGS				+=	$(INCLUDES)
 
 # ============================= SOURCE FILES =============================== #
 
-# Find all C files recursively in src directory (including debugger)
-PUSH_SWAP_SRCS		=	$(shell find src -name "*.c" | grep -v checker_bonus | grep -v debug_stub.c | grep -v "src/debug/")
+# Find all C files recursively in src directory (excluding debug and bonus)
+PUSH_SWAP_SRCS		=	$(shell find src -name "*.c" | grep -v checker_bonus | grep -v debug)
+
 CHECKER_SRCS		=	src/checker_bonus/checker_bonus.c \
 						src/checker_bonus/checker_init.c \
 						src/checker_bonus/checker_operations.c \
@@ -62,7 +63,7 @@ HEADERS				=	$(shell find include -name "*.h")
 
 # ================================= RULES =================================== #
 
-.PHONY: all clean fclean re bonus lib_clean lib_fclean debug test test-algos test-leaks
+.PHONY: all clean fclean re bonus test
 
 # Default target
 all: $(PUSH_SWAP)
@@ -85,7 +86,7 @@ $(CHECKER): $(LIBS) $(CHECKER_OBJS)
 	@$(CC) $(CFLAGS) $(CHECKER_OBJS) $(LIBS) -o $@
 	@echo "✅ $(CHECKER) compiled successfully! 🎉"
 
-# Object compilation rule - this is the key fix
+# Object compilation rule
 $(OBJ_DIR)/%.o: src/%.c $(HEADERS)
 	@mkdir -p $(dir $@)
 	@echo "🔨 Compiling $<..."
@@ -100,29 +101,6 @@ $(LIBFT_FILE):
 		$(MAKE) --no-print-directory -C $(LIBFT_DIR); \
 	else \
 		echo "No Makefile found in $(LIBFT_DIR), skipping libft build."; \
-	fi
-
-# Library cleanup
-lib_clean:
-	@if [ -f "$(LIBFT_DIR)/Makefile" ]; then \
-		if grep -q '^clean:' $(LIBFT_DIR)/Makefile; then \
-			$(MAKE) --no-print-directory -C $(LIBFT_DIR) clean; \
-		else \
-			echo "No 'clean' target in $(LIBFT_DIR)/Makefile, skipping."; \
-		fi \
-	else \
-		echo "No Makefile found in $(LIBFT_DIR), skipping lib_clean."; \
-	fi
-
-lib_fclean:
-	@if [ -f "$(LIBFT_DIR)/Makefile" ]; then \
-		if grep -q '^fclean:' $(LIBFT_DIR)/Makefile; then \
-			$(MAKE) --no-print-directory -C $(LIBFT_DIR) fclean; \
-		else \
-			echo "No 'fclean' target in $(LIBFT_DIR)/Makefile, skipping."; \
-		fi \
-	else \
-		echo "No Makefile found in $(LIBFT_DIR), skipping lib_fclean."; \
 	fi
 
 # ============================== CLEANUP ================================== #
@@ -140,23 +118,25 @@ fclean: clean
 # Rebuild everything
 re: fclean all
 
-# =============================== DEBUGGING ================================= #
+# ============================== ALGORITHM MODES ============================== #
 
-# Debug build
-debug: CFLAGS += -g3 -DDEBUG -fsanitize=address
-debug: re
+# Algorithm compilation modes
+chunk: CFLAGS += -DALGORITHM=ALGO_CHUNK
+chunk: re
+
+greedy: CFLAGS += -DALGORITHM=ALGO_GREEDY
+greedy: re
+
+k_sort: CFLAGS += -DALGORITHM=ALGO_K_SORT
+k_sort: re
+
+radix: CFLAGS += -DALGORITHM=ALGO_RADIX
+radix: re
+
+lis: CFLAGS += -DALGORITHM=ALGO_LIS
+lis: re
 
 # ================================ TESTING ================================== #
-
-# Run algorithm testing suite
-test-algos: $(PUSH_SWAP)
-	@if [ -f "test_algorithms.sh" ]; then \
-		echo "🧪 Running algorithm testing suite..."; \
-		chmod +x test_algorithms.sh; \
-		./test_algorithms.sh; \
-	else \
-		echo "❌ Algorithm test script not found"; \
-	fi
 
 # Run tests
 test: $(PUSH_SWAP) $(CHECKER)
@@ -166,6 +146,26 @@ test: $(PUSH_SWAP) $(CHECKER)
 		./test_push_swap.sh; \
 	else \
 		echo "❌ Test script not found"; \
+	fi
+
+# ============================== UTILITIES ================================== #
+
+# Show help
+help:
+	@echo "🎯 Available targets:"
+	@echo "   all          - Build push_swap (default)"
+	@echo "   bonus        - Build checker"
+	@echo "   both         - Build both programs"
+	@echo "   clean        - Remove object files"
+	@echo "   fclean       - Remove object files and executables"
+	@echo "   re           - Rebuild everything"
+	@echo "   chunk        - Build with chunk algorithm"
+	@echo "   greedy       - Build with greedy algorithm"
+	@echo "   k_sort       - Build with k-sort algorithm"
+	@echo "   radix        - Build with radix algorithm"
+	@echo "   lis          - Build with LIS algorithm"
+	@echo "   test         - Run test suite"
+	@echo "   help         - Show this help message"
 	fi
 
 # Run checker testing suite

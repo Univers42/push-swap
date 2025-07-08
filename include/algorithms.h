@@ -6,66 +6,18 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 17:13:26 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/06/15 22:57:34 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/06/16 00:00:00 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ALGORITHMS_H
 # define ALGORITHMS_H
 
-# include "stack_core.h"
-# include "stack_operations.h"
-
-typedef enum e_loc
-{
-	TOP_A,
-	BOTTOM_A,
-	TOP_B,
-	BOTTOM_B
-}			t_loc;
-
-typedef struct s_chunk
-{
-	t_loc	loc;
-	int		size;
-}			t_chunk;
-
-typedef struct s_split_dest
-{
-	t_chunk	min;
-	t_chunk	mid;
-	t_chunk	max;
-}			t_split_dest;
-
-typedef struct s_turk_node
-{
-	int	value;
-	int	index;
-	int	target_pos;
-	int	cost_a;
-	int	cost_b;
-	int	total_cost;
-}	t_turk_node;
-
-typedef struct s_greedy_node
-{
-	int	value;
-	int	index;
-	int	target_pos;
-	int	cost_a;
-	int	cost_b;
-	int	total_cost;
-}	t_greedy_node;
-
-// Main sorting interface
-void		sort(t_ps *data);
+# include "push_swap.h"
 
 // Chunk-based sorting
-void		chunk_sort(t_ps *data);
 void		rec_chunk_sort(t_ps *data, t_chunk *to_sort);
 void		chunk_split(t_ps *data, t_chunk *to_split, t_split_dest *dest);
-
-// Small array optimizations
 void		sort_one(t_ps *data, t_chunk *to_sort);
 void		sort_two(t_ps *data, t_chunk *to_sort);
 void		sort_three(t_ps *data, t_chunk *to_sort);
@@ -74,8 +26,56 @@ void		sort_three(t_ps *data, t_chunk *to_sort);
 int			chunk_value(t_ps *data, t_chunk *chunk, int n);
 int			chunk_max_value(t_ps *data, t_chunk *chunk);
 t_stack		*loc_to_stack(t_ps *data, t_loc loc);
+int			move_from_to(t_ps *data, t_loc from, t_loc to);
+void		chunk_to_the_top(t_ps *data, t_chunk *to_sort);
 
-// Element movement
+// Pattern recognition
+void		easy_sort(t_ps *data, t_chunk *to_sort);
+void		split_max_reduction(t_ps *data, t_chunk *max);
+bool		a_partly_sort(t_ps *data, int from);
+bool		is_consecutive(int a, int b, int c, int d);
+
+// Greedy algorithm helpers
+void		greedy_execute_move(t_ps *data, t_greedy_node *node);
+int			greedy_find_target_position(t_ps *data, int value);
+int			greedy_calculate_total_cost(int cost_a, int cost_b, int pos_a, int pos_b);
+void		greedy_push_element_strategically(t_ps *data, int current, int total_size);
+void		greedy_calculate_costs(t_ps *data, t_greedy_node *nodes, int size_b);
+void		greedy_calculate_move_costs(t_greedy_node *node, int size_a, int size_b);
+int			greedy_find_cheapest(t_greedy_node *nodes, int size);
+int			greedy_find_min_pos(t_ps *data, int size_a, int min_value);
+void		greedy_execute_combined_and_remaining(t_ps *data, int moves_a, int moves_b, t_greedy_node *node);
+void		greedy_rotate_to_top(t_ps *data, int min_pos, int size_a);
+int			greedy_find_best_target(t_ps *data, int value, int size_a);
+int			greedy_find_min_target(t_ps *data, int size_a);
+
+// K-sort helpers
+void		k_sort_handle_small_arrays(t_ps *data);
+void		k_sort_apply_final_rotation(t_ps *data);
+void		k_sort_push_loop(t_ps *data, int *range, int *i, int target_remaining);
+void		k_handle_range_expansion(t_ps *data, int *range, int *i, int *rotations);
+void		k_sort_handle_remaining_in_a(t_ps *data);
+void		k_find_and_move_max_to_top(t_ps *data);
+void		k_find_max_in_stack_b(t_ps *data, int *max_value, int *max_position, int size_b);
+void		k_rotate_max_to_top_b(t_ps *data, int max_position, int size_b);
+int			k_find_min_position(t_ps *data, int size_a, int min_value);
+void		k_rotate_min_to_top(t_ps *data, int min_pos, int size_a);
+
+// Radix helpers
+void		radix_handle_small_arrays(t_ps *data);
+void		radix_rotate_to_position(t_ps *data, int min_pos, int size_a);
+int			calculate_max_bits_for_size(int size);
+
+// LIS helpers
+void		lis_handle_small_arrays(t_ps *data);
+void		lis_push_back_phase(t_ps *data);
+void		lis_rotate_max_to_top(t_ps *data, int max_position, int size_b);
+void		lis_final_rotation_to_sorted(t_ps *data);
+
+// Math utilities
+int			ft_sqrt_simple(int nb);
+
+#endif
 int			move_from_to(t_ps *data, t_loc from, t_loc to);
 
 // Greedy algorithm implementation

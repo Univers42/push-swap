@@ -6,7 +6,7 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 20:56:55 by ugerkens          #+#    #+#             */
-/*   Updated: 2025/06/15 17:09:49 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/06/16 00:00:00 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,21 @@
 
 void	chunk_sort(t_ps *data)
 {
-	t_chunk	chunk_all;
-
-	chunk_all.loc = TOP_A;
-	chunk_all.size = data->a.capacity;
-	rec_chunk_sort(data, &chunk_all);
+	if (data->total_size <= 3)
+	{
+		if (data->total_size == 3)
+			sort_three_simple(data);
+		else if (data->total_size == 2)
+		{
+			if (get_stack_element_at_position(&data->a, 1)
+				> get_stack_element_at_position(&data->a, 2))
+				sa(data);
+		}
+		return ;
+	}
+	if (verify_stack_is_sorted(data))
+		return ;
+	rec_chunk_sort(data, &data->algo.ctx.chunk.current_chunk);
 }
 
 void	rec_chunk_sort(t_ps *data, t_chunk *to_sort)
