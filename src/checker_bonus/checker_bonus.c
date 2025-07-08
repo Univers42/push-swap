@@ -6,11 +6,20 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 20:56:49 by ugerkens          #+#    #+#             */
-/*   Updated: 2025/06/15 23:11:04 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/06/16 00:00:00 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "checker_bonus.h"
+
+#ifndef VISUALIZE
+# define VISUALIZE 0
+#endif
+
+#if VISUALIZE == 1
+# include "visualizer.h"
+void	run_checker_with_visualization(t_ps *data);
+#endif
 
 int	main(int argc, char *argv[])
 {
@@ -19,11 +28,17 @@ int	main(int argc, char *argv[])
 	if (argc <= 1)
 		exit(EXIT_SUCCESS);
 	initialize_checker_data(&data, argc, argv);
+	
+#if VISUALIZE == 1
+	run_checker_with_visualization(&data);
+#else
 	read_and_execute_operations(&data);
 	if (check_if_stack_is_empty(&data.b) && verify_stack_is_sorted(&data))
 		ft_printf("OK\n");
 	else
 		ft_printf("KO\n");
+#endif
+	
 	checker_cleanup_and_exit(&data);
 	exit(EXIT_SUCCESS);
 }
@@ -64,3 +79,44 @@ void	checker_error_exit(t_ps *data)
 	ft_putendl_fd("Error", 2);
 	exit(255);
 }
+
+#if VISUALIZE == 1
+void	run_checker_with_visualization(t_ps *data)
+{
+	char	choice;
+	
+	ft_printf("🎬 Checker Visualization Mode\n");
+	ft_printf("Stack size: %d\n", get_current_stack_size(&data->a));
+	ft_printf("\nVisualize operations? (y/n): ");
+	
+	if (scanf(" %c", &choice) == 1 && (choice == 'y' || choice == 'Y'))
+	{
+		ft_printf("\nPress Enter to start...\n");
+		getchar();
+		getchar();
+		
+		init_recorder();
+		start_recording();
+		show_frame(data, "🏁 INITIAL STATE");
+		
+		read_and_execute_operations(data);
+		
+		stop_recording();
+		
+		if (check_if_stack_is_empty(&data->b) && verify_stack_is_sorted(data))
+			show_frame(data, "✅ OK - Stack is sorted!");
+		else
+			show_frame(data, "❌ KO - Stack is not sorted!");
+			
+		cleanup_recorder();
+	}
+	else
+	{
+		read_and_execute_operations(data);
+		if (check_if_stack_is_empty(&data->b) && verify_stack_is_sorted(data))
+			ft_printf("OK\n");
+		else
+			ft_printf("KO\n");
+	}
+}
+#endif

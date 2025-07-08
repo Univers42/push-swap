@@ -139,6 +139,36 @@ lis: re
 queue: CFLAGS += -DALGORITHM=ALGO_QUEUE
 queue: re
 
+# ============================== VISUALIZATION MODE ============================== #
+
+# Visualization mode
+visual: CFLAGS += -DVISUALIZE=1
+visual: re
+
+# Algorithm + Visualization modes
+chunk_visual: CFLAGS += -DALGORITHM=ALGO_CHUNK -DVISUALIZE=1
+chunk_visual: re
+
+greedy_visual: CFLAGS += -DALGORITHM=ALGO_GREEDY -DVISUALIZE=1
+greedy_visual: re
+
+k_sort_visual: CFLAGS += -DALGORITHM=ALGO_K_SORT -DVISUALIZE=1
+k_sort_visual: re
+
+radix_visual: CFLAGS += -DALGORITHM=ALGO_RADIX -DVISUALIZE=1
+radix_visual: re
+
+lis_visual: CFLAGS += -DALGORITHM=ALGO_LIS -DVISUALIZE=1
+lis_visual: re
+
+queue_visual: CFLAGS += -DALGORITHM=ALGO_QUEUE -DVISUALIZE=1
+queue_visual: re
+
+# Checker with visualization
+checker_visual: CFLAGS += -DVISUALIZE=1
+checker_visual: $(CHECKER)
+	@echo "✅ Checker with visualization enabled!"
+
 # ================================ TESTING ================================== #
 
 # Run tests
@@ -207,6 +237,7 @@ help:
 	@echo "   list-sources - Show source files that will be compiled"
 	@echo "   info         - Show compilation information"
 	@echo "   help         - Show this help message"
+	@echo "   checker_visual - Build checker with visualization"
 
 # ============================== ALGORITHM MODES ============================== #
 

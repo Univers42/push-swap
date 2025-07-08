@@ -1,74 +1,78 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   replay.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/16 00:00:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/06/16 00:00:00 by dlesieur         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+#include "visualizer.h"
+#include <stdio.h>
+#include <string.h>
 
-#include "push_swap.h"
-
-#if VISUALIZE == 1
-# include "visualizer.h"
-
-void	execute_operation_for_visual(t_ps *ps, const char *op)
 {
-	if (ft_strcmp(op, "sa") == 0)
-		sa(ps);
-	else if (ft_strcmp(op, "sb") == 0)
-		sb(ps);
-	else if (ft_strcmp(op, "ss") == 0)
-		ss(ps);
-	else if (ft_strcmp(op, "pa") == 0)
-		pa(ps);
-	else if (ft_strcmp(op, "pb") == 0)
-		pb(ps);
-	else if (ft_strcmp(op, "ra") == 0)
-		ra(ps);
-	else if (ft_strcmp(op, "rb") == 0)
-		rb(ps);
-	else if (ft_strcmp(op, "rr") == 0)
-		rr(ps);
-	else if (ft_strcmp(op, "rra") == 0)
-		rra(ps);
-	else if (ft_strcmp(op, "rrb") == 0)
-		rrb(ps);
-	else if (ft_strcmp(op, "rrr") == 0)
-		rrr(ps);
+    if (strcmp(op, "sa") == 0) sa(ps);
+    else if (strcmp(op, "sb") == 0) sb(ps);
+    else if (strcmp(op, "ss") == 0) ss(ps);
+    else if (strcmp(op, "pa") == 0) pa(ps);
+    else if (strcmp(op, "pb") == 0) pb(ps);
+    else if (strcmp(op, "ra") == 0) ra(ps);
+    else if (strcmp(op, "rb") == 0) rb(ps);
+    else if (strcmp(op, "rr") == 0) rr(ps);
+    else if (strcmp(op, "rra") == 0) rra(ps);
+    else if (strcmp(op, "rrb") == 0) rrb(ps);
+    else if (strcmp(op, "rrr") == 0) rrr(ps);
 }
 
-void	run_algorithm_with_visualization(t_ps *ps, void (*algorithm)(t_ps *))
+t_ps *create_ps_copy(t_ps *original)
 {
-	ft_printf("🎬 Push_swap Visualizer Mode\n");
-	ft_printf("Running algorithm...\n");
-	
-	// For now, just run the algorithm normally
-	// Full visualization implementation would go here
-	algorithm(ps);
-	
-	ft_printf("Algorithm completed.\n");
+    t_ps *copy = malloc(sizeof(t_ps));
+    if (!copy)
+        return NULL;
+    
+    // Initialize array-based stacks
+    init_stack(&copy->stack_a, original->stack_a.capacity);
+    init_stack(&copy->stack_b, original->stack_b.capacity);
+    
+    // Copy stack A data
+    for (int i = 0; i < original->stack_a.element_count; i++)
+        copy->stack_a.stack[i] = original->stack_a.stack[i];
+    copy->stack_a.element_count = original->stack_a.element_count;
+    
+    // Copy stack B data
+    for (int i = 0; i < original->stack_b.element_count; i++)
+        copy->stack_b.stack[i] = original->stack_b.stack[i];
+    copy->stack_b.element_count = original->stack_b.element_count;
+    
+    copy->total_size = original->total_size;
+    copy->recording = false;  // Initialize recording flag
+    
+    // Don't copy the op_buffer - let each copy have its own
+    
+    return copy;
 }
 
-#else
-
-// Stub implementations when visualization is disabled
-void	execute_operation_for_visual(t_ps *ps, const char *op)
+void replay_operations(t_ps *ps)
 {
-	(void)ps;
-	(void)op;
-}
-
-void	run_algorithm_with_visualization(t_ps *ps, void (*algorithm)(t_ps *))
-{
-	(void)ps;
-	(void)algorithm;
-}
-
-#endif
+    t_test_context *ctx = get_test_context();
+    
+    ft_printf("\n📼 Replaying %d operations...\n", ctx->op_count);
+    ft_printf("Press Enter to start visualization...\n");
+    getchar();
+    
+    show_frame(ps, "🏁 INITIAL STATE");
+    
+    t_operation *current = ctx->operations;
+    int step = 1;
+    
+    while (current)
+    {
+        execute_operation_for_visual(ps, current->name);
+        
+        char step_info[100];
+        snprintf(step_info, sizeof(step_info), "Step %d: %s", step, current->name);
+        show_frame(ps, step_info);
+        
+        current = current->next;
+        step++;
+    }
+    
+    if (is_sorted(&ps->a) && ps->b.element_count == 0)
+        show_frame(ps, "✅ SORTING COMPLETE - SUCCESS!");
+    else
+        show_frame(ps, "❌ SORTING INCOMPLETE");
     
     ft_printf("\n📊 Visualization complete. Operations count: %d\n", ctx->op_count);
 }
@@ -158,5 +162,4 @@ void run_algorithm_with_visualization(t_ps *ps, void (*algorithm)(t_ps *))
     free_stack(&algo_copy->stack_a);
     free_stack(&algo_copy->stack_b);
     free(algo_copy);
-}
 }
