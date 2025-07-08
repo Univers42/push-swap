@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
+#include "algorithms.h"
 
 static void	easy_sort_second(t_ps *data, t_chunk *to_sort);
 static void	handle_top_b(t_ps *data, t_chunk *to_sort);

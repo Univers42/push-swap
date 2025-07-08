@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
+# include "algorithms.h"
 
 static void	innit_size(t_chunk *min, t_chunk *mid, t_chunk *max);
 static void	set_split_loc(t_loc loc, t_chunk *min, t_chunk *mid, t_chunk *max);

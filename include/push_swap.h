@@ -18,7 +18,7 @@
 # include <stdbool.h>
 # include <limits.h>
 # include <stdint.h>
-# include "libft.h"
+# include "../libft/libft.h"
 
 // Constants
 # define INITIAL_OP_CAPACITY 100
@@ -27,7 +27,16 @@
 
 // Forward declarations
 typedef struct s_ps t_ps;
-typedef struct s_stack t_stack;
+
+// Stack structure - must be defined before it's used in other structs
+typedef struct s_stack
+{
+	int	*stack;
+	int	top;
+	int	bottom;
+	int	capacity;
+	int	element_count;
+}	t_stack;
 
 // Enumerations
 typedef enum e_op
@@ -64,15 +73,6 @@ typedef enum e_algo_type
 	ALGO_QUEUE
 }	t_algo_type;
 
-// Stack structure
-struct s_stack
-{
-	int	*stack;
-	int	top;
-	int	bottom;
-	int	capacity;
-	int	element_count;
-};
 
 // Algorithm-specific data structures
 typedef struct s_chunk
@@ -147,6 +147,7 @@ typedef struct s_op_buffer
 	int		capacity;
 }	t_op_buffer;
 
+typedef struct s_stack t_stack;
 // Main push_swap structure
 struct s_ps
 {
@@ -232,7 +233,11 @@ void		remove_op_from_list(t_list **list, t_list *to_remove);
 
 // Math utilities
 void		ft_swap(void *a, void *b, size_t size);
-void		ft_quick_sort(int *arr, int low, int high);
+void		quick_sort_int(int *arr, int low, int high);
 int			ft_sqrt(int nb);
-
+int	k_find_min_position(t_ps *data, int size_a, int min_value);
+void	k_rotate_max_to_top_b(t_ps *data, int max_position, int size_b);
+void	k_rotate_min_to_top(t_ps *data, int min_pos, int size_a);
+void	k_find_max_in_stack_b(t_ps *data, int *max_value, int *max_position,
+		int size_b);
 #endif

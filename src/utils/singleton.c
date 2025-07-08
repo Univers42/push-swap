@@ -1,4 +1,4 @@
-// Singleton instance
+// This file is intentionally left empty after removal of the visualization system
 static t_test_context *get_test_context(void)
 {
     static t_test_context context = {

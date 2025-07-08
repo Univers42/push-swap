@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
+# include "algorithms.h"
 
 int	chunk_value(t_ps *data, t_chunk *chunk, int n)
 {

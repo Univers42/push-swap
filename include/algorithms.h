@@ -75,9 +75,6 @@ void		lis_final_rotation_to_sorted(t_ps *data);
 // Math utilities
 int			ft_sqrt_simple(int nb);
 
-#endif
-int			move_from_to(t_ps *data, t_loc from, t_loc to);
-
 // Greedy algorithm implementation
 void		greedy_sort(t_ps *data);
 void		sort_three_simple(t_ps *data);

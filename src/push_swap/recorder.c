@@ -1,4 +1,3 @@
-void init_recorder(void)
 {
     t_test_context *ctx = get_test_context();
     
@@ -72,4 +71,5 @@ int is_recording(void)
 {
     t_test_context *ctx = get_test_context();
     return ctx->is_recording;
+}
 }

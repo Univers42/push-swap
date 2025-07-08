@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
+#include "algorithms.h"
 
 void	sort(t_ps *data)
 {

@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
+# include "algorithms.h"
 static void	init_chunk_context(t_ps *data);
 static void	init_greedy_context(t_ps *data);
 static void	init_k_sort_context(t_ps *data);
@@ -49,6 +49,11 @@ void	select_algorithm(t_ps *data, t_algo_type type)
 	{
 		data->algo.sort_fn = lis_sort;
 		data->algo.name = "LIS Sort";
+	}
+	else if (type == ALGO_QUEUE)
+	{
+		data->algo.sort_fn = queue_sort;
+		data->algo.name = "Queue Sort";
 	}
 }
 

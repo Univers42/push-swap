@@ -41,5 +41,5 @@ bool	detect_duplicates_with_sorting(int *numbers, int size)
 void	efficient_sort(int *arr, int size)
 {
 	if (size > 1)
-		ft_quick_sort(arr, 0, size - 1);
+		quick_sort_int(arr, 0, size - 1);
 }

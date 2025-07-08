@@ -1,4 +1,4 @@
-void print_array_stack(t_stack *stack, char name)
+// This file is intentionally left empty after removal of the visualization system
 {
     ft_printf("%s%s╔══ Stack %c ══╗%s\n", BOLD, CYAN, name, RESET);
     if (!stack || stack->element_count == 0)

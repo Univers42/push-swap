@@ -6,55 +6,27 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 20:56:27 by ugerkens          #+#    #+#             */
-/*   Updated: 2025/06/15 17:19:10 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/06/16 00:00:00 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STACK_H
 # define STACK_H
 
-# include "../libft/libft.h"
-# include <limits.h>
-# include <stdbool.h>
-# include <stdlib.h>
-# include <stdio.h>
+# include "push_swap.h"
 
-# define HASH_TABLE_THRESHOLD 1000000
-# define INITIAL_OP_CAPACITY 1000
+// Forward compatibility layer for stack operations
+void		push(t_stack *src, t_stack *dest);
+void		r_rotate(t_stack *stk);
+void		rotate(t_stack *stk);
+void		swap(t_stack *stk);
 
-typedef struct s_stack
-{
-	int	*stack;
-	int	top;
-	int	bottom;
-	int	capacity;
-	int	element_count;
-}	t_stack;
+// Remove op from list
+void		remove_op(t_list *to_delete);
 
-typedef struct s_push_swap
-{
-	t_stack	a;
-	t_stack	b;
-	t_list	*op_list;
-	int		op_count;
-	int		op_capacity;
-}			t_ps;
-
-typedef enum e_op
-{
-	OP_NULL,
-	OP_PA,
-	OP_PB,
-	OP_RA,
-	OP_RB,
-	OP_RR,
-	OP_RRA,
-	OP_RRB,
-	OP_RRR,
-	OP_SA,
-	OP_SB,
-	OP_SS
-}			t_op;
+// Math utilities (avoid circular dependency)
+void		quick_sort_int(int *arr, int low, int high);
+int			ft_sqrt(int nb);
 
 // CORE INITIALIZATION
 void		initialize_push_swap_data(t_ps *data, int argc, char **argv);
@@ -84,28 +56,11 @@ bool		check_if_stack_is_empty(t_stack *stk);
 
 // OPERATION TRACKING
 void		save_op(t_ps *data, t_op op);
-void		increment_op_count(t_ps *data);
 void		display_operation_stats(t_ps *data);
 void		print_operations(t_list *head);
 const char	*op_to_string(t_op op);
 t_op		op_from(t_list *node);
 
-// CORE STACK OPERATIONS
-void		push(t_stack *src, t_stack *dest);
-void		pa(t_ps *data);
-void		pb(t_ps *data);
-void		r_rotate(t_stack *stk);
-void		rra(t_ps *data);
-void		rrb(t_ps *data);
-void		rrr(t_ps *data);
-void		rotate(t_stack *stk);
-void		ra(t_ps *data);
-void		rb(t_ps *data);
-void		rr(t_ps *data);
-void		swap(t_stack *stk);
-void		sa(t_ps *data);
-void		sb(t_ps *data);
-void		ss(t_ps *data);
 
 void		remove_op(t_list *to_delete);
 

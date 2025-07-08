@@ -1,4 +1,3 @@
-void execute_operation_for_visual(t_ps *ps, const char *op)
 {
     if (strcmp(op, "sa") == 0) sa(ps);
     else if (strcmp(op, "sb") == 0) sb(ps);
@@ -159,4 +158,5 @@ void run_algorithm_with_visualization(t_ps *ps, void (*algorithm)(t_ps *))
     free_stack(&algo_copy->stack_a);
     free_stack(&algo_copy->stack_b);
     free(algo_copy);
+}
 }

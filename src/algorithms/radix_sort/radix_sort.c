@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
+# include "algorithms.h"
 static void	radix_sort_by_bit_corrected(t_ps *data, int bit_position);
 static void	radix_final_rotation_simple(t_ps *data);
 static int	radix_find_min_position(t_ps *data, int size_a);
@@ -29,10 +29,8 @@ void	radix_sort(t_ps *data)
 	if (verify_stack_is_sorted(data))
 		return ;
 	total_size = get_current_stack_size(&data->a);
-	debug_print_stack_state(data, "Starting Corrected Radix Sort");
 	radix_process_all_bits(data, total_size);
 	radix_final_rotation_simple(data);
-	debug_print_stack_state(data, "Corrected Radix Sort completed");
 }
 
 static void	radix_process_all_bits(t_ps *data, int total_size)

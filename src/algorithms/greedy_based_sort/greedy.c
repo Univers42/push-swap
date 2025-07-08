@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
+# include "algorithms.h"
 
 static void	greedy_push_to_b(t_ps *data);
 static void	greedy_push_back_to_a(t_ps *data);
@@ -87,9 +88,6 @@ static void	greedy_final_rotation(t_ps *data)
 	min_value = find_min_value_in_stack(&data->a);
 	min_pos = 0;
 	size_a = get_current_stack_size(&data->a);
-	min_pos = greedy_find_min_pos(data, size_a, min_value);
-	greedy_rotate_to_top(data, min_pos, size_a);
-}
 	min_pos = greedy_find_min_pos(data, size_a, min_value);
 	greedy_rotate_to_top(data, min_pos, size_a);
 }

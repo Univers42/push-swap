@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
+# include "algorithms.h"
 
 int	greedy_find_target_position(t_ps *data, int value)
 {

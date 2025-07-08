@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
+# include "algorithms.h"
 
 void	greedy_push_element_strategically(t_ps *data, int current,
 		int total_size)

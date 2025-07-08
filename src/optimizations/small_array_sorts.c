@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
+#include "algorithms.h"
 
 static void	sort_three_top_a(t_ps *data, t_chunk *to_sort, t_stack *stk,
 				int max);

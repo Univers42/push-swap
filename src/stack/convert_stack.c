@@ -64,7 +64,7 @@ void	convert_numbers_to_ranks(int *numbers, int *rank, int size)
 	if (!sorted_numbers)
 		return ;
 	ft_memcpy(sorted_numbers, numbers, sizeof(int) * size);
-	ft_quick_sort(sorted_numbers, 0, size - 1);
+	quick_sort_int(sorted_numbers, 0, size - 1);
 	assign_element_ranks(numbers, rank, sorted_numbers, size);
 	free(sorted_numbers);
 }

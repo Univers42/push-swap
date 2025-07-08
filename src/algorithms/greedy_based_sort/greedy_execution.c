@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
+# include "algorithms.h"
 
 static void	rotation_a(t_ps *data, int moves_a, bool rotate_a_up);
 static void	rotation_b(t_ps *data, int moves_b, bool rotate_b_up);

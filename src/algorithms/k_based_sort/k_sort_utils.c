@@ -6,11 +6,12 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 16:30:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/06/15 23:15:57 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/06/16 00:00:00 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+#include "algorithms.h"
 
 void	k_sort_handle_small_arrays(t_ps *data)
 {
@@ -20,21 +21,6 @@ void	k_sort_handle_small_arrays(t_ps *data)
 		&& get_stack_element_at_position(&data->a, 1)
 		> get_stack_element_at_position(&data->a, 2))
 		sa(data);
-}
-
-void	k_sort_print_debug_info(t_ps *data, int total_size)
-{
-	int	i;
-
-	ft_printf("🔍 [K-SORT DEBUG] First 10 elements: ");
-	i = 1;
-	while (i <= 10 && i <= total_size)
-	{
-		ft_printf("%d ", get_stack_element_at_position(&data->a, i));
-		i++;
-	}
-	ft_printf("\n");
-	k_sort_verify_order(data, total_size);
 }
 
 void	k_sort_push_loop(t_ps *data, int *range, int *i, int target_remaining)

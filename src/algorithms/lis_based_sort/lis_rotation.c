@@ -6,11 +6,12 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 15:51:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/06/15 16:03:33 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/06/16 00:00:00 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+#include "algorithms.h"
 
 static void	lis_rotate_to_position(t_ps *data, int min_pos, int size_a);
 static int	lis_find_min_position_in_stack(t_ps *data, int size_a,
@@ -30,8 +31,6 @@ void	lis_final_rotation_to_sorted(t_ps *data)
 	if (min_pos == 0)
 		return ;
 	lis_rotate_to_position(data, min_pos, size_a);
-	if (is_verbose_mode_enabled())
-		lis_verify_final_rotation(data);
 }
 
 static void	lis_rotate_to_position(t_ps *data, int min_pos, int size_a)

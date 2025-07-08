@@ -31,8 +31,8 @@ CFLAGS				+=	$(INCLUDES)
 
 # ============================= SOURCE FILES =============================== #
 
-# Find all C files recursively in src directory (excluding debug and bonus)
-PUSH_SWAP_SRCS		=	$(shell find src -name "*.c" | grep -v checker_bonus | grep -v debug)
+# Find all C files recursively in src directory (excluding debug, bonus, and removed files)
+PUSH_SWAP_SRCS		=	$(shell find src -name "*.c" | grep -v checker_bonus | grep -v debug | grep -v singleton.c | grep -v replay.c | grep -v recorder.c | grep -v visualizer)
 
 CHECKER_SRCS		=	src/checker_bonus/checker_bonus.c \
 						src/checker_bonus/checker_init.c \
@@ -63,7 +63,7 @@ HEADERS				=	$(shell find include -name "*.h")
 
 # ================================= RULES =================================== #
 
-.PHONY: all clean fclean re bonus test
+.PHONY: all clean fclean re bonus both test chunk greedy k_sort radix lis queue help
 
 # Default target
 all: $(PUSH_SWAP)
@@ -136,6 +136,9 @@ radix: re
 lis: CFLAGS += -DALGORITHM=ALGO_LIS
 lis: re
 
+queue: CFLAGS += -DALGORITHM=ALGO_QUEUE
+queue: re
+
 # ================================ TESTING ================================== #
 
 # Run tests
@@ -164,12 +167,9 @@ help:
 	@echo "   k_sort       - Build with k-sort algorithm"
 	@echo "   radix        - Build with radix algorithm"
 	@echo "   lis          - Build with LIS algorithm"
+	@echo "   queue        - Build with queue algorithm"
 	@echo "   test         - Run test suite"
 	@echo "   help         - Show this help message"
-	fi
-
-# Run checker testing suite
-test-checker: $(CHECKER)
 	@if [ -f "test_checker.sh" ]; then \
 		echo "🧪 Running checker testing suite..."; \
 		chmod +x test_checker.sh; \

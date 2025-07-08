@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
+#include "algorithms.h"
 
 void	split_max_reduction(t_ps *data, t_chunk *max)
 {

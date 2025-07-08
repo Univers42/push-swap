@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
+# include "algorithms.h"
 static void	lis_find_and_move_max(t_ps *data);
 static void	lis_find_max_in_stack_b(t_ps *data, int *max_value,
 				int *max_position, int size_b);
