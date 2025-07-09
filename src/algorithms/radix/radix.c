@@ -1,17 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   radix_sort.c                                       :+:      :+:    :+:   */
+/*   radix.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 23:45:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/06/15 22:57:35 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/09 22:32:12 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-# include "algorithms.h"
+#include "algorithms.h"
+
 static void	radix_sort_by_bit_corrected(t_ps *data, int bit_position);
 static void	radix_final_rotation_simple(t_ps *data);
 static int	radix_find_min_position(t_ps *data, int size_a);

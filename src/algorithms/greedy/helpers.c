@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   greedy_utils.c                                     :+:      :+:    :+:   */
+/*   helpers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 16:40:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/06/15 16:16:51 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/09 22:27:39 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-# include "algorithms.h"
+#include "algorithms.h"
 
 void	greedy_push_element_strategically(t_ps *data, int current,
 		int total_size)

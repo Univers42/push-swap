@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   convert_stack.c                                    :+:      :+:    :+:   */
+/*   cv_stack.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 21:09:08 by ugerkens          #+#    #+#             */
-/*   Updated: 2025/06/15 15:20:18 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/09 17:44:48 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	convert_numbers_to_ranks(int *numbers, int *rank, int size)
 	if (!sorted_numbers)
 		return ;
 	ft_memcpy(sorted_numbers, numbers, sizeof(int) * size);
-	quick_sort_int(sorted_numbers, 0, size - 1);
+	ft_quick_sort(sorted_numbers, 0, size - 1);
 	assign_element_ranks(numbers, rank, sorted_numbers, size);
 	free(sorted_numbers);
 }

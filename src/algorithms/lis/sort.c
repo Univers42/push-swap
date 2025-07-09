@@ -6,12 +6,12 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 00:00:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/08 18:53:17 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/09 22:30:28 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-# include "algorithms.h"
+#include "algorithms.h"
 
 void	lis_sort(t_ps *data)
 {
@@ -22,8 +22,5 @@ void	lis_sort(t_ps *data)
 	}
 	if (verify_stack_is_sorted(data))
 		return ;
-	
-	// Simple LIS implementation - fallback to greedy for now
-	// TODO: Implement proper LIS algorithm
 	greedy_sort(data);
 }

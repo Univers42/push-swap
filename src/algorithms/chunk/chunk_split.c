@@ -6,12 +6,12 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 20:57:19 by ugerkens          #+#    #+#             */
-/*   Updated: 2025/07/08 14:55:43 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/09 22:26:02 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-# include "algorithms.h"
+#include "algorithms.h"
 
 static void	innit_size(t_chunk *min, t_chunk *mid, t_chunk *max);
 static void	set_split_loc(t_loc loc, t_chunk *min, t_chunk *mid, t_chunk *max);

@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 23:15:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/08 19:06:58 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/09 19:42:20 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,8 @@ void	checker_r_rotate(t_stack *stk)
 	}
 }
 
-// Stub function for checker - operations are not tracked
 void	save_op(t_ps *data, t_op op)
 {
 	(void)data;
 	(void)op;
-	// Checker doesn't track operations, so this is intentionally empty
 }

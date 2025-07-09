@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 15:15:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/08 18:34:20 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/08 21:36:07 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,3 @@ bool	op_on_same_stack(t_op ref, t_op to_check)
 		return (to_check == OP_RB || to_check == OP_RRB || to_check == OP_SB);
 	return (false);
 }
-

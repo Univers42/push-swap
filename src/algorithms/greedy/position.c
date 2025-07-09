@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   greedy_position.c                                  :+:      :+:    :+:   */
+/*   position.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 16:42:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/06/15 16:14:14 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/09 22:27:46 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-# include "algorithms.h"
+#include "algorithms.h"
 
 int	greedy_find_target_position(t_ps *data, int value)
 {

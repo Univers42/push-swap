@@ -6,12 +6,12 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 14:32:28 by codespace         #+#    #+#             */
-/*   Updated: 2025/07/08 14:32:43 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/09 22:31:14 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "algorithms.h"
-# include "push_swap.h"
+#include "algorithms.h"
+#include "push_swap.h"
 
 void	sort_one(t_ps *data, t_chunk *to_sort)
 {

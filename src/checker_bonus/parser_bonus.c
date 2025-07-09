@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   parser_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 13:27:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/06/15 14:58:23 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/09 22:25:29 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+#include "checker_bonus.h"
 
 static int	calculate_value_range(int *numbers, int size);
 static bool	detect_duplicates_with_hash(int *numbers, int size,

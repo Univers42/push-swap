@@ -6,7 +6,7 @@
 #    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/08 13:37:35 by codespace         #+#    #+#              #
-#    Updated: 2025/07/08 19:06:59 by codespace        ###   ########.fr        #
+#    Updated: 2025/07/09 22:56:16 by codespace        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ endef
 
 # COMMANDS AND FLAGS
 CC					=	cc
-CFLAGS				=	-Wall -Wextra -Werror -I./include -I./libft -g3 -O3
+CFLAGS				=	-Wall -Wextra -Werror -I./include -I./libft -g3 -O3 -std=c99
 RM					=	rm -rf
 AR					=	ar rcs
 
@@ -46,6 +46,7 @@ D_STACK				=	$(D_SRC)/stack
 D_UTILS				=	$(D_SRC)/utils
 D_PARSER			=	$(D_SRC)/parser
 D_ALG_HELPERS		=	$(D_SRC)/algorithm_helpers
+D_VISUALIZER		=	$(D_CHECKER_BONUS)/visualizer
 
 # SOURCE FILES
 CHUNK_SRCS			=	$(D_CHUNK)/chunk_sort.c \
@@ -101,13 +102,20 @@ PUSH_SWAP_SRCS		=	$(D_PUSH_SWAP)/main.c \
 						$(D_PUSH_SWAP)/helpers.c \
 						$(D_PUSH_SWAP)/init.c \
 						$(D_PUSH_SWAP)/unit_ctrl.c \
-						$(D_PUSH_SWAP)/goinfre.c
+						$(D_PUSH_SWAP)/goinfre.c \
+						$(D_PUSH_SWAP)/config_algos.c \
+						$(D_PUSH_SWAP)/init_algos.c
 
 PARSER_SRCS			=	$(D_PARSER)/helpers.c \
 						$(D_PARSER)/parser.c
 
 ALG_HELPERS_SRCS	=	$(D_ALG_HELPERS)/chunk_utils.c \
 						$(D_ALG_HELPERS)/move.c
+
+VISUALIZER_SRCS		=	$(D_VISUALIZER)/helper.c \
+						$(D_VISUALIZER)/replay.c \
+						$(D_VISUALIZER)/singleton.c \
+						$(D_VISUALIZER)/visualizer.c
 
 # COMMON SOURCES (shared by all algorithms - NO algorithm-specific files)
 COMMON_SRCS			=	$(OPERATIONS_SRCS) \
@@ -136,14 +144,17 @@ CHECKER_SRCS		=	$(D_CHECKER_BONUS)/checker_bonus.c \
 						$(D_CHECKER_BONUS)/checker_stack_ops_bonus.c \
 						$(D_CHECKER_BONUS)/strop_bonus.c \
 						$(D_CHECKER_BONUS)/parser_bonus.c \
-						$(D_CHECKER_BONUS)/replay_bonus.c \
-						$(D_CHECKER_BONUS)/singleton_bonus.c \
 						$(D_STACK)/cv_stack.c \
 						$(D_UTILS)/check.c \
 						$(D_UTILS)/exit.c \
 						$(D_UTILS)/get.c \
 						$(D_UTILS)/math.c \
 						$(D_PARSER)/helpers.c
+
+VISUALIZER_SRCS		=	$(D_CHECKER_BONUS)/visualizer/visualizer.c \
+						$(D_CHECKER_BONUS)/visualizer/helper.c \
+						$(D_CHECKER_BONUS)/visualizer/singleton.c \
+						$(D_CHECKER_BONUS)/visualizer/replay.c
 
 # OBJECT FILES
 OBJ_DIR				=	obj
@@ -154,6 +165,7 @@ LIS_OBJS			=	$(LIS_ALL_SRCS:%.c=$(OBJ_DIR)/%.o)
 RADIX_OBJS			=	$(RADIX_ALL_SRCS:%.c=$(OBJ_DIR)/%.o)
 QUEUE_OBJS			=	$(QUEUE_ALL_SRCS:%.c=$(OBJ_DIR)/%.o)
 CHECKER_OBJS		=	$(CHECKER_SRCS:%.c=$(OBJ_DIR)/%.o)
+VISUALIZER_OBJS		=	$(CHECKER_SRCS:%.c=$(OBJ_DIR)/%.o)
 
 # DEFAULT TARGET (chunk algorithm)
 all: build_libft $(PUSH_SWAP)
@@ -210,7 +222,7 @@ visualize: build_libft
 	$(CC) $(CFLAGS) -DALGORITHM=ALGO_CHUNK -DVISUALIZE=1 $(CHUNK_ALL_SRCS) $(D_CHECKER_BONUS)/visualizer_bonus.c -L$(D_LIBFT) -lft -o $(PUSH_SWAP)
 
 checker_visual: build_libft
-	$(CC) $(CFLAGS) -DVISUALIZE=1 $(CHECKER_SRCS) $(D_CHECKER_BONUS)/visualizer_bonus.c -L$(D_LIBFT) -lft -o $(CHECKER)
+	$(CC) $(CFLAGS) -DVISUALIZE=1 -DOVERRIDE_MAIN_LOGIC $(CHECKER_SRCS) $(VISUALIZER_SRCS) -L$(D_LIBFT) -lft -o $(CHECKER)
 
 # Object compilation rule
 $(OBJ_DIR)/%.o: %.c

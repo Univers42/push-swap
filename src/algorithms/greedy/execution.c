@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   greedy_execution.c                                 :+:      :+:    :+:   */
+/*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 16:41:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/06/15 22:57:36 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/09 22:29:29 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-# include "algorithms.h"
+#include "algorithms.h"
 
 static void	rotation_a(t_ps *data, int moves_a, bool rotate_a_up);
 static void	rotation_b(t_ps *data, int moves_b, bool rotate_b_up);

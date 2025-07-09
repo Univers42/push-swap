@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   chunk_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 20:58:02 by ugerkens          #+#    #+#             */
-/*   Updated: 2025/06/13 13:14:55 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/09 22:32:38 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-# include "algorithms.h"
+#include "algorithms.h"
 
 int	chunk_value(t_ps *data, t_chunk *chunk, int n)
 {

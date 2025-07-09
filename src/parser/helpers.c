@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_utils.c                                     :+:      :+:    :+:   */
+/*   helpers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 23:15:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/06/15 14:56:51 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/09 17:45:26 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,5 @@ bool	detect_duplicates_with_sorting(int *numbers, int size)
 void	efficient_sort(int *arr, int size)
 {
 	if (size > 1)
-		quick_sort_int(arr, 0, size - 1);
+		ft_quick_sort(arr, 0, size - 1);
 }

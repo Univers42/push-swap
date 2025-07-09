@@ -6,11 +6,12 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 21:09:02 by ugerkens          #+#    #+#             */
-/*   Updated: 2025/07/08 21:05:26 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/09 17:37:45 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "stack.h"
+#include "push_swap.h"
 #include <stdint.h>
 
 void	save_op(t_ps *data, t_op op)
@@ -27,8 +28,6 @@ void	save_op(t_ps *data, t_op op)
 void	increment_op_count(t_ps *data)
 {
 	data->op_count++;
-	if (data->op_count >= data->op_capacity)
-		data->op_capacity *= 2;
 }
 
 void	print_operations(t_list *head)

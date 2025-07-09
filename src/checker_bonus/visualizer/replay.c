@@ -6,14 +6,14 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 00:00:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/08 19:57:13 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/09 18:20:04 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "checker_bonus.h"
 
 #if VISUALIZE == 1
-# include "visualizer.h"
+# include "visualizer_bonus.h"
 
 // Only define functions that are unique to replay functionality
 void	replay_operations_from_input(t_ps *data)

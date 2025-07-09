@@ -6,12 +6,12 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 14:14:38 by codespace         #+#    #+#             */
-/*   Updated: 2025/07/08 14:17:54 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/09 22:31:04 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "algorithms.h"
-# include "push_swap.h"
+#include "algorithms.h"
+#include "push_swap.h"
 
 static void	easy_sort_second(t_ps *data, t_chunk *to_sort);
 static void	handle_top_b(t_ps *data, t_chunk *to_sort);

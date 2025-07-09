@@ -6,10 +6,11 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 21:08:41 by ugerkens          #+#    #+#             */
-/*   Updated: 2025/07/08 19:11:45 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/09 17:38:08 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "push_swap.h"
 #include "stack.h"
 
 static void	push(t_stack *src, t_stack *dest);

@@ -6,12 +6,12 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 19:52:32 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/08 18:53:17 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/09 22:29:20 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-# include "algorithms.h"
+#include "algorithms.h"
 
 static void	greedy_push_to_b(t_ps *data);
 static void	greedy_push_back_to_a(t_ps *data);
@@ -31,9 +31,9 @@ void	greedy_sort(t_ps *data)
 	}
 	if (verify_stack_is_sorted(data))
 		return ;
-	data->algo.ctx.greedy.phase = 0;
+	data->algo_ctx.ctx.greedy.phase = 0;
 	greedy_push_to_b(data);
-	data->algo.ctx.greedy.phase = 1;
+	data->algo_ctx.ctx.greedy.phase = 1;
 	greedy_push_back_to_a(data);
 	greedy_final_rotation(data);
 }
@@ -66,16 +66,20 @@ static void	greedy_push_back_to_a(t_ps *data)
 	while (get_current_stack_size(&data->b) > 0)
 	{
 		size_b = get_current_stack_size(&data->b);
-		data->algo.ctx.greedy.nodes = malloc(sizeof(t_greedy_node) * size_b);
-		if (!data->algo.ctx.greedy.nodes)
+		data->algo_ctx.ctx.greedy.nodes
+			= malloc(sizeof(t_greedy_node) * size_b);
+		if (!data->algo_ctx.ctx.greedy.nodes)
 			cleanup_and_exit_with_error(data);
-		data->algo.ctx.greedy.nodes_count = size_b;
-		greedy_calculate_costs(data, data->algo.ctx.greedy.nodes, size_b);
-		cheapest_idx = greedy_find_cheapest(data->algo.ctx.greedy.nodes, size_b);
-		greedy_execute_move(data, &data->algo.ctx.greedy.nodes[cheapest_idx]);
-		free(data->algo.ctx.greedy.nodes);
-		data->algo.ctx.greedy.nodes = NULL;
-		data->algo.ctx.greedy.nodes_count = 0;
+		data->algo_ctx.ctx.greedy.nodes_count = size_b;
+		greedy_calculate_costs(data,
+			data->algo_ctx.ctx.greedy.nodes, size_b);
+		cheapest_idx
+			= greedy_find_cheapest(data->algo_ctx.ctx.greedy.nodes, size_b);
+		greedy_execute_move(data,
+			&data->algo_ctx.ctx.greedy.nodes[cheapest_idx]);
+		free(data->algo_ctx.ctx.greedy.nodes);
+		data->algo_ctx.ctx.greedy.nodes = NULL;
+		data->algo_ctx.ctx.greedy.nodes_count = 0;
 	}
 }
 

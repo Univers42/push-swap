@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   remove_ops.c                                       :+:      :+:    :+:   */
+/*   remops.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 14:16:09 by codespace         #+#    #+#             */
-/*   Updated: 2025/07/08 14:54:54 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/08 21:36:18 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "push_swap.h"
+#include "push_swap.h"
 
 void	remove_op_from_list(t_list **list, t_list *to_remove)
 {

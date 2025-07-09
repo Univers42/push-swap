@@ -6,12 +6,13 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 23:50:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/08 18:38:27 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/09 17:42:21 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 #include "tracker.h"
+
 #include <stdint.h>
 
 static t_op		child_op(t_op first, t_op second);

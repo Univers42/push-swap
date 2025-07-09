@@ -6,12 +6,12 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 20:56:55 by ugerkens          #+#    #+#             */
-/*   Updated: 2025/07/08 18:48:29 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/09 22:27:05 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-# include "algorithms.h"
+#include "algorithms.h"
 
 void	chunk_sort(t_ps *data)
 {
@@ -29,17 +29,21 @@ void	chunk_sort(t_ps *data)
 	}
 	if (verify_stack_is_sorted(data))
 		return ;
-	rec_chunk_sort(data, &data->algo.ctx.chunk.current_chunk);
+	rec_chunk_sort(data, &data->algo_ctx.ctx.chunk.current_chunk);
 }
 
 /**
-moving a chunk to the `top` of a stack in your implemmentation (using chunk_to_the_top)
-- it ensureas that the chunk we want to operate on is in a predictable, accessible positions
-(the top of stack A or B), makin further operations (like sorting, splitting, or moving elements
+moving a chunk to the `top` of a stack in your implemmentation
+(using chunk_to_the_top)
+- it ensureas that the chunk we want to operate on is in a predictable,
+accessible positions
+(the top of stack A or B), makin further operations (like sorting, splitting,
+or moving elements
 easier and more efficient)
-
-in the context of chunk_sort and rec_chunk_sort, befre performming easy_sort or splitting the  chunk
-we want the chnk to be at the top we can apply sortingoperation directly or split it cleanly into sub_chunks
+in the context of chunk_sort and rec_chunk_sort, befre performming easy_sort
+or splitting the  chunk
+we want the chnk to be at the top we can apply sortingoperation directl
+ or split it cleanly into sub_chunks
 @param data
 @param to_sort
 @return 

@@ -6,11 +6,11 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 21:08:52 by ugerkens          #+#    #+#             */
-/*   Updated: 2025/07/08 14:52:38 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/09 17:41:47 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stack.h"
+#include "push_swap.h"
 
 static void	rotate(t_stack *stk);
 

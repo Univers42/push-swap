@@ -1,17 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lis_utils.c                                        :+:      :+:    :+:   */
+/*   helpers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 15:50:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/06/15 16:03:58 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/09 22:30:10 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-# include "algorithms.h"
+#include "algorithms.h"
+
 static void	lis_find_and_move_max(t_ps *data);
 static void	lis_find_max_in_stack_b(t_ps *data, int *max_value,
 				int *max_position, int size_b);
