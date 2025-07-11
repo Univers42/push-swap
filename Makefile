@@ -6,7 +6,7 @@
 #    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/08 13:37:35 by codespace         #+#    #+#              #
-#    Updated: 2025/07/09 22:56:16 by codespace        ###   ########.fr        #
+#    Updated: 2025/07/11 17:47:36 by dlesieur         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ endef
 
 # COMMANDS AND FLAGS
 CC					=	cc
-CFLAGS				=	-Wall -Wextra -Werror -I./include -I./libft -g3 -O3 -std=c99
+CFLAGS				=	-Wall -Wextra -Werror -I./include -I./libft -g3 -O3
 RM					=	rm -rf
 AR					=	ar rcs
 
