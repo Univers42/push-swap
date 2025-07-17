@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   algorithms.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 17:13:26 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/17 03:54:37 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/17 09:25:45 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,6 @@ void		easy_sort(t_ps *data, t_chunk *to_sort);
 
 //------------------------HELPERS-------------------------------//
 
-// Greedy algorithm implementation
-
-int			greedy_find_best_target(t_ps *data, int value, int size_a);
 
 // K-based sorting algorithm
 void		k_sort(t_ps *data);
@@ -88,22 +85,28 @@ int			move_from_to(t_ps *data, t_loc from, t_loc to);
 void		chunk_to_the_top(t_ps *data, t_chunk *to_sort);
 
 // Greedy algorithm helpers
-void		greedy_execute_move(t_ps *data, t_greedy_node *node);
-int			greedy_find_target_position(t_ps *data, int value);
-int			greedy_calculate_total_cost(int cost_a, int cost_b,
+void		execute_move(t_ps *data, t_greedy_node *node);
+int			find_target_position(t_ps *data, int value);
+int			calculate_total_cost(int cost_a, int cost_b,
 				int pos_a, int pos_b);
-void		greedy_push_element_strategically(t_ps *data,
+void		push_element_strategically(t_ps *data,
 				int current, int total_size);
-void		greedy_calculate_costs(t_ps *data, t_greedy_node *nodes,
+void		calculate_costs(t_ps *data, t_greedy_node *nodes,
 				int size_b);
-void		greedy_calculate_move_costs(t_greedy_node *node, int size_a,
+void		calculate_move_costs(t_greedy_node *node, int size_a,
 				int size_b);
-int			greedy_find_cheapest(t_greedy_node *nodes, int size);
-int			greedy_find_min_pos(t_ps *data, int size_a, int min_value);
-void		greedy_execute_combined_and_remaining(t_ps *data,
+int			find_cheapest(t_greedy_node *nodes, int size);
+int			find_min_pos(t_ps *data, int size_a, int min_value);
+void		execute_combined_and_remaining(t_ps *data,
 				int moves_a, int moves_b, t_greedy_node *node);
-void		greedy_rotate_to_top(t_ps *data, int min_pos, int size_a);
-int			greedy_find_min_target(t_ps *data, int size_a);
+void		rotate_to_top(t_ps *data, int min_pos, int size_a);
+int			find_min_target(t_ps *data, int size_a);
+void		push_to_b(t_ps *data);
+void		push_back_to_a(t_ps *data);
+void		final_rotation(t_ps *data);
+void		rotation_b(t_ps *data, int moves_b, bool rotate_b_up);
+void		rotation_a(t_ps *data, int moves_a, bool rotate_a_up);
+int			find_best_target(t_ps *data, int value, int size_a);
 
 // K-sort helpers
 void		k_sort_handle_small_arrays(t_ps *data);

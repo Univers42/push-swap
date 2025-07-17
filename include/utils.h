@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 15:18:55 by codespace         #+#    #+#             */
-/*   Updated: 2025/07/17 01:37:38 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/17 09:06:06 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int			calculate_next_up_index(t_stack *stk, int index);
 int			calculate_next_down_index(t_stack *stk, int index);
 bool		check_if_stack_is_full(t_stack *stk);
 bool		check_if_stack_is_empty(t_stack *stk);
-int			find_min_value_in_stack(t_stack *stack);
 
 //CLEANUP
 void		cleanup_and_exit_with_error(t_ps *data);

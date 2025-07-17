@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+         #
+#    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/08 13:37:35 by codespace         #+#    #+#              #
-#    Updated: 2025/07/17 03:54:09 by dlesieur         ###   ########.fr        #
+#    Updated: 2025/07/17 09:19:29 by codespace        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,9 +56,10 @@ CHUNK_SRCS			=	$(D_CHUNK)/chunk_sort.c \
 
 GREEDY_SRCS			=	$(D_GREEDY)/greedy.c \
 						$(D_GREEDY)/execution.c \
-						$(D_GREEDY)/helpers.c \
+						$(D_GREEDY)/push.c \
 						$(D_GREEDY)/position.c \
-						$(D_GREEDY)/simple.c
+						$(D_GREEDY)/rotation.c \
+						$(D_GREEDY)/compute.c
 
 K_SRCS				=	$(D_K)/final.c \
 						$(D_K)/helpers.c \
@@ -79,7 +80,8 @@ QUEUE_SRCS			=	$(D_QUEUE)/queue_sort.c
 PERM_SRCS			=	$(D_PERMUTATIONS)/easy_perm.c \
 						$(D_PERMUTATIONS)/one_perm.c \
 						$(D_PERMUTATIONS)/three_perm.c \
-						$(D_PERMUTATIONS)/two_perm.c
+						$(D_PERMUTATIONS)/two_perm.c \
+						$(D_PERMUTATIONS)/3_perm.c
 
 OPERATIONS_SRCS		=	$(D_OPERATIONS)/push.c \
 						$(D_OPERATIONS)/rotate.c \

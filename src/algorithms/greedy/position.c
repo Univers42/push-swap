@@ -6,26 +6,26 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 16:42:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/09 22:27:46 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/17 09:24:20 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 #include "algorithms.h"
 
-int	greedy_find_target_position(t_ps *data, int value)
+int	find_target_position(t_ps *data, int value)
 {
 	int	size_a;
 	int	target_pos;
 
 	size_a = get_current_stack_size(&data->a);
-	target_pos = greedy_find_best_target(data, value, size_a);
+	target_pos = find_best_target(data, value, size_a);
 	if (target_pos == -1)
-		target_pos = greedy_find_min_target(data, size_a);
+		target_pos = find_min_target(data, size_a);
 	return (target_pos);
 }
 
-int	greedy_find_best_target(t_ps *data, int value, int size_a)
+int	find_best_target(t_ps *data, int value, int size_a)
 {
 	int	current_index;
 	int	best_target;
@@ -51,7 +51,7 @@ int	greedy_find_best_target(t_ps *data, int value, int size_a)
 	return (target_pos);
 }
 
-int	greedy_find_min_target(t_ps *data, int size_a)
+int	find_min_target(t_ps *data, int size_a)
 {
 	int	min_value;
 	int	current_index;
@@ -75,23 +75,46 @@ int	greedy_find_min_target(t_ps *data, int size_a)
 	return (target_pos);
 }
 
-int	greedy_calculate_total_cost(int cost_a, int cost_b, int pos_a, int pos_b)
+int	find_min_pos(t_ps *data, int size_a, int min_value)
 {
-	bool	rotate_a_up;
-	bool	rotate_b_up;
-	int		size_a;
-	int		size_b;
+	int	current_index;
+	int	min_pos;
+	int	i;
 
-	size_a = 100;
-	size_b = 100;
-	rotate_a_up = (pos_a <= size_a / 2);
-	rotate_b_up = (pos_b <= size_b / 2);
-	if (rotate_a_up == rotate_b_up)
+	current_index = data->a.top;
+	min_pos = 0;
+	i = 0;
+	while (i < size_a)
 	{
-		if (cost_a > cost_b)
-			return (cost_a);
-		else
-			return (cost_b);
+		if (data->a.stack[current_index] == min_value)
+		{
+			min_pos = i;
+			break ;
+		}
+		current_index = calculate_next_down_index(&data->a, current_index);
+		i++;
 	}
-	return (cost_a + cost_b);
+	return (min_pos);
+}
+
+
+int	find_cheapest(t_greedy_node *nodes, int size)
+{
+	int	cheapest_idx;
+	int	min_cost;
+	int	i;
+
+	cheapest_idx = 0;
+	min_cost = nodes[0].total_cost;
+	i = 1;
+	while (i < size)
+	{
+		if (nodes[i].total_cost < min_cost)
+		{
+			min_cost = nodes[i].total_cost;
+			cheapest_idx = i;
+		}
+		i++;
+	}
+	return (cheapest_idx);
 }
