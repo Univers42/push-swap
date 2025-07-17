@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ctrl_station.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 15:57:07 by codespace         #+#    #+#             */
-/*   Updated: 2025/07/17 01:34:57 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/17 03:49:00 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define CTRL_STATION_H
 
 # include "algorithms.h"
+# include "push_swap.h"
 
 // Forward declarations
 typedef struct s_ps	t_ps;
