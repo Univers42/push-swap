@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 15:40:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/08 18:47:48 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/17 12:37:57 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,29 @@ void	radix_rotate_to_position(t_ps *data, int min_pos, int size_a)
 	}
 }
 
+/**
+ * let's trace this functions with an example 
+ * First iteration:: +1
+ *	value = 5 (binary:: `101`) >>= 1 : (binary:: `10`)
+ * Second iteration: + 2
+ * value >>= 1 (binary:: `10`) : (binary:: `1`)
+ * third itertion + 3
+ * value >>= 1 (binary:: `1` ) :(binary:: `0`)
+ * 0 the loop stops
+ * 
+ * Why we need this function ?
+ * we need to know the number of bits required to represent
+ * the largest index (size - 1) so we can determine how many bitwise
+ * passes are needed in the radix sort algorithm
+ * In radix sort
+ * each pass sorts the numbers based on a single bit position (
+ * from LSB TO MSB). The number of passes required is equal to
+ * value . This ensures that every bit of every number
+ * is considered
+ * , so hthe sort is complete and correct for all possible vlaues
+ * 
+ * in the stack
+ */
 int	calculate_max_bits_for_size(int size)
 {
 	int	bits;

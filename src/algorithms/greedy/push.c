@@ -6,13 +6,27 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 16:40:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/17 09:24:03 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/17 09:36:54 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 #include "algorithms.h"
 
+/**
+ * push_element_strategically - Pushes an element from A to B with strategic rotation.
+ * @data: Pointer to the main push_swap data structure.
+ * @current: The value of the current element in A.
+ * @total_size: The total size of the original stack A.
+ *
+ * Decides whether to rotate B after pushing based on the value's position.
+ * This helps distribute values in B for optimal merging later.
+ *
+ * Example:
+ *   If current is in the first third, pushes and rotates B.
+ *   If in the last third, just pushes.
+ *   Otherwise, pushes and may rotate B if the top of B is small.
+ */
 void	push_element_strategically(t_ps *data, int current,
 		int total_size)
 {
@@ -35,6 +49,14 @@ void	push_element_strategically(t_ps *data, int current,
 	}
 }
 
+/**
+ * push_to_b - Pushes all but three elements from A to B, using strategic logic.
+ * @data: Pointer to the main push_swap data structure.
+ *
+ * Pushes two elements to B initially, then continues pushing until only three remain in A.
+ * Uses push_element_strategically() for each push.
+ * Finally, sorts the remaining three in A.
+ */
 void	push_to_b(t_ps *data)
 {
 	int	total_size;
@@ -55,6 +77,17 @@ void	push_to_b(t_ps *data)
 		sort_three_simple(data);
 }
 
+/**
+ * push_back_to_a - Pushes all elements from B back to A in optimal order.
+ * @data: Pointer to the main push_swap data structure.
+ *
+ * For each element in B:
+ *   - Calculates move costs for all nodes.
+ *   - Finds the cheapest node to move.
+ *   - Executes the move.
+ *   - Frees the nodes array.
+ * Continues until B is empty.
+ */
 void	push_back_to_a(t_ps *data)
 {
 	int				size_b;

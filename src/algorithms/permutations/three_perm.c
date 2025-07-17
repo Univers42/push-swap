@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 14:11:23 by codespace         #+#    #+#             */
-/*   Updated: 2025/07/08 14:12:47 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/17 09:56:00 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,19 @@ static void	sort_three_bottom_a(t_ps *data, t_chunk *to_sort, t_stack *stk,
 static void	sort_three_bottom_b(t_ps *data, t_chunk *to_sort, t_stack *stk,
 				int max);
 
+/**
+ * sort_three - Sorts three elements in a chunk, regardless of their location and stack.
+ * @data: Pointer to the main push_swap data structure.
+ * @to_sort: Pointer to the chunk to sort.
+ *
+ * Determines the chunk's location (top/bottom of A/B) and calls the appropriate
+ * helper to sort the three elements with minimal moves. This is optimal because
+ * it uses the minimum number of stack operations for each case.
+ *
+ * Example:
+ *   If the chunk is at the top of B, uses pa and sb to bring the largest to A
+ *   and sort the rest.
+ */
 void	sort_three(t_ps *data, t_chunk *to_sort)
 {
 	t_stack	*stk;
@@ -39,6 +52,16 @@ void	sort_three(t_ps *data, t_chunk *to_sort)
 		sort_three_bottom_b(data, to_sort, stk, max);
 }
 
+/**
+ * sort_three_top_a - Sorts three elements at the top of stack A.
+ * @data: Pointer to the main push_swap data structure.
+ * @to_sort: Pointer to the chunk to sort.
+ * @stk: Pointer to the stack structure.
+ * @max: Maximum value in the chunk.
+ *
+ * Uses a combination of sa, ra, and rra to sort the three elements in place.
+ * This is optimal for the top of A, as it avoids unnecessary pushes.
+ */
 static void	sort_three_top_a(t_ps *data, t_chunk *to_sort, t_stack *stk,
 		int max)
 {
@@ -60,6 +83,16 @@ static void	sort_three_top_a(t_ps *data, t_chunk *to_sort, t_stack *stk,
 	sort_two(data, to_sort);
 }
 
+/**
+ * sort_three_top_b - Sorts three elements at the top of stack B and pushes to A.
+ * @data: Pointer to the main push_swap data structure.
+ * @to_sort: Pointer to the chunk to sort.
+ * @stk: Pointer to the stack structure.
+ * @max: Maximum value in the chunk.
+ *
+ * Uses pa and sb to bring the largest to A and sort the rest, then pushes all
+ * to A. This is optimal for B, as it minimizes the number of operations.
+ */
 static void	sort_three_top_b(t_ps *data, t_chunk *to_sort, t_stack *stk,
 		int max)
 {
@@ -83,6 +116,16 @@ static void	sort_three_top_b(t_ps *data, t_chunk *to_sort, t_stack *stk,
 	sort_two(data, to_sort);
 }
 
+/**
+ * sort_three_bottom_a - Sorts three elements at the bottom of stack A.
+ * @data: Pointer to the main push_swap data structure.
+ * @to_sort: Pointer to the chunk to sort.
+ * @stk: Pointer to the stack structure.
+ * @max: Maximum value in the chunk.
+ *
+ * Rotates the bottom three to the top, sorts them, then rotates back if needed.
+ * This is optimal for bottom chunks, as it avoids unnecessary pushes.
+ */
 static void	sort_three_bottom_a(t_ps *data, t_chunk *to_sort, t_stack *stk,
 		int max)
 {
@@ -107,6 +150,16 @@ static void	sort_three_bottom_a(t_ps *data, t_chunk *to_sort, t_stack *stk,
 	sort_two(data, to_sort);
 }
 
+/**
+ * sort_three_bottom_b - Sorts three elements at the bottom of stack B and pushes to A.
+ * @data: Pointer to the main push_swap data structure.
+ * @to_sort: Pointer to the chunk to sort.
+ * @stk: Pointer to the stack structure.
+ * @max: Maximum value in the chunk.
+ *
+ * Rotates the bottom three to the top of B, sorts them, then pushes to A.
+ * This is optimal for bottom B, as it minimizes the number of moves.
+ */
 static void	sort_three_bottom_b(t_ps *data, t_chunk *to_sort, t_stack *stk,
 		int max)
 {
