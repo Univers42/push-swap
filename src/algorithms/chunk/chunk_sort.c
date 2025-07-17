@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 20:56:55 by ugerkens          #+#    #+#             */
-/*   Updated: 2025/07/09 22:27:05 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/17 01:39:48 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	chunk_sort(t_ps *data)
 	}
 	if (verify_stack_is_sorted(data))
 		return ;
-	rec_chunk_sort(data, &data->algo_ctx.ctx.chunk.current_chunk);
+	rec_chunk_sort(data, &data->algo_ctx.u_ctx.s_chunk.current_chunk);
 }
 
 /**

@@ -1,15 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   visualizer_bonus.c                                 :+:      :+:    :+:   */
+/*   visualizer.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 00:00:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/09 18:43:03 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/17 01:41:31 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+# ifndef _POSIX_C_SOURCE
+#  define _POSIX_C_SOURCE 200809L
+# endif
+
+# ifndef _DEFAULT_SOURCE
+#  define _DEFAULT_SOURCE
+# endif
+
+# ifndef _BSD_SOURCE
+#  define _BSD_SOURCE
+# endif
 #include "push_swap.h"
 #include "visualizer_bonus.h"
 #include "checker_bonus.h"

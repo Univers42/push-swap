@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 17:13:26 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/09 17:40:08 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/17 01:34:30 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ typedef enum e_algo_type
 	ALGO_RADIX,
 	ALGO_QUEUE
 }	t_algo_type;
-
 
 // Chunk structure for chunk sort
 typedef struct s_chunk

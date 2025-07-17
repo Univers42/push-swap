@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 14:20:48 by ugerkens          #+#    #+#             */
-/*   Updated: 2025/07/09 17:41:10 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/17 01:38:58 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,12 @@
 # include "algorithms.h"
 // Project headers (order matters to avoid circular dependencies)
 # include "stack.h"
-
-// Forward declarations
-typedef struct s_ps t_ps;
-
-
+// Include other headers after main structure is defined
+# include "parser.h"
+# include "utils.h"
+# include "ctrl_station.h"
+# include "optimizations.h"
+# include "tracker.h"
 
 // Algorithm context structure
 typedef struct s_algo_context
@@ -39,33 +40,33 @@ typedef struct s_algo_context
 		{
 			t_chunk			current_chunk;
 			t_split_dest	split_dest;
-		}	chunk;
+		}	s_chunk;
 		struct
 		{
 			t_greedy_node	*nodes;
 			int				nodes_count;
 			int				phase;
-		}	greedy;
+		}	s_greedy;
 		struct
 		{
 			int	k_value;
 			int	range;
-		}	k_sort;
+		}	s_k_sort;
 		struct
 		{
 			int	bit_count;
 			int	max_bits;
-		}	radix;
+		}	s_radix;
 		struct
 		{
 			int	*lis;
 			int	lis_length;
-		}	lis;
+		}	s_lis;
 		struct
 		{
 			int	dummy;
-		}	queue;
-	}	ctx;
+		}	s_queue;
+	}	u_ctx;
 }	t_algo_context;
 
 // Algorithm structure
@@ -77,7 +78,7 @@ typedef struct s_algorithm
 }	t_algorithm;
 
 // Main push_swap structure - define the actual structure
-struct s_ps
+typedef struct s_ps
 {
 	t_stack			a;
 	t_stack			b;
@@ -87,18 +88,9 @@ struct s_ps
 	int				total_size;
 	t_algorithm		algo;
 	t_algo_context	algo_ctx;
-};
-
+}					t_ps;
 // Function pointer types
 typedef void	(*t_config_fn)(t_ps *data);
-
-// Include other headers after main structure is defined
-# include "algorithms.h"
-# include "parser.h"
-# include "utils.h"
-# include "ctrl_station.h"
-# include "optimizations.h"
-# include "tracker.h"
 
 // CORE INITIALIZATION
 void		initialize_push_swap_data(t_ps *data, int argc, char **argv);
