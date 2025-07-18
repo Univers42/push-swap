@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 23:22:18 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/18 16:26:00 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/18 20:06:10 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
  * this one is more a didactical way to showcase different way of thinking
  * which is really important for Engineering principles
  * The default algorithm is set to ALGO_CHUNK to do that
+ * I've noticed that the greedy algorithm is the most efficient
+ * answer possible for small stacks. 
  */
 int	main(int argc, char *argv[])
 {
@@ -34,6 +36,8 @@ int	main(int argc, char *argv[])
 	if (!is_stack_sorted(&data))
 	{
 		select_algorithm(&data, ALGORITHM);
+		if (data.total_size <= 12)
+			select_algorithm(&data, ALGO_GREEDY);
 		execute_algorithm(&data);
 		post_sort_optimization(&data);
 		print_operations(data.op_list);

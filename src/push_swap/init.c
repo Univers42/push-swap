@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 21:08:35 by ugerkens          #+#    #+#             */
-/*   Updated: 2025/07/18 16:25:15 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/18 19:41:15 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	init_engine_ps(t_ps *data, int argc, char **argv)
 {
 	data->op_list = NULL;
 	if (argc <= 1)
-		cleanup_and_exit_with_error(data);
+		return ;
 	--argc;
 	allocate_and_init_stack(data, &data->a, argc);
 	allocate_and_init_stack(data, &data->b, argc);

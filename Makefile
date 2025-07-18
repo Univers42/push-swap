@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
+#    By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/08 13:37:35 by codespace         #+#    #+#              #
-#    Updated: 2025/07/18 15:55:07 by codespace        ###   ########.fr        #
+#    Updated: 2025/07/18 19:17:16 by dlesieur         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -149,7 +149,6 @@ CHECKER_SRCS		=	$(D_CHECKER_BONUS)/checker_bonus.c \
 						$(D_UTILS)/check.c \
 						$(D_UTILS)/exit.c \
 						$(D_UTILS)/get.c \
-						$(D_UTILS)/math.c \
 						$(D_PARSER)/helpers.c
 
 VISUALIZER_SRCS		=	$(D_CHECKER_BONUS)/visualizer/visualizer.c \
