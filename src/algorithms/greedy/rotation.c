@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 09:12:12 by codespace         #+#    #+#             */
-/*   Updated: 2025/07/17 12:17:07 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/18 16:23:33 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,9 +109,9 @@ void	final_rotation(t_ps *data)
 	int	min_pos;
 	int	size_a;
 
-	min_value = find_min_value_in_stack(&data->a);
+	min_value = find_min(&data->a);
 	min_pos = 0;
-	size_a = get_current_stack_size(&data->a);
+	size_a = get_stack_size(&data->a);
 	min_pos = find_min_pos(data, size_a, min_value);
 	rotate_to_top(data, min_pos, size_a);
 }

@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 09:13:42 by codespace         #+#    #+#             */
-/*   Updated: 2025/07/17 11:32:37 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/18 16:08:03 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	calculate_costs(t_ps *data, t_greedy_node *nodes, int size_b)
 	int	current_index;
 	int	i;
 
-	size_a = get_current_stack_size(&data->a);
+	size_a = get_stack_size(&data->a);
 	current_index = data->b.top;
 	i = 0;
 	while (i < size_b)
@@ -70,7 +70,7 @@ void	calculate_costs(t_ps *data, t_greedy_node *nodes, int size_b)
 		nodes[i].index = i;
 		nodes[i].target_pos = find_target_position(data, nodes[i].value);
 		calculate_move_costs(&nodes[i], size_a, size_b);
-		current_index = calculate_next_down_index(&data->b, current_index);
+		current_index = move_down(&data->b, current_index);
 		i++;
 	}
 }

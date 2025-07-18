@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lis_rotation.c                                     :+:      :+:    :+:   */
+/*   rotation.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 15:51:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/06/16 00:00:00 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/18 16:26:00 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ void	lis_final_rotation_to_sorted(t_ps *data)
 	int	min_pos;
 	int	size_a;
 
-	if (verify_stack_is_sorted(data))
+	if (is_stack_sorted(data))
 		return ;
-	size_a = get_current_stack_size(&data->a);
-	min_value = find_min_value_in_stack(&data->a);
+	size_a = get_stack_size(&data->a);
+	min_value = find_min(&data->a);
 	min_pos = lis_find_min_position_in_stack(data, size_a, min_value);
 	if (min_pos == 0)
 		return ;
@@ -74,7 +74,7 @@ static int	lis_find_min_position_in_stack(t_ps *data, int size_a,
 			min_pos = i;
 			break ;
 		}
-		current_index = calculate_next_down_index(&data->a, current_index);
+		current_index = move_down(&data->a, current_index);
 		i++;
 	}
 	return (min_pos);

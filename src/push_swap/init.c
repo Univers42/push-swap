@@ -6,13 +6,13 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 21:08:35 by ugerkens          #+#    #+#             */
-/*   Updated: 2025/07/09 17:45:03 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/18 16:25:15 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	initialize_push_swap_data(t_ps *data, int argc, char **argv)
+void	init_engine_ps(t_ps *data, int argc, char **argv)
 {
 	data->op_list = NULL;
 	if (argc <= 1)

@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 00:00:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/17 01:41:31 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/18 16:13:24 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void print_both_array_stacks(t_stack *stack_a, t_stack *stack_b)
     for (int i = 0; i < stack_a->element_count; i++)
     {
         char temp[20];
-        sprintf(temp, "[%d]", get_stack_element_at_position(stack_a, i + 1));
+        sprintf(temp, "[%d]", get_items(stack_a, i + 1));
         int len = strlen(temp);
         if (len > max_width_a)
             max_width_a = len;
@@ -119,7 +119,7 @@ void print_both_array_stacks(t_stack *stack_a, t_stack *stack_b)
     for (int i = 0; i < stack_b->element_count; i++)
     {
         char temp[20];
-        sprintf(temp, "[%d]", get_stack_element_at_position(stack_b, i + 1));
+        sprintf(temp, "[%d]", get_items(stack_b, i + 1));
         int len = strlen(temp);
         if (len > max_width_b)
             max_width_b = len;
@@ -166,7 +166,7 @@ void print_both_array_stacks(t_stack *stack_a, t_stack *stack_b)
         // Stack A element
         if (i < stack_a->element_count)
         {
-            int value = get_stack_element_at_position(stack_a, i + 1);
+            int value = get_items(stack_a, i + 1);
             ft_printf("%s[%d]%s", BRIGHT_YELLOW, value, RESET);
             char temp[20];
             sprintf(temp, "[%d]", value);
@@ -183,7 +183,7 @@ void print_both_array_stacks(t_stack *stack_a, t_stack *stack_b)
         // Stack B element
         if (i < stack_b->element_count)
         {
-            int value = get_stack_element_at_position(stack_b, i + 1);
+            int value = get_items(stack_b, i + 1);
             ft_printf("%s[%d]%s", BRIGHT_MAGENTA, value, RESET);
             char temp[20];
             sprintf(temp, "[%d]", value);
@@ -248,8 +248,8 @@ bool is_sorted(t_stack *stack)
     
     for (i = 0; i < stack->element_count - 1; i++)
     {
-        if (get_stack_element_at_position(stack, i + 1) > 
-            get_stack_element_at_position(stack, i + 2))
+        if (get_items(stack, i + 1) > 
+            get_items(stack, i + 2))
             return false;
     }
     return true;

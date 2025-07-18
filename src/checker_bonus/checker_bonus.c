@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 20:56:49 by ugerkens          #+#    #+#             */
-/*   Updated: 2025/07/09 19:49:34 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/18 16:26:00 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ __attribute__((weak))
 void	checker_main_logic(t_ps *data)
 {
 	read_and_execute_operations(data);
-	if (check_if_stack_is_empty(&data->b) && verify_stack_is_sorted(data))
+	if (check_if_stack_is_empty(&data->b) && is_stack_sorted(data))
 		ft_printf("OK\n");
 	else
 		ft_printf("KO\n");

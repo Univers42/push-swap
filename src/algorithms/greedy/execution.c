@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 16:41:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/17 09:35:20 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/18 16:08:10 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ void	execute_combined_and_remaining(t_ps *data, int moves_a,
 	bool	rotate_a_up;
 	bool	rotate_b_up;
 
-	size_a = get_current_stack_size(&data->a);
-	size_b = get_current_stack_size(&data->b);
+	size_a = get_stack_size(&data->a);
+	size_b = get_stack_size(&data->b);
 	rotate_a_up = (node->target_pos <= size_a / 2);
 	rotate_b_up = (node->index <= size_b / 2);
 	while (moves_a > 0 && moves_b > 0 && rotate_a_up == rotate_b_up)

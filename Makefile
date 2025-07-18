@@ -6,7 +6,7 @@
 #    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/08 13:37:35 by codespace         #+#    #+#              #
-#    Updated: 2025/07/17 09:19:29 by codespace        ###   ########.fr        #
+#    Updated: 2025/07/18 15:55:07 by codespace        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -97,8 +97,7 @@ STACK_SRCS			=	$(D_STACK)/cv_stack.c
 
 UTILS_SRCS			=	$(D_UTILS)/check.c \
 						$(D_UTILS)/exit.c \
-						$(D_UTILS)/get.c \
-						$(D_UTILS)/math.c
+						$(D_UTILS)/get.c
 
 PUSH_SWAP_SRCS		=	$(D_PUSH_SWAP)/main.c \
 						$(D_PUSH_SWAP)/helpers.c \

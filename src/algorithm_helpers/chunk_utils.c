@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 20:58:02 by ugerkens          #+#    #+#             */
-/*   Updated: 2025/07/09 22:32:38 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/18 16:04:48 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ int	chunk_value(t_ps *data, t_chunk *chunk, int n)
 		i = stk->bottom;
 	if (loc == TOP_A || loc == TOP_B)
 		while (--n > 0)
-			i = calculate_next_down_index(stk, i);
+			i = move_down(stk, i);
 	else if (loc == BOTTOM_A || loc == BOTTOM_B)
 		while (--n > 0)
-			i = calculate_next_up_index(stk, i);
+			i = move_up(stk, i);
 	return (stk->stack[i]);
 }
 
@@ -55,9 +55,9 @@ int	chunk_max_value(t_ps *data, t_chunk *chunk)
 		if (stk->stack[i] > max_value)
 			max_value = stk->stack[i];
 		if (chunk->loc == TOP_A || chunk->loc == TOP_B)
-			i = calculate_next_down_index(stk, i);
+			i = move_down(stk, i);
 		else if (chunk->loc == BOTTOM_A || chunk->loc == BOTTOM_B)
-			i = calculate_next_up_index(stk, i);
+			i = move_up(stk, i);
 	}
 	return (max_value);
 }

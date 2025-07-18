@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 13:27:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/09 22:25:29 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/18 16:26:00 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	calculate_value_range(int *numbers, int size);
 static bool	detect_duplicates_with_hash(int *numbers, int size,
 				char *hash_table, int range);
 
-bool	verify_stack_is_sorted(t_ps *data)
+bool	is_stack_sorted(t_ps *data)
 {
 	int	current_index;
 	int	expected_rank;
@@ -33,7 +33,7 @@ bool	verify_stack_is_sorted(t_ps *data)
 		if (data->a.stack[current_index] != expected_rank)
 			return (false);
 		expected_rank++;
-		current_index = calculate_next_down_index(&data->a, current_index);
+		current_index = move_down(&data->a, current_index);
 	}
 	return (true);
 }

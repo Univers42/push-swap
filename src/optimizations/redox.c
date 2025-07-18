@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 20:58:15 by ugerkens          #+#    #+#             */
-/*   Updated: 2025/07/08 14:55:25 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/18 16:13:24 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,18 @@ void	redox(t_ps *data, t_chunk *max)
 
 	a = &data->a;
 	if (max->loc == TOP_A && max->size == 3
-		&& is_consecutive(get_stack_element_at_position(a, 1),
-			get_stack_element_at_position(a, 2),
-			get_stack_element_at_position(a, 3),
-			get_stack_element_at_position(a, 4))
+		&& is_consecutive(get_items(a, 1),
+			get_items(a, 2),
+			get_items(a, 3),
+			get_items(a, 4))
 		&& a_partly_sort(data, 4))
 	{
 		sort_three(data, max);
 		return ;
 	}
 	if (max->loc == TOP_A
-		&& get_stack_element_at_position(a, 1)
-		== get_stack_element_at_position(a, 3) - 1
+		&& get_items(a, 1)
+		== get_items(a, 3) - 1
 		&& a_partly_sort(data, 3))
 	{
 		sa(data);
@@ -49,11 +49,11 @@ bool	a_partly_sort(t_ps *data, int from)
 	a = &data->a;
 	i = a->top;
 	while (--from)
-		i = calculate_next_down_index(a, i);
+		i = move_down(a, i);
 	while (a->stack[i] != data->a.capacity)
 	{
 		value_current = a->stack[i];
-		i = calculate_next_down_index(a, i);
+		i = move_down(a, i);
 		if (a->stack[i] != value_current + 1)
 			return (false);
 	}

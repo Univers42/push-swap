@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 16:42:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/17 12:07:36 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/18 16:23:33 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	find_target_position(t_ps *data, int value)
 	int	size_a;
 	int	target_pos;
 
-	size_a = get_current_stack_size(&data->a);
+	size_a = get_stack_size(&data->a);
 	target_pos = find_best_target(data, value, size_a);
 	if (target_pos == -1)
 		target_pos = find_min_target(data, size_a);
@@ -106,7 +106,7 @@ int	find_best_target(t_ps *data, int value, int size_a)
 			best_target = current_value;
 			target_pos = i;
 		}
-		current_index = calculate_next_down_index(&data->a, current_index);
+		current_index = move_down(&data->a, current_index);
 		i++;
 	}
 	return (target_pos);
@@ -126,7 +126,7 @@ int	find_min_target(t_ps *data, int size_a)
 	int	target_pos;
 	int	i;
 
-	min_value = find_min_value_in_stack(&data->a);
+	min_value = find_min(&data->a);
 	current_index = data->a.top;
 	target_pos = 0;
 	i = 0;
@@ -137,7 +137,7 @@ int	find_min_target(t_ps *data, int size_a)
 			target_pos = i;
 			break ;
 		}
-		current_index = calculate_next_down_index(&data->a, current_index);
+		current_index = move_down(&data->a, current_index);
 		i++;
 	}
 	return (target_pos);
@@ -167,7 +167,7 @@ int	find_min_pos(t_ps *data, int size_a, int min_value)
 			min_pos = i;
 			break ;
 		}
-		current_index = calculate_next_down_index(&data->a, current_index);
+		current_index = move_down(&data->a, current_index);
 		i++;
 	}
 	return (min_pos);

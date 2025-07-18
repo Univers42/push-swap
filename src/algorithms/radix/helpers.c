@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 15:40:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/17 12:51:16 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/18 16:13:24 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ void	radix_handle_small_arrays(t_ps *data)
 {
 	int	size;
 
-	size = get_current_stack_size(&data->a);
+	size = get_stack_size(&data->a);
 	if (size == 3)
 		sort_three_simple(data);
 	else if (size == 2)
 	{
-		if (get_stack_element_at_position(&data->a, 1)
-			> get_stack_element_at_position(&data->a, 2))
+		if (get_items(&data->a, 1)
+			> get_items(&data->a, 2))
 			sa(data);
 	}
 }

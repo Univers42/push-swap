@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 14:20:48 by ugerkens          #+#    #+#             */
-/*   Updated: 2025/07/18 15:27:07 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/18 16:25:15 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ typedef struct s_ps
 typedef void	(*t_config_fn)(t_ps *data);
 
 // CORE INITIALIZATION
-void		initialize_push_swap_data(t_ps *data, int argc, char **argv);
+void		init_engine_ps(t_ps *data, int argc, char **argv);
 void		allocate_and_init_stack(t_ps *data, t_stack *stk, int capacity);
 void config_mask(t_ps *data, void (*ctx_alg)(t_ps *),
 					void (*init)(t_ps *), t_string name);
@@ -102,6 +102,7 @@ void		config_lis(t_ps *data);
 void		config_radix(t_ps *data);
 void		config_k_sort(t_ps *data);
 void		config_greedy(t_ps *data);
+void		config_chunk(t_ps *data);
 void		init_chunk_context(t_ps *data);
 void		init_greedy_context(t_ps *data);
 void		init_k_sort_context(t_ps *data);

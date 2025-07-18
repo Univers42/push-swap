@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 14:11:23 by codespace         #+#    #+#             */
-/*   Updated: 2025/07/17 09:56:00 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/18 16:05:50 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static void	sort_three_top_a(t_ps *data, t_chunk *to_sort, t_stack *stk,
 		sa(data);
 		rra(data);
 	}
-	else if (stk->stack[calculate_next_down_index(stk, stk->top)] == max)
+	else if (stk->stack[move_down(stk, stk->top)] == max)
 	{
 		ra(data);
 		sa(data);
@@ -102,7 +102,7 @@ static void	sort_three_top_b(t_ps *data, t_chunk *to_sort, t_stack *stk,
 		pa(data);
 		sa(data);
 	}
-	else if (stk->stack[calculate_next_down_index(stk, stk->top)] == max)
+	else if (stk->stack[move_down(stk, stk->top)] == max)
 	{
 		sb(data);
 		pa(data);
@@ -136,7 +136,7 @@ static void	sort_three_bottom_a(t_ps *data, t_chunk *to_sort, t_stack *stk,
 		sa(data);
 		rra(data);
 	}
-	else if (stk->stack[calculate_next_down_index(stk, stk->top)] == max)
+	else if (stk->stack[move_down(stk, stk->top)] == max)
 		rra(data);
 	else
 	{
@@ -170,7 +170,7 @@ static void	sort_three_bottom_b(t_ps *data, t_chunk *to_sort, t_stack *stk,
 		pa(data);
 		rrb(data);
 	}
-	else if (stk->stack[calculate_next_down_index(stk, stk->top)] == max)
+	else if (stk->stack[move_down(stk, stk->top)] == max)
 	{
 		sb(data);
 		pa(data);

@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 19:05:54 by codespace         #+#    #+#             */
-/*   Updated: 2025/07/09 19:44:36 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/18 16:26:00 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	checker_main_logic(t_ps *data)
 void	checker_main_logic_core(t_ps *data)
 {
 	read_and_execute_operations(data);
-	if (check_if_stack_is_empty(&data->b) && verify_stack_is_sorted(data))
+	if (check_if_stack_is_empty(&data->b) && is_stack_sorted(data))
 		ft_printf("OK\n");
 	else
 		ft_printf("KO\n");
@@ -85,7 +85,7 @@ void	ask_for_visualization(t_ps *data)
 	FILE	*tty;
 
 	ft_printf("🎬 Push_swap Checker Visualization\n");
-	ft_printf("Stack size: %d\n", get_current_stack_size(&data->a));
+	ft_printf("Stack size: %d\n", get_stack_size(&data->a));
 	ft_printf("\nVisualize operations step by step? (y/n): ");
 	fflush(stdout);
 	tty = fopen("/dev/tty", "r");
@@ -112,7 +112,7 @@ void	run_checker_with_visualization(t_ps *data)
 	ft_printf("\n🎬 Push_swap Visualizer\n");
 	ft_printf("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
 	ft_printf("Stack size: %d | Auto-visualization mode\n",
-		get_current_stack_size(&data->a));
+		get_stack_size(&data->a));
 	ft_printf("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n");
 	init_recorder();
 	start_recording();
@@ -129,7 +129,7 @@ void	run_checker_with_visualization(t_ps *data)
 		line = get_next_line(STDIN_FILENO);
 	}
 	ft_printf("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
-	if (check_if_stack_is_empty(&data->b) && verify_stack_is_sorted(data))
+	if (check_if_stack_is_empty(&data->b) && is_stack_sorted(data))
 	{
 		show_frame(data, "✅ FINAL STATE - OK");
 		ft_printf("\n🎉 SUCCESS: Stack is properly sorted!\n");

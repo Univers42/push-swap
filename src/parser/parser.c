@@ -6,13 +6,13 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 00:00:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/09 22:33:50 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/18 16:26:00 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-bool	verify_stack_is_sorted(t_ps *data)
+bool	is_stack_sorted(t_ps *data)
 {
 	int	current_index;
 	int	next_index;
@@ -21,14 +21,14 @@ bool	verify_stack_is_sorted(t_ps *data)
 
 	if (!data || data->b.element_count > 0)
 		return (false);
-	size = get_current_stack_size(&data->a);
+	size = get_stack_size(&data->a);
 	if (size <= 1)
 		return (true);
 	current_index = data->a.top;
 	i = 0;
 	while (i < size - 1)
 	{
-		next_index = calculate_next_down_index(&data->a, current_index);
+		next_index = move_down(&data->a, current_index);
 		if (data->a.stack[current_index] > data->a.stack[next_index])
 			return (false);
 		current_index = next_index;

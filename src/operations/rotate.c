@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 21:08:52 by ugerkens          #+#    #+#             */
-/*   Updated: 2025/07/09 17:41:47 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/18 16:10:20 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,17 @@ static void	rotate(t_stack *stk)
 	int	new_top;
 	int	new_bottom;
 
-	if (get_current_stack_size(stk) < 2)
+	if (get_stack_size(stk) < 2)
 		return ;
-	new_top = calculate_next_down_index(stk, stk->top);
-	if (get_current_stack_size(stk) == stk->capacity)
+	new_top = move_down(stk, stk->top);
+	if (get_stack_size(stk) == stk->capacity)
 	{
 		stk->bottom = stk->top;
 		stk->top = new_top;
 	}
 	else
 	{
-		new_bottom = calculate_next_down_index(stk, stk->bottom);
+		new_bottom = move_down(stk, stk->bottom);
 		stk->stack[new_bottom] = stk->stack[stk->top];
 		stk->stack[stk->top] = 0;
 		stk->bottom = new_bottom;

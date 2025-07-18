@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 23:45:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/17 13:35:16 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/18 16:26:00 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,14 @@ void	radix_sort(t_ps *data)
 {
 	int	total_size;
 	
-	if (verify_stack_is_sorted(data))
+	if (is_stack_sorted(data))
 		return ;
-	if (!data || get_current_stack_size(&data->a) <= 3)
+	if (!data || get_stack_size(&data->a) <= 3)
 	{
 		radix_handle_small_arrays(data);
 		return ;
 	}
-	total_size = get_current_stack_size(&data->a);
+	total_size = get_stack_size(&data->a);
 	radix_process_all_bits(data, total_size);
 	radix_final_rotation_simple(data);
 }
@@ -71,7 +71,7 @@ static void	radix_sort_by_bit_corrected(t_ps *data, int bit_position)
 	int	current_element;
 	int	zero_based_value;
 
-	total_elements = get_current_stack_size(&data->a);
+	total_elements = get_stack_size(&data->a);
 	processed = 0;
 	while (processed < total_elements)
 	{
@@ -83,7 +83,7 @@ static void	radix_sort_by_bit_corrected(t_ps *data, int bit_position)
 			ra(data);
 		processed++;
 	}
-	while (get_current_stack_size(&data->b) > 0)
+	while (get_stack_size(&data->b) > 0)
 		pa(data);
 }
 

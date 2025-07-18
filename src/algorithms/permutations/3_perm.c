@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 07:28:06 by codespace         #+#    #+#             */
-/*   Updated: 2025/07/17 15:01:21 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/18 16:13:24 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,11 @@ void	sort_three_simple(t_ps *data)
 	int	second;
 	int	third;
 
-	if (get_current_stack_size(&data->a) != 3)
+	if (get_stack_size(&data->a) != 3)
 		return ;
-	first = get_stack_element_at_position(&data->a, 1);
-	second = get_stack_element_at_position(&data->a, 2);
-	third = get_stack_element_at_position(&data->a, 3);
+	first = get_items(&data->a, 1);
+	second = get_items(&data->a, 2);
+	third = get_items(&data->a, 3);
 	if (first > second && second < third && first < third)
 		sa(data);
 	else if (first > second && second > third)

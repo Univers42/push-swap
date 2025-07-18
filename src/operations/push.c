@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 21:08:41 by ugerkens          #+#    #+#             */
-/*   Updated: 2025/07/09 17:38:08 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/18 16:10:12 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ static void	push(t_stack *src, t_stack *dest)
 	int	new_dest_top;
 	int	new_src_top;
 
-	if (get_current_stack_size(dest) == dest->capacity
-		|| get_current_stack_size(src) == 0)
+	if (get_stack_size(dest) == dest->capacity
+		|| get_stack_size(src) == 0)
 		return ;
-	new_dest_top = calculate_next_up_index(dest, dest->top);
-	new_src_top = calculate_next_down_index(src, src->top);
+	new_dest_top = move_up(dest, dest->top);
+	new_src_top = move_down(src, src->top);
 	dest->stack[new_dest_top] = src->stack[src->top];
 	dest->top = new_dest_top;
 	dest->element_count++;

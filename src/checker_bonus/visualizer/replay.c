@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   replay_bonus.c                                     :+:      :+:    :+:   */
+/*   replay.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 00:00:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/09 18:20:04 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/18 16:26:00 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	replay_operations_from_input(t_ps *data)
 		step++;
 	}
 	
-	if (check_if_stack_is_empty(&data->b) && verify_stack_is_sorted(data))
+	if (check_if_stack_is_empty(&data->b) && is_stack_sorted(data))
 		show_frame(data, "✅ SORTING COMPLETE - SUCCESS!");
 	else
 		show_frame(data, "❌ SORTING INCOMPLETE");

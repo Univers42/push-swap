@@ -122,12 +122,12 @@ void greedy_sort(t_ps *data)
         if (data->total_size == 3)
             sort_three_simple(data);
         else if (data->total_size == 2
-            && get_stack_element_at_position(&data->a, 1)
-            > get_stack_element_at_position(&data->a, 2))
+            && get_items(&data->a, 1)
+            > get_items(&data->a, 2))
             sa(data);
         return;
     }
-    if (verify_stack_is_sorted(data))
+    if (is_stack_sorted(data))
         return;
     data->algo_ctx.ctx.greedy.phase = 0;
     greedy_push_to_b(data);
@@ -144,7 +144,7 @@ This is the entry point for the greedy algorithm,handling the entire sorting pro
     - If the input size is ≤ 3, sort directly:
         - For size = 3, call sort_three_simple to sort Stack A.
         - For size = 2, swap (sa) if the top two elements are out of order.
-        - For size ≤ 1 or if Stack A is already sorted (verify_stack_is_sorted), return immediately.
+        - For size ≤ 1 or if Stack A is already sorted (is_stack_sorted), return immediately.
 2. **Phase 0: Push to Stack B**:
     - Set phase = 0 in the algorithm context and call greedy_push_to_b to move most elements to Stack B, leaving 3 elements in Stack A.
 3. **Phase 1: Push Back to Stack A**:

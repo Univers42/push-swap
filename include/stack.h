@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 20:56:27 by ugerkens          #+#    #+#             */
-/*   Updated: 2025/07/17 09:06:46 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/18 16:26:00 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ bool		detect_duplicates_with_sorting(int *numbers, int size);
 void		efficient_sort(int *arr, int size);
 
 // STACK VERIFICATION AND CLEANUP
-bool		verify_stack_is_sorted(t_ps *data);
-void		release_allocated_memory(t_ps *data);
+bool		is_stack_sorted(t_ps *data);
+void		release_mem(t_ps *data);
 void		cleanup_and_exit_with_error(t_ps *data);
 
 // OPERATION TRACKING
@@ -82,10 +82,10 @@ void		allocate_and_init_stack(t_ps *data, t_stack *stk, int capacity);
 void		convert_numbers_to_ranks(int *numbers, int *rank, int size);
 
 // Stack utility functions
-int			get_stack_element_at_position(t_stack *stk, int position);
-int			get_current_stack_size(t_stack *stk);
-int			calculate_next_up_index(t_stack *stk, int index);
-int			calculate_next_down_index(t_stack *stk, int index);
+int			get_items(t_stack *stk, int position);
+int			get_stack_size(t_stack *stk);
+int			move_up(t_stack *stk, int index);
+int			move_down(t_stack *stk, int index);
 bool		check_if_stack_is_full(t_stack *stk);
 bool		check_if_stack_is_empty(t_stack *stk);
 

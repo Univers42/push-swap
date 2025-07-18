@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 14:31:22 by codespace         #+#    #+#             */
-/*   Updated: 2025/07/09 22:26:20 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/18 16:07:48 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ a stack,, based on its size and position
 void	chunk_to_the_top(t_ps *data, t_chunk *to_sort)
 {
 	if (to_sort->loc == BOTTOM_B
-		&& get_current_stack_size(&data->b) == to_sort->size)
+		&& get_stack_size(&data->b) == to_sort->size)
 		to_sort->loc = TOP_B;
 	if (to_sort->loc == BOTTOM_A
-		&& get_current_stack_size(&data->a) == to_sort->size)
+		&& get_stack_size(&data->a) == to_sort->size)
 		to_sort->loc = TOP_A;
 }

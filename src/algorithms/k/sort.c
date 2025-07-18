@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   k_sort.c                                           :+:      :+:    :+:   */
+/*   sort.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 23:00:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/06/16 00:00:00 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/18 16:26:00 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ void	k_sort(t_ps *data)
 {
 	int	total_size;
 
-	if (!data || get_current_stack_size(&data->a) <= 3)
+	if (!data || get_stack_size(&data->a) <= 3)
 	{
 		k_sort_handle_small_arrays(data);
 		return ;
 	}
-	if (verify_stack_is_sorted(data))
+	if (is_stack_sorted(data))
 		return ;
-	total_size = get_current_stack_size(&data->a);
+	total_size = get_stack_size(&data->a);
 	k_sort_main_process(data, total_size);
 }
 
@@ -41,7 +41,7 @@ static void	k_sort_main_process(t_ps *data, int total_size)
 	target_remaining = 3;
 	k_sort_push_loop(data, &range, &i, target_remaining);
 	k_sort_handle_remaining_in_a(data);
-	while (get_current_stack_size(&data->b) > 0)
+	while (get_stack_size(&data->b) > 0)
 	{
 		k_find_and_move_max_to_top(data);
 		pa(data);

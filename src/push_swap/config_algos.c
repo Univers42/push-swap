@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 21:28:58 by codespace         #+#    #+#             */
-/*   Updated: 2025/07/18 15:27:28 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/18 15:37:30 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,6 @@ void config_mask(t_ps *data, void (*ctx_alg)(t_ps *),
     data->algo.name = name;
     if (init)
         init(data);
-}
-
-void config_greedy(t_ps *data) {
-    config_mask(data, greedy_sort, init_greedy_context, "Greedy Sort");
 }
 
 void config_k_sort(t_ps *data)

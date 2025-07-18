@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 22:31:18 by codespace         #+#    #+#             */
-/*   Updated: 2025/07/17 09:56:36 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/18 16:13:24 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ void	sort_two(t_ps *data, t_chunk *to_sort)
 		move_from_to(data, to_sort->loc, TOP_A);
 		move_from_to(data, to_sort->loc, TOP_A);
 	}
-	if (get_stack_element_at_position(&data->a, 1)
-		> get_stack_element_at_position(&data->a, 2))
+	if (get_items(&data->a, 1)
+		> get_items(&data->a, 2))
 		sa(data);
 	to_sort->size -= 2;
 }
