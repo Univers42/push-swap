@@ -3,36 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   easy_perm.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 14:14:38 by codespace         #+#    #+#             */
-/*   Updated: 2025/07/18 16:13:24 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/19 01:19:14 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "algorithms.h"
 #include "push_swap.h"
 
-static void	easy_sort_second(t_ps *data, t_chunk *to_sort);
+static void	fast_sort_second(t_ps *data, t_chunk *to_sort);
 static void	handle_top_b(t_ps *data, t_chunk *to_sort);
 static void	handle_bottom_a(t_ps *data, t_chunk *to_sort);
 static void	handle_bottom_b(t_ps *data, t_chunk *to_sort);
 
 /**
- * easy_sort - Quickly sorts small chunks (usually 2 or 3 elements) in various stack locations.
+ * fast_sort - Quickly sorts small chunks (usually 2 or 3 elements) in various stack locations.
  * @data: Pointer to the main push_swap data structure.
  * @to_sort: Pointer to the chunk to sort (location and size).
  *
  * This function is used for small, nearly sorted chunks. It checks if the top
  * element is the next in order, and if so, sorts it with sort_one or
- * easy_sort_second. This minimizes moves by handling sorted or nearly sorted
+ * fast_sort_second. This minimizes moves by handling sorted or nearly sorted
  * cases directly.
  *
  * Example:
  *   If the top of A is the next value needed, just move it to its place.
- *   If the next two are in order, use easy_sort_second for a 2-element swap.
+ *   If the next two are in order, use fast_sort_second for a 2-element swap.
  */
-void	easy_sort(t_ps *data, t_chunk *to_sort)
+void	fast_sort(t_ps *data, t_chunk *to_sort)
 {
 	while (to_sort->loc != TOP_A && to_sort->size)
 	{
@@ -41,21 +41,21 @@ void	easy_sort(t_ps *data, t_chunk *to_sort)
 			sort_one(data, to_sort);
 		else if (get_items(&data->a, 1)
 			== chunk_value(data, to_sort, 2) + 1 && to_sort->size > 1)
-			easy_sort_second(data, to_sort);
+			fast_sort_second(data, to_sort);
 		else
 			break ;
 	}
 }
 
 /**
- * easy_sort_second - Handles the case where the second element in the chunk is next in order.
+ * fast_sort_second - Handles the case where the second element in the chunk is next in order.
  * @data: Pointer to the main push_swap data structure.
  * @to_sort: Pointer to the chunk to sort.
  *
  * Depending on the chunk's location, calls the appropriate handler to sort the
  * second element with minimal moves.
  */
-static void	easy_sort_second(t_ps *data, t_chunk *to_sort)
+static void	fast_sort_second(t_ps *data, t_chunk *to_sort)
 {
 	if (to_sort->loc == TOP_B)
 		handle_top_b(data, to_sort);

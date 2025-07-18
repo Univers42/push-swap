@@ -6,7 +6,7 @@
 #    By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/08 13:37:35 by codespace         #+#    #+#              #
-#    Updated: 2025/07/18 23:40:30 by dlesieur         ###   ########.fr        #
+#    Updated: 2025/07/19 01:20:06 by dlesieur         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,8 +50,9 @@ D_VISUALIZER		=	$(D_CHECKER_BONUS)/visualizer
 
 # SOURCE FILES
 CHUNK_SRCS			=	$(D_CHUNK)/chunk_sort.c \
-						$(D_CHUNK)/chunk_split.c \
-						$(D_CHUNK)/helpers.c
+						$(D_CHUNK)/divide_seg.c \
+						$(D_CHUNK)/helpers.c	\
+						$(D_CHUNK)/move.c
 
 GREEDY_SRCS			=	$(D_GREEDY)/greedy.c \
 						$(D_GREEDY)/execution.c \
@@ -109,9 +110,6 @@ PUSH_SWAP_SRCS		=	$(D_PUSH_SWAP)/main.c \
 PARSER_SRCS			=	$(D_PARSER)/helpers.c \
 						$(D_PARSER)/parser.c
 
-ALG_HELPERS_SRCS	=	$(D_ALG_HELPERS)/chunk_utils.c \
-						$(D_ALG_HELPERS)/move.c
-
 VISUALIZER_SRCS		=	$(D_VISUALIZER)/helper.c \
 						$(D_VISUALIZER)/replay.c \
 						$(D_VISUALIZER)/singleton.c \
@@ -124,7 +122,6 @@ COMMON_SRCS			=	$(OPERATIONS_SRCS) \
 						$(UTILS_SRCS) \
 						$(PUSH_SWAP_SRCS) \
 						$(PARSER_SRCS) \
-						$(ALG_HELPERS_SRCS) \
 						$(PERM_SRCS)
 
 # ALGORITHM-SPECIFIC BUILDS (include ALL algorithms for proper linking)

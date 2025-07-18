@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redox.c                                            :+:      :+:    :+:   */
+/*   adjust_chunk.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 20:58:15 by ugerkens          #+#    #+#             */
-/*   Updated: 2025/07/18 23:40:30 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/19 01:14:38 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 #include "algorithms.h"
 
-void	redox(t_ps *data, t_chunk *max)
+void	adjust_chunk(t_ps *data, t_chunk *max)
 {
 	t_stack	*a;
 
@@ -23,7 +23,7 @@ void	redox(t_ps *data, t_chunk *max)
 			get_items(a, 2),
 			get_items(a, 3),
 			get_items(a, 4))
-		&& a_partly_sort(data, 4))
+		&& is_seg_sorted(data, 4))
 	{
 		sort_three(data, max);
 		return ;
@@ -31,31 +31,35 @@ void	redox(t_ps *data, t_chunk *max)
 	if (max->loc == TOP_A
 		&& get_items(a, 1)
 		== get_items(a, 3) - 1
-		&& a_partly_sort(data, 3))
+		&& is_seg_sorted(data, 3))
 	{
 		sa(data);
 		max->size--;
 	}
-	if (max->loc == TOP_A && a_partly_sort(data, 1))
+	if (max->loc == TOP_A && is_seg_sorted(data, 1))
 		max->size--;
 }
 
-bool	a_partly_sort(t_ps *data, int from)
+bool	is_seg_sorted(t_ps *data, int from)
 {
-	int		i;
 	t_stack	*a;
-	int		value_current;
+	int		i;
+	int		prev;
 
 	a = &data->a;
 	i = a->top;
+	if (a->element_count == 0)
+		return (false);
 	while (--from)
 		i = move_down(a, i);
-	while (a->stack[i] != data->a.capacity)
+	prev = a->stack[i];
+	i = move_down(a, i);
+	while (a->stack[i] != a->capacity)
 	{
-		value_current = a->stack[i];
-		i = move_down(a, i);
-		if (a->stack[i] != value_current + 1)
+		if (a->stack[i] != prev + 1)
 			return (false);
+		prev = a->stack[i];
+		i = move_down(a, i);
 	}
 	return (true);
 }

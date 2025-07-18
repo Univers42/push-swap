@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   two_perm.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 22:31:18 by codespace         #+#    #+#             */
-/*   Updated: 2025/07/18 16:13:24 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/19 01:01:36 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void	sort_two(t_ps *data, t_chunk *to_sort)
 	if (to_sort->loc == BOTTOM_A || to_sort->loc == BOTTOM_B
 		|| to_sort->loc == TOP_B)
 	{
-		move_from_to(data, to_sort->loc, TOP_A);
-		move_from_to(data, to_sort->loc, TOP_A);
+		transfer_chunk(data, to_sort->loc, TOP_A);
+		transfer_chunk(data, to_sort->loc, TOP_A);
 	}
 	if (get_items(&data->a, 1)
 		> get_items(&data->a, 2))

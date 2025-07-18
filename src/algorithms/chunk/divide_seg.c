@@ -34,15 +34,15 @@ void	divide_seg(t_ps *data, t_chunk *to_split, t_split_dest *dest)
 		next_value = chunk_value(data, to_split, 1);
 		if (next_value > max_value - pivot_2)
 		{
-			dest->max.size += move_from_to(data, to_split->loc, dest->max.loc);
+			dest->max.size += transfer_chunk(data, to_split->loc, dest->max.loc);
 			adjust_chunk(data, &dest->max);
 			if (is_seg_sorted(data, 1) && to_split->size)
 				fast_sort(data, to_split);
 		}
 		else if (next_value > max_value - pivot_1)
-			dest->mid.size += move_from_to(data, to_split->loc, dest->mid.loc);
+			dest->mid.size += transfer_chunk(data, to_split->loc, dest->mid.loc);
 		else
-			dest->min.size += move_from_to(data, to_split->loc, dest->min.loc);
+			dest->min.size += transfer_chunk(data, to_split->loc, dest->min.loc);
 	}
 }
 

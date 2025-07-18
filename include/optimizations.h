@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   optimizations.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 17:15:23 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/09 17:36:28 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/19 01:19:14 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ typedef struct s_ps	t_ps;
 */
 
 // Chunk optimization functions
-void		easy_sort(t_ps *data, t_chunk *to_sort);
-void		redox(t_ps *data, t_chunk *max);
-bool		a_partly_sort(t_ps *data, int from);
-void		chunk_to_the_top(t_ps *data, t_chunk *to_sort);
+void		fast_sort(t_ps *data, t_chunk *to_sort);
+void		adjust_chunk(t_ps *data, t_chunk *max);
+bool		is_seg_sorted(t_ps *data, int from);
+void		loc_seg(t_ps *data, t_chunk *to_sort);
 
 // Optimization functions
 void		post_sort_optimization(t_ps *data);
@@ -49,6 +49,6 @@ t_op		neutral_op(t_op op);
 bool		op_on_same_stack(t_op ref, t_op to_check);
 
 // Chunk sort functions
-void		rec_chunk_sort(t_ps *data, t_chunk *to_sort);
-void		chunk_split(t_ps *data, t_chunk *to_split, t_split_dest *dest);
+void		sort_chunks(t_ps *data, t_chunk *to_sort);
+void		divide_seg(t_ps *data, t_chunk *to_split, t_split_dest *dest);
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   algorithms.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 17:13:26 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/17 12:39:46 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/19 01:19:14 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,9 @@
 # define ALGORITHMS_H
 
 # include "stack.h"
+
 // Forward declarations
 typedef struct s_ps		t_ps;
-
-// Algorithm types
-typedef enum e_algo_type
-{
-	ALGO_CHUNK,
-	ALGO_GREEDY,
-	ALGO_K_SORT,
-	ALGO_LIS,
-	ALGO_RADIX,
-	ALGO_QUEUE
-}	t_algo_type;
 
 // Chunk structure for chunk sort
 typedef struct s_chunk
@@ -42,6 +32,44 @@ typedef struct s_split_dest
 	t_chunk	mid;
 	t_chunk	max;
 }	t_split_dest;
+
+// Now you can use t_chunk in arrays:
+typedef struct s_chunk_stack
+{
+    t_chunk chunks[1024];
+    int top;
+}   t_chunk_stack;
+
+typedef struct s_chunk_locs {
+	t_loc min;
+	t_loc mid;
+	t_loc max;
+} t_chunk_locs;
+
+typedef struct s_chunk_pivot_cfg {
+	int pivot_1_factor;
+	int pivot_2_factor;
+	int pivot_1_override;
+	int pivot_2_override;
+	int pivot_1_min_size;
+	int pivot_2_min_size;
+} t_chunk_pivot_cfg;
+
+typedef struct s_chunk_fsm {
+	t_chunk_locs locs;
+	t_chunk_pivot_cfg pivots;
+} t_chunk_fsm;
+
+// Algorithm types
+typedef enum e_algo_type
+{
+	ALGO_CHUNK,
+	ALGO_GREEDY,
+	ALGO_K_SORT,
+	ALGO_LIS,
+	ALGO_RADIX,
+	ALGO_QUEUE
+}	t_algo_type;
 
 // Greedy node structure
 typedef struct s_greedy_node
@@ -67,7 +95,7 @@ void		sort_one(t_ps *data, t_chunk *to_sort);
 void		sort_two(t_ps *data, t_chunk *to_sort);
 void		sort_three(t_ps *data, t_chunk *to_sort);
 void		sort_three_simple(t_ps *data);
-void		easy_sort(t_ps *data, t_chunk *to_sort);
+void		fast_sort(t_ps *data, t_chunk *to_sort);
 
 //------------------------HELPERS-------------------------------//
 
@@ -80,8 +108,8 @@ int			k_find_min_position(t_ps *data, int size_a, int min_value);
 int			chunk_value(t_ps *data, t_chunk *chunk, int n);
 int			chunk_max_value(t_ps *data, t_chunk *chunk);
 t_stack		*loc_to_stack(t_ps *data, t_loc loc);
-int			move_from_to(t_ps *data, t_loc from, t_loc to);
-void		chunk_to_the_top(t_ps *data, t_chunk *to_sort);
+int			transfer_chunk(t_ps *data, t_loc from, t_loc to);
+void		loc_seg(t_ps *data, t_chunk *to_sort);
 
 // Greedy algorithm helpers
 void		execute_move(t_ps *data, t_greedy_node *node);
@@ -136,5 +164,8 @@ void		lis_rotate_max_to_top(t_ps *data, int max_position,
 				int size_b);
 void		lis_final_rotation_to_sorted(t_ps *data);
 
+void	chunk_sort_loop(t_ps *data, t_chunk *to_sort);
+
+const t_chunk_fsm	*get_chunk_fsm_table(void);
 
 #endif

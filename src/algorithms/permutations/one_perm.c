@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   one_perm.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 14:32:28 by codespace         #+#    #+#             */
-/*   Updated: 2025/07/17 09:54:42 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/19 01:01:36 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  * @to_sort: Pointer to the chunk to sort.
  *
  * If the element is not already at the top of A, moves it there using
- * move_from_to. This is optimal for single elements, as it avoids unnecessary
+ * transfer_chunk. This is optimal for single elements, as it avoids unnecessary
  * operations and ensures the element is in place for further sorting.
  *
  * Example:
@@ -29,6 +29,6 @@ void	sort_one(t_ps *data, t_chunk *to_sort)
 {
 	if (to_sort->loc == BOTTOM_A || to_sort->loc == BOTTOM_B
 		|| to_sort->loc == TOP_B)
-		move_from_to(data, to_sort->loc, TOP_A);
+		transfer_chunk(data, to_sort->loc, TOP_A);
 	to_sort->size -= 1;
 }

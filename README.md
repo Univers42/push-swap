@@ -70,7 +70,7 @@ The algorithm's vision is to **divide and conquer** by breaking the sorting prob
 	- Each sub-chunk is recursively split until its size is `<= 3` , at which point simple sorting functions (`sort_three`, `sort_two` , `sort_one`) are used.
 	- The recursion ensures that smaller chunks are fully sorted before merging back into the main stack
 5. optimization:
-	- `the chunk_to_the_top` function ensures are in optimial positions reducing unnecessary rotations. 
+	- `the loc_seg` function ensures are in optimial positions reducing unnecessary rotations. 
 6. Scalability:
 	- the algorithm is designed to handle large inputs efficiently by keeping the number of operatoions low through strategic chunking and merging...
 
@@ -88,7 +88,7 @@ The algorithm splits a chunk into three sub-chunks (`min`, `mid`, `max`) and dis
 	- `mid` : values int the middle third (`max_value - pivot 1 < value <= max_value - pivot2)`
 	- `min` : Values in the bottom third (smallest values, `<= max_value - pivot 1` )
 - **Movement**:
-	- Elements are moved using `move_from_to`, which may involve `pb` (push to B), `pa` (push to A), `ra`, `rb` etc...
+	- Elements are moved using `transfer_chunk`, which may involve `pb` (push to B), `pa` (push to A), `ra`, `rb` etc...
 	-  The `set_split_loc` function determines where each sub-chunk goes:
 		- For `TOP_A` : `max` -> `BOTTOM_A` , mid, ->`TOP_B`, `min` -> `BOTTOM_b`
 		- This creates logical partitions: `BOTTOM_A` and `TOP_A` in Stack A , `TOP_B` and `BOTTOM_B` in stack B
@@ -100,7 +100,7 @@ Each sub-chunk (`max`, `mid` ,`min`) is processed recursively.
 3. The recursion continues until all chunks are sorted.
 
 ### Greedy sort
-The algorithm is called greedy because it makes locally optimal choices at each step (e.g., choosing the element with the lowest cost to move) with the goall of achieving a globally eficient solution. It contrasts with the previously discussed `rec_chunk_sort`, which uses a recursive divide-and-conquer approach with chunk splitting. The greedy approach is simpler and often more intuitive, though it may not always produce the absolute minimum number of operation compared to chunk-based sort
+The algorithm is called greedy because it makes locally optimal choices at each step (e.g., choosing the element with the lowest cost to move) with the goall of achieving a globally eficient solution. It contrasts with the previously discussed `sort_chunks`, which uses a recursive divide-and-conquer approach with chunk splitting. The greedy approach is simpler and often more intuitive, though it may not always produce the absolute minimum number of operation compared to chunk-based sort
 
 - `greedy_sort` : The main entry point, orchestrating the three phases of the algorithm.
 - `greedy_push_to_b` : moves element form stack A to Stack B, reducing stack A to 3 elemments and organizing Stack B
