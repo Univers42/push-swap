@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redox.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 20:58:15 by ugerkens          #+#    #+#             */
-/*   Updated: 2025/07/18 16:13:24 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/18 23:40:30 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,5 @@ bool	a_partly_sort(t_ps *data, int from)
 
 bool	is_consecutive(int a, int b, int c, int d)
 {
-	ft_swap(&a, &b, sizeof(int));
-	ft_swap(&b, &c, sizeof(int));
 	return ((b - a == 1) && (c - b == 1) && (d - c == 1));
 }

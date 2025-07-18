@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   chunk_split.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 20:57:19 by ugerkens          #+#    #+#             */
-/*   Updated: 2025/07/09 22:26:02 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/19 00:14:44 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,43 +53,106 @@ static void	innit_size(t_chunk *min, t_chunk *mid, t_chunk *max)
 	max->size = 0;
 }
 
-static void	set_split_loc(t_loc loc, t_chunk *min, t_chunk *mid, t_chunk *max)
+typedef struct s_chunk_locs {
+	t_loc min;
+	t_loc mid;
+	t_loc max;
+} t_chunk_locs;
+
+typedef struct s_chunk_pivot_cfg {
+	int pivot_1_factor;
+	int pivot_2_factor;
+	int pivot_1_override;
+	int pivot_2_override;
+	int pivot_1_min_size;
+	int pivot_2_min_size;
+} t_chunk_pivot_cfg;
+
+typedef struct s_chunk_fsm {
+	t_chunk_locs locs;
+	t_chunk_pivot_cfg pivots;
+} t_chunk_fsm;
+
+// Mask function for FSM node initialization (4 parameters)
+static t_chunk_fsm chunk_fsm_mask(
+	t_chunk_locs locs,
+	int pivot_1_factor,
+	int pivot_2_factor,
+	int pivot_overrides_and_mins[4])
 {
-	if (loc == TOP_A)
-	{
-		min->loc = BOTTOM_B;
-		mid->loc = TOP_B;
-		max->loc = BOTTOM_A;
-	}
-	else if (loc == BOTTOM_A)
-	{
-		min->loc = BOTTOM_B;
-		mid->loc = TOP_B;
-		max->loc = TOP_A;
-	}
-	else if (loc == TOP_B)
-	{
-		min->loc = BOTTOM_B;
-		mid->loc = BOTTOM_A;
-		max->loc = TOP_A;
-	}
-	else if (loc == BOTTOM_B)
-	{
-		min->loc = TOP_B;
-		mid->loc = BOTTOM_A;
-		max->loc = TOP_A;
-	}
+	t_chunk_fsm fsm;
+	fsm.locs = locs;
+	fsm.pivots.pivot_1_factor = pivot_1_factor;
+	fsm.pivots.pivot_2_factor = pivot_2_factor;
+	fsm.pivots.pivot_1_override = pivot_overrides_and_mins[0];
+	fsm.pivots.pivot_2_override = pivot_overrides_and_mins[1];
+	fsm.pivots.pivot_1_min_size = pivot_overrides_and_mins[2];
+	fsm.pivots.pivot_2_min_size = pivot_overrides_and_mins[3];
+	return fsm;
 }
 
-static void	set_third_pivots(t_loc loc, int crt_size, int *pivot_1,
-				int *pivot_2)
+// Singleton accessor for FSM table using mask and runtime initialization
+static const t_chunk_fsm *get_chunk_fsm_table(void)
 {
-	*pivot_2 = crt_size / 3;
-	*pivot_1 = 2 * crt_size / 3;
-	if (loc == TOP_B || loc == BOTTOM_B)
-		*pivot_1 = crt_size / 2;
-	if ((loc == TOP_A || loc == BOTTOM_A) && crt_size < 15)
-		*pivot_1 = crt_size;
-	if (loc == BOTTOM_B && crt_size < 8)
-		*pivot_2 = crt_size / 2;
+	static t_chunk_fsm table[4];
+	static int initialized = 0;
+	if (!initialized)
+	{
+		int top_a_cfg[4]     = {1, 0, 15, 0};
+		int bottom_a_cfg[4]  = {1, 0, 15, 0};
+		int top_b_cfg[4]     = {0, 0, 0, 0};
+		int bottom_b_cfg[4]  = {0, 1, 0, 8};
+
+		table[TOP_A] = chunk_fsm_mask(
+			(t_chunk_locs){BOTTOM_B, TOP_B, BOTTOM_A},
+			2, 1, top_a_cfg);
+		table[BOTTOM_A] = chunk_fsm_mask(
+			(t_chunk_locs){BOTTOM_B, TOP_B, TOP_A},
+			2, 1, bottom_a_cfg);
+		table[TOP_B] = chunk_fsm_mask(
+			(t_chunk_locs){BOTTOM_B, BOTTOM_A, TOP_A},
+			1, 1, top_b_cfg);
+		table[BOTTOM_B] = chunk_fsm_mask(
+			(t_chunk_locs){TOP_B, BOTTOM_A, TOP_A},
+			1, 2, bottom_b_cfg);
+		initialized = 1;
+	}
+	return table;
+}
+
+static void	set_split_loc(t_loc loc, t_chunk *min, t_chunk *mid, t_chunk *max)
+{
+	const t_chunk_fsm *fsm = &get_chunk_fsm_table()[loc];
+	min->loc = fsm->locs.min;
+	mid->loc = fsm->locs.mid;
+	max->loc = fsm->locs.max;
+}
+
+static void	set_third_pivots(t_loc loc, int crt_size, int *pivot_1, int *pivot_2)
+{
+	const t_chunk_fsm *fsm = &get_chunk_fsm_table()[loc];
+
+	int base_pivot_2;
+	int base_pivot_1;
+
+	// Calculate base pivots
+	if (fsm->pivots.pivot_2_factor == 2)
+		base_pivot_2 = crt_size / 2;
+	else
+		base_pivot_2 = crt_size / 3;
+
+	if (fsm->pivots.pivot_1_factor == 2)
+		base_pivot_1 = 2 * crt_size / 3;
+	else
+		base_pivot_1 = crt_size / 2;
+
+	// Apply overrides if needed
+	if (fsm->pivots.pivot_1_override && crt_size < fsm->pivots.pivot_1_min_size)
+		base_pivot_1 = crt_size;
+
+	if (fsm->pivots.pivot_2_override && crt_size < fsm->pivots.pivot_2_min_size)
+		base_pivot_2 = crt_size / 2;
+
+	*pivot_2 = base_pivot_2;
+	*pivot_1 = base_pivot_1;
 }

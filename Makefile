@@ -6,7 +6,7 @@
 #    By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/08 13:37:35 by codespace         #+#    #+#              #
-#    Updated: 2025/07/18 19:17:16 by dlesieur         ###   ########.fr        #
+#    Updated: 2025/07/18 23:40:30 by dlesieur         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,6 @@ D_VISUALIZER		=	$(D_CHECKER_BONUS)/visualizer
 # SOURCE FILES
 CHUNK_SRCS			=	$(D_CHUNK)/chunk_sort.c \
 						$(D_CHUNK)/chunk_split.c \
-						$(D_CHUNK)/sort.c \
 						$(D_CHUNK)/helpers.c
 
 GREEDY_SRCS			=	$(D_GREEDY)/greedy.c \

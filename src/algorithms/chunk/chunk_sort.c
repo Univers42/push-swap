@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   chunk_sort.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 20:56:55 by ugerkens          #+#    #+#             */
-/*   Updated: 2025/07/18 16:26:00 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/19 00:11:19 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,24 +48,53 @@ we want the chnk to be at the top we can apply sortingoperation directl
 @param to_sort
 @return 
 */
-void	rec_chunk_sort(t_ps *data, t_chunk *to_sort)
-{
-	t_split_dest	dest;
 
-	chunk_to_the_top(data, to_sort);
-	easy_sort(data, to_sort);
-	if (to_sort->size <= 3)
-	{
-		if (to_sort->size == 3)
-			sort_three(data, to_sort);
-		else if (to_sort->size == 2)
-			sort_two(data, to_sort);
-		else if (to_sort->size == 1)
-			sort_one(data, to_sort);
-		return ;
-	}
-	chunk_split(data, to_sort, &dest);
-	rec_chunk_sort(data, &dest.max);
-	rec_chunk_sort(data, &dest.mid);
-	rec_chunk_sort(data, &dest.min);
+typedef struct s_chunk_stack {
+    t_chunk chunks[1024];  // Store chunk values, not pointers
+    int top;
+}   t_chunk_stack;
+
+static void push_chunk(t_chunk_stack *stack, t_chunk chunk)
+{
+    if (stack->top < 1024)
+        stack->chunks[stack->top++] = chunk;
+}
+
+static int pop_chunk(t_chunk_stack *stack, t_chunk *out)
+{
+    if (stack->top > 0) {
+        *out = stack->chunks[--stack->top];
+        return 1;
+    }
+    return 0;
+}
+
+void    rec_chunk_sort(t_ps *data, t_chunk *to_sort)
+{
+    t_chunk_stack  stack;
+    t_split_dest   dest;
+    t_chunk        current;
+
+    stack.top = 0;
+    push_chunk(&stack, *to_sort);
+
+    while (pop_chunk(&stack, &current))
+    {
+        chunk_to_the_top(data, &current);
+        easy_sort(data, &current);
+        if (current.size <= 3)
+        {
+            if (current.size == 3)
+                sort_three(data, &current);
+            else if (current.size == 2)
+                sort_two(data, &current);
+            else if (current.size == 1)
+                sort_one(data, &current);
+            continue ;
+        }
+        chunk_split(data, &current, &dest);
+        push_chunk(&stack, dest.min);
+        push_chunk(&stack, dest.mid);
+        push_chunk(&stack, dest.max);
+    }
 }
