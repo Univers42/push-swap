@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 23:22:18 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/08 20:57:19 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/18 15:10:22 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,14 @@
 # define ALGORITHM ALGO_CHUNK
 #endif
 
+/**
+ * Main entry point of the DATA migration facility
+ * the migration facility is just a set of rules and data
+ * structure that enable to extend our code to the logic we need
+ * this one is more a didactical way to showcase different way of thinking
+ * which is really important for Engineering principles
+ * The default algorithm is set to ALGO_CHUNK to do that
+ */
 int	main(int argc, char *argv[])
 {
 	t_ps	data;

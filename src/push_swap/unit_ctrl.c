@@ -6,13 +6,16 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 00:00:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/09 17:45:09 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/18 15:12:51 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 #include "algorithms.h"
 
+/**
+ * 
+ */
 static void	config_chunk(t_ps *data)
 {
 	data->algo.sort_fn = chunk_sort;
@@ -21,6 +24,10 @@ static void	config_chunk(t_ps *data)
 	init_chunk_context(data);
 }
 
+/**
+ * The jump table that hold all the alorith redirections..
+ *  this is also here you might want to extend your own algorithm
+ */
 void	select_algorithm(t_ps *data, t_algo_type type)
 {
 	static const t_config_fn	configurators[] = {
@@ -39,6 +46,7 @@ void	select_algorithm(t_ps *data, t_algo_type type)
 		config_chunk(data);
 }
 
+//wrapper that dispatch the algos...
 void	execute_algorithm(t_ps *data)
 {
 	if (data->algo.sort_fn)
