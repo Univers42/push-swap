@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 00:00:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/09 17:26:42 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/17 12:40:35 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ int				is_recording(void);
 t_test_context	*get_test_context(void);
 
 // Stack display
-void			print_single_array_stack(t_stack *stack, char name);
 void			print_both_array_stacks(t_stack *stack_a, t_stack *stack_b);
 
 // Helper functions

@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 21:08:57 by ugerkens          #+#    #+#             */
-/*   Updated: 2025/07/09 17:42:04 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/18 13:57:47 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@ void	sb(t_ps *data)
 	save_op(data, OP_SB);
 }
 
+/**
+ * @param data pointer to structure data members
+ * swap_datas...
+ */
 void	ss(t_ps *data)
 {
 	swap(&data->a);

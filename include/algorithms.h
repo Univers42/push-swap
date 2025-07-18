@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 17:13:26 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/17 09:25:45 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/17 12:39:46 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ void		easy_sort(t_ps *data, t_chunk *to_sort);
 
 // K-based sorting algorithm
 void		k_sort(t_ps *data);
-void		k_sort_verify_order(t_ps *data, int total_size);
 int			k_find_min_position(t_ps *data, int size_a, int min_value);
 
 //HELPERS FUNCTIONS FOR SPECIFIC ALGORITHMS
@@ -131,39 +130,11 @@ int			calculate_max_bits_for_size(int size);
 // LIS helpers
 // LIS-based sorting algorithm
 void		lis_print_final_result(bool is_ascending);
-void		lis_push_phase(t_ps *data, int range, int total_size);
-void		lis_sort_remaining_in_a(t_ps *data);
-void		lis_verify_final_rotation(t_ps *data);
-void		lis_handle_single_rotation(t_ps *data, int *range,
-				int total_size);
-void		lis_debug_first_elements(t_ps *data, int total_size);
-void		lis_debug_check_order(t_ps *data, int total_size);
 void		lis_handle_small_arrays(t_ps *data);
 void		lis_push_back_phase(t_ps *data);
 void		lis_rotate_max_to_top(t_ps *data, int max_position,
 				int size_b);
 void		lis_final_rotation_to_sorted(t_ps *data);
 
-//===============DEBUG_FUNCTIONS[LEGACY CODE]============//
-// Debug mode (stateless - no global variables)
-void		set_debug_mode(int mode);
-bool		is_debug_mode_enabled(void);
-bool		is_verbose_mode_enabled(void);
-bool		is_stats_mode_enabled(void);
-const char	*get_debug_level_name(int mode);
-void		debug_print_stack_state(t_ps *data, const char *context);
-
-// RADIX HELPERS
-void		radix_debug_bit_pass(int bit_position);
-void		radix_debug_final_verification(t_ps *data, int total_size);
-void		radix_debug_first_elements(t_ps *data, int total_size);
-void		radix_debug_check_order(t_ps *data, int total_size);
-void		radix_debug_break_point(int position, int current, int next);
-void		radix_debug_final_result(bool is_ascending);
-
-// Legacy compatibility
-void		enable_debug_mode(void);
-void		alternative_sort(t_ps *data);
-void		k_sort_print_debug_info(t_ps *data, int total_size);
 
 #endif

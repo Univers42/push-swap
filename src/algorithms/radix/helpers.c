@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 15:40:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/17 12:37:57 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/17 12:51:16 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,19 @@ void	radix_handle_small_arrays(t_ps *data)
 	}
 }
 
-void	radix_debug_bit_pass(int bit_position)
-{
-	(void)bit_position;
-}
-
+/**
+ * This function is commune to the greedy sort, to do the finall rotation
+ * we need to find the min value and pop it right to the top
+ * of the staack from  size->a
+ */
 void	radix_rotate_to_position(t_ps *data, int min_pos, int size_a)
 {
 	int	i;
+	int first_half;
 
-	if (min_pos <= size_a / 2)
+	first_half = (min_pos <= size_a / 2);
+
+	if (first_half)
 	{
 		i = 0;
 		while (i < min_pos)

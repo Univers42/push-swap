@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 15:18:55 by codespace         #+#    #+#             */
-/*   Updated: 2025/07/17 09:06:06 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/17 12:40:28 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,7 @@ bool		check_if_stack_is_empty(t_stack *stk);
 void		cleanup_and_exit_with_error(t_ps *data);
 void		release_allocated_memory(t_ps *data);
 void		remove_op_from_list(t_list **list, t_list *to_remove);
-// Main utilities
-void		print_algorithm_name(int mode);
+
 int			find_min_value_in_stack(t_stack *stack);
 bool		is_consecutive(int a, int b, int c, int d);
 #endif

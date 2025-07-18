@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 23:45:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/09 22:32:12 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/17 13:35:16 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,33 @@ static void	radix_final_rotation_simple(t_ps *data);
 static int	radix_find_min_position(t_ps *data, int size_a);
 static void	radix_process_all_bits(t_ps *data, int total_size);
 
+/**
+ * This is the main  entry point of this algorithm
+ * divided into three steps of concern separated
+ * first as we have a really efficient comparison small sort
+ * we use it
+ * to do so we take the current size and the algorithm
+ * will chose the path to take...
+ * stack_is_sorted  ? 1 : 0 
+ * then second step we process all bits:
+ * Radix Sort and bitwise operators
+ * Radix sort work sby sorting numbers one bit at a time
+ * from (LSB to MSB) the bitwise `&`and shift `>>` 
+ * operators are used to checck the value of each bit in every number.
+ * 
+ * third step we finalize the rotation tweak
+ */
 void	radix_sort(t_ps *data)
 {
 	int	total_size;
-
+	
+	if (verify_stack_is_sorted(data))
+		return ;
 	if (!data || get_current_stack_size(&data->a) <= 3)
 	{
 		radix_handle_small_arrays(data);
 		return ;
 	}
-	if (verify_stack_is_sorted(data))
-		return ;
 	total_size = get_current_stack_size(&data->a);
 	radix_process_all_bits(data, total_size);
 	radix_final_rotation_simple(data);

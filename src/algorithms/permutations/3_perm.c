@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 07:28:06 by codespace         #+#    #+#             */
-/*   Updated: 2025/07/17 09:53:56 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/17 15:01:21 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,14 @@
  *
  * This approach is optimal because it covers all 6 permutations of 3 elements
  * and sorts them in at most 2 moves.
+ * | #   | order | Operations |
+| --- | ----- | ---------- |
+| 1   | 1 2 3 | \0         |
+| 2   | 1 3 2 | sa         |
+| 3   | 2 1 3 | sa         |
+| 4   | 2 3 1 | ra & sa    |
+| 5   | 3 1 2 | ra         |
+| 6   | 3 2 1 | rra        |
  */
 void	sort_three_simple(t_ps *data)
 {
