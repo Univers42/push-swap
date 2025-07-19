@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 14:20:48 by ugerkens          #+#    #+#             */
-/*   Updated: 2025/07/18 16:25:15 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/19 02:52:17 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,20 @@
 # include "ctrl_station.h"
 # include "optimizations.h"
 # include "tracker.h"
+
+typedef enum e_stack_mask
+{
+	STACK_NONE =	0,
+	STACK_A =		0x1,
+	STACK_B =		0x2,
+	STACK_BOTH =	(STACK_A | STACK_B)
+}	t_stack_mask;
+
+typedef struct s_op_info
+{
+	t_op			neutral;
+	t_stack_mask	mask;
+}					t_op_info;
 
 // Algorithm context structure
 typedef struct s_algo_context

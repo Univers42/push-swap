@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checker_bonus.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 20:55:38 by ugerkens          #+#    #+#             */
-/*   Updated: 2025/07/17 01:34:13 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/19 02:45:17 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,12 @@
 
 typedef struct s_op_exec
 {
-	void	(*single_op)(t_stack *);
-	void	(*dual_op)(t_stack *, t_stack *);
-	int		stack_mask;
-	int		is_dual;
+	const char	*name;
+	void		(*op_func)(t_ps *);
+	int			stack_mask;
 }	t_op_exec;
+
+t_op_exec *get_op_table(void);
 
 char	*get_next_line(int fd);
 
@@ -54,6 +55,18 @@ void	checker_push(t_stack *src, t_stack *dest);
 void	checker_swap(t_stack *stk);
 void	checker_rotate(t_stack *stk);
 void	checker_r_rotate(t_stack *stk);
+
+void	checker_pa(t_ps *data);
+void	checker_pb(t_ps *data);
+void	checker_sa(t_ps *data);
+void	checker_sb(t_ps *data);
+void	checker_ss(t_ps *data);
+void	checker_ra(t_ps *data);
+void	checker_rb(t_ps *data);
+void	checker_rr(t_ps *data);
+void	checker_rra(t_ps *data);
+void	checker_rrb(t_ps *data);
+void	checker_rrr(t_ps *data);
 
 // Visualization functions (when VISUALIZE is enabled)
 # if VISUALIZE == 1

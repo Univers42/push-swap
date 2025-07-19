@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fusops.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 23:50:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/09 17:42:21 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/19 02:53:39 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,20 +54,33 @@ static t_list	*process_merge_operation(t_ps *data, t_list *reader)
 	return (reader->next);
 }
 
-static t_op	child_op(t_op first, t_op second)
+static t_op	get_fusion_op(t_op first, t_op second)
 {
+	// Table: [first][second] = fused_op
+	static t_op table[12][12];
+	static int initialized = 0;
+
+	if (!initialized)
+	{
+		// RR
+		table[OP_RA][OP_RB] = OP_RR;
+		table[OP_RB][OP_RA] = OP_RR;
+		// RRR
+		table[OP_RRA][OP_RRB] = OP_RRR;
+		table[OP_RRB][OP_RRA] = OP_RRR;
+		// SS
+		table[OP_SA][OP_SB] = OP_SS;
+		table[OP_SB][OP_SA] = OP_SS;
+		initialized = 1;
+	}
 	if (first <= OP_NULL || first >= 12 || second <= OP_NULL || second >= 12)
 		return (OP_NULL);
-	if ((first == OP_RA && second == OP_RB)
-		|| (first == OP_RB && second == OP_RA))
-		return (OP_RR);
-	if ((first == OP_RRA && second == OP_RRB)
-		|| (first == OP_RRB && second == OP_RRA))
-		return (OP_RRR);
-	if ((first == OP_SA && second == OP_SB)
-		|| (first == OP_SB && second == OP_SA))
-		return (OP_SS);
-	return (OP_NULL);
+	return (table[first][second]);
+}
+
+static t_op	child_op(t_op first, t_op second)
+{
+	return (get_fusion_op(first, second));
 }
 
 void	post_sort_optimization(t_ps *data)

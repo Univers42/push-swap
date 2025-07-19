@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checker_stack_ops_bonus.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 23:15:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/18 16:09:57 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/19 02:44:46 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,7 @@ void	checker_r_rotate(t_stack *stk)
 	}
 }
 
-void	save_op(t_ps *data, t_op op)
+void checker_pa(t_ps *data)
 {
-	(void)data;
-	(void)op;
+	checker_push(&data->b, &data->a);
 }

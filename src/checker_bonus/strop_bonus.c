@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   strop_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 01:00:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/08 20:09:28 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/19 02:21:58 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,16 @@
 
 t_op	string_to_op(const char *str)
 {
+	int i = 0;
+	t_op_exec *op_table = get_op_table();
 	if (!str || !*str)
 		return (OP_NULL);
-	if (ft_strcmp(str, "pa") == 0)
-		return (OP_PA);
-	if (ft_strcmp(str, "pb") == 0)
-		return (OP_PB);
-	if (ft_strcmp(str, "sa") == 0)
-		return (OP_SA);
-	if (ft_strcmp(str, "sb") == 0)
-		return (OP_SB);
-	if (ft_strcmp(str, "ss") == 0)
-		return (OP_SS);
-	if (ft_strcmp(str, "ra") == 0)
-		return (OP_RA);
-	if (ft_strcmp(str, "rb") == 0)
-		return (OP_RB);
-	if (ft_strcmp(str, "rr") == 0)
-		return (OP_RR);
-	if (ft_strcmp(str, "rra") == 0)
-		return (OP_RRA);
-	if (ft_strcmp(str, "rrb") == 0)
-		return (OP_RRB);
-	if (ft_strcmp(str, "rrr") == 0)
-		return (OP_RRR);
+	while (i < 12)
+	{
+		if (op_table[i].name && ft_strcmp(str, op_table[i].name) == 0)
+			return (t_op)i;
+		i++;
+	}
 	return (OP_NULL);
 }
 

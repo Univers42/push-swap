@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tracker.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 15:02:16 by codespace         #+#    #+#             */
-/*   Updated: 2025/07/17 01:33:40 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/19 02:14:45 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void		rrb(t_ps *data);
 void		rrr(t_ps *data);
 
 // Operation tracking
-void		save_op(t_ps *data, t_op op);
 void		increment_op_count(t_ps *data);
 t_op		op_from(t_list *node);
 
