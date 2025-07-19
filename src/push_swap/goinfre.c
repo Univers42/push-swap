@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   goinfre.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: syzygy <syzygy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 21:09:02 by ugerkens          #+#    #+#             */
-/*   Updated: 2025/07/18 15:38:33 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/19 14:14:14 by syzygy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,6 @@ void	save_op(t_ps *data, t_op op)
 	if (!new)
 		cleanup_and_exit_with_error(data);
 	ft_lstadd_back(&data->op_list, new);
-	increment_op_count(data);
-}
-
-void	increment_op_count(t_ps *data)
-{
 	data->op_count++;
 }
 

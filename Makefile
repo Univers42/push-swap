@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+         #
+#    By: syzygy <syzygy@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/08 13:37:35 by codespace         #+#    #+#              #
-#    Updated: 2025/07/19 01:20:06 by dlesieur         ###   ########.fr        #
+#    Updated: 2025/07/19 17:58:19 by syzygy           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ endef
 
 # COMMANDS AND FLAGS
 CC					=	cc
-CFLAGS				=	-Wall -Wextra -Werror -I./include -I./libft -g3 -O3
+CFLAGS				=	-Wall -Wextra -Werror -I./include -I./libft -g3 -O3 -fsanitize=address -fsanitize=undefined -D_FORTIFY_SOURCE=2 -fno-omit-frame-pointer -DDEBUG=0 -D_ALGO_CHUNK=1
 RM					=	rm -rf
 AR					=	ar rcs
 

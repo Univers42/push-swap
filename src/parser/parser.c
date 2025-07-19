@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
+/*   By: syzygy <syzygy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 00:00:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/19 03:27:14 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/19 15:19:58 by syzygy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,25 +37,25 @@ bool	is_stack_sorted(t_ps *data)
 	return (true);
 }
 
-bool	validate_numeric_argument(char *arg)
+bool	validate_numeric_argument(char *op)
 {
 	int		i;
 	long	num;
 
 	i = 0;
-	if (!arg || !arg[0])
+	if (!op || !op[0])
 		return (false);
-	if (arg[i] == '-' || arg[i] == '+')
+	if (op[i] == '-' || op[i] == '+')
 		i++;
-	if (!arg[i])
+	if (!op[i])
 		return (false);
-	while (arg[i])
+	while (op[i])
 	{
-		if (!ft_isdigit(arg[i]))
+		if (!ft_isdigit(op[i]))
 			return (false);
 		i++;
 	}
-	num = ft_atol(arg);
+	num = ft_atol(op);
 	if (num > INT_MAX || num < INT_MIN)
 		return (false);
 	return (true);

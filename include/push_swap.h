@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
+/*   By: syzygy <syzygy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 14:20:48 by ugerkens          #+#    #+#             */
-/*   Updated: 2025/07/19 03:32:57 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/19 14:19:00 by syzygy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,6 @@ void		rr(t_ps *data);
 void		rra(t_ps *data);
 void		rrb(t_ps *data);
 void		rrr(t_ps *data);
-bool	detect_dup(int *numbers, int size);
+
 
 #endif

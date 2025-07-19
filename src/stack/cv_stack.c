@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cv_stack.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
+/*   By: syzygy <syzygy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 21:09:08 by ugerkens          #+#    #+#             */
-/*   Updated: 2025/07/19 03:32:57 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/19 15:20:47 by syzygy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stack.h"
+#include "push_swap.h"
 
 static void	assign_element_ranks(int *numbers, int *rank, int *sorted,
 				int size);

@@ -6,7 +6,7 @@
 /*   By: syzygy <syzygy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 00:00:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/19 14:33:46 by syzygy           ###   ########.fr       */
+/*   Updated: 2025/07/19 15:07:31 by syzygy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,12 @@ t_op_exec	*get_op_table(void)
 	return (table);
 }
 
-void	execute_checker_operation(t_ps *data, t_op operation)
+/**
+ * retrive the map of operations
+ * checker if the operation code is out of bound
+ * execute the operations of movement to sort the list
+ */
+void	run_op(t_ps *data, t_op operation)
 {
 	t_op_exec	*op_table;
 

@@ -6,13 +6,18 @@
 /*   By: syzygy <syzygy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 13:27:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/19 14:21:28 by syzygy           ###   ########.fr       */
+/*   Updated: 2025/07/19 15:49:38 by syzygy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 #include "checker_bonus.h"
 
+/**
+ * This function take data->memb to discover if the stack is finally sorted
+ * or not.
+ * @param data ptr to structure data.
+ */
 bool	is_stack_sorted(t_ps *data)
 {
 	int	current_index;
@@ -34,31 +39,38 @@ bool	is_stack_sorted(t_ps *data)
 	return (true);
 }
 
-bool	validate_numeric_argument(char *arg)
+/**
+ * inspired by atoi logic, we use just a checker to 
+ * be sure that the numbers are truly numbers but also
+ * with a bound checking to avoid to be out of bound
+ * as it is expected from the evaluation
+ * @param arg string
+ */
+bool	validate_numeric_argument(char *op)
 {
 	long long	num;
 	int			sign;
 
 	sign = 1;
-	if (*arg == '\0')
+	if (*op == '\0')
 		return (false);
-	if (*arg == '-' || *arg == '+')
+	if (*op == '-' || *op == '+')
 	{
-		if (*arg == '-')
+		if (*op == '-')
 			sign = -1;
-		arg++;
-		if (*arg == '\0')
+		op++;
+		if (*op == '\0')
 			return (false);
 	}
 	num = 0;
-	while (*arg)
+	while (*op)
 	{
-		if (!ft_isdigit(*arg))
+		if (!ft_isdigit(*op))
 			return (false);
-		num = num * 10 + (*arg - '0');
+		num = num * 10 + (*op - '0');
 		if ((sign == 1 && num > INT_MAX) || (sign == -1 && (-num < INT_MIN)))
 			return (false);
-		arg++;
+		op++;
 	}
 	return (true);
 }
