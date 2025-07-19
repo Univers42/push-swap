@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 16:40:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/18 16:13:24 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/19 01:22:10 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,4 +112,3 @@ void	push_back_to_a(t_ps *data)
 		data->algo_ctx.u_ctx.s_greedy.nodes_count = 0;
 	}
 }
-
