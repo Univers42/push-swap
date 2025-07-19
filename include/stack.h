@@ -6,7 +6,7 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 20:56:27 by ugerkens          #+#    #+#             */
-/*   Updated: 2025/07/19 02:57:42 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/19 03:34:19 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,7 @@ typedef enum e_loc
 void		populate_stack_with_ranks(t_ps *data, t_stack *stk, int size,
 				char **arg);
 bool		validate_numeric_argument(char *arg);
-bool		detect_duplicates_optimized(t_ps *data, int *numbers, int size);
-bool		detect_duplicates_with_sorting(int *numbers, int size);
-void		efficient_sort(int *arr, int size);
+bool		detect_dup(int *numbers, int size);
 
 // STACK VERIFICATION AND CLEANUP
 bool		is_stack_sorted(t_ps *data);

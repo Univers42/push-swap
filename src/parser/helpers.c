@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   helpers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 23:15:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/09 17:45:26 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/19 03:34:14 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-bool	detect_duplicates_with_sorting(int *numbers, int size)
+bool	detect_dup(int *numbers, int size)
 {
 	int		*sorted_copy;
 	int		i;
@@ -22,7 +22,7 @@ bool	detect_duplicates_with_sorting(int *numbers, int size)
 	if (!sorted_copy)
 		return (true);
 	ft_memcpy(sorted_copy, numbers, sizeof(int) * size);
-	efficient_sort(sorted_copy, size);
+	ft_quick_sort(sorted_copy,0, size - 1);
 	has_duplicate = false;
 	i = 0;
 	while (i < size - 1)
@@ -36,10 +36,4 @@ bool	detect_duplicates_with_sorting(int *numbers, int size)
 	}
 	free(sorted_copy);
 	return (has_duplicate);
-}
-
-void	efficient_sort(int *arr, int size)
-{
-	if (size > 1)
-		ft_quick_sort(arr, 0, size - 1);
 }

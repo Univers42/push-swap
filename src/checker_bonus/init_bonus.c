@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   checker_init.c                                     :+:      :+:    :+:   */
+/*   init_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 01:00:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/06/15 23:13:31 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/19 03:32:57 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	initialize_checker_data(t_ps *data, int argc, char **argv)
 	argv++;
 	validate_arguments(argc, argv);
 	raw_numbers = parse_numbers(argc, argv);
-	if (detect_duplicates_with_sorting(raw_numbers, argc))
+	if (detect_dup(raw_numbers, argc))
 	{
 		free(raw_numbers);
 		ft_putendl_fd("Error", 2);

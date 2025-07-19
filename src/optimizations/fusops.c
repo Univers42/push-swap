@@ -6,13 +6,12 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 23:50:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/19 02:53:39 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/19 03:35:50 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 #include "tracker.h"
-
 #include <stdint.h>
 
 static t_op		child_op(t_op first, t_op second);
@@ -56,19 +55,15 @@ static t_list	*process_merge_operation(t_ps *data, t_list *reader)
 
 static t_op	get_fusion_op(t_op first, t_op second)
 {
-	// Table: [first][second] = fused_op
-	static t_op table[12][12];
-	static int initialized = 0;
+	static t_op	table[12][12];
+	static int	initialized = 0;
 
 	if (!initialized)
 	{
-		// RR
 		table[OP_RA][OP_RB] = OP_RR;
 		table[OP_RB][OP_RA] = OP_RR;
-		// RRR
 		table[OP_RRA][OP_RRB] = OP_RRR;
 		table[OP_RRB][OP_RRA] = OP_RRR;
-		// SS
 		table[OP_SA][OP_SB] = OP_SS;
 		table[OP_SB][OP_SA] = OP_SS;
 		initialized = 1;

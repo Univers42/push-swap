@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 00:00:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/18 16:26:00 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/19 03:27:14 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,4 @@ bool	validate_numeric_argument(char *arg)
 	if (num > INT_MAX || num < INT_MIN)
 		return (false);
 	return (true);
-}
-
-bool	detect_duplicates_optimized(t_ps *data, int *numbers, int size)
-{
-	(void)data;
-	if (size <= 1)
-		return (false);
-	if (size > HASH_TABLE_THRESHOLD)
-		return (detect_duplicates_with_sorting(numbers, size));
-	else
-		return (detect_duplicates_with_sorting(numbers, size));
 }

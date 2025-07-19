@@ -6,7 +6,7 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 14:20:48 by ugerkens          #+#    #+#             */
-/*   Updated: 2025/07/19 02:58:28 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/19 03:32:57 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,5 +134,6 @@ void		rr(t_ps *data);
 void		rra(t_ps *data);
 void		rrb(t_ps *data);
 void		rrr(t_ps *data);
+bool	detect_dup(int *numbers, int size);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cv_stack.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 21:09:08 by ugerkens          #+#    #+#             */
-/*   Updated: 2025/07/09 17:44:48 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/19 03:32:57 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	populate_stack_with_ranks(t_ps *data, t_stack *stk, int size,
 	if (!raw_numbers)
 		cleanup_and_exit_with_error(data);
 	validate_and_convert_args(data, raw_numbers, size, arg);
-	if (detect_duplicates_optimized(data, raw_numbers, size))
+	if (detect_dup(raw_numbers, size))
 	{
 		free(raw_numbers);
 		cleanup_and_exit_with_error(data);

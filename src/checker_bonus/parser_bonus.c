@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 13:27:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/18 16:26:00 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/19 03:32:57 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ bool	detect_duplicates_optimized(t_ps *data, int *numbers, int size)
 	(void)data;
 	range = calculate_value_range(numbers, size);
 	if (range > HASH_TABLE_THRESHOLD)
-		return (detect_duplicates_with_sorting(numbers, size));
+		return (detect_dup(numbers, size));
 	hash_table = ft_calloc(range, sizeof(char));
 	if (!hash_table)
 		return (true);
