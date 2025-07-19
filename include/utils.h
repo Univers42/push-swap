@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 15:18:55 by codespace         #+#    #+#             */
-/*   Updated: 2025/07/18 16:24:32 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/19 02:57:17 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ int			get_items(t_stack *stk, int position);
 int			get_stack_size(t_stack *stk);
 int			move_up(t_stack *stk, int index);
 int			move_down(t_stack *stk, int index);
-bool		check_if_stack_is_full(t_stack *stk);
-bool		check_if_stack_is_empty(t_stack *stk);
 
 //CLEANUP
 void		cleanup_and_exit_with_error(t_ps *data);

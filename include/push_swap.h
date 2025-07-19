@@ -6,7 +6,7 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 14:20:48 by ugerkens          #+#    #+#             */
-/*   Updated: 2025/07/19 02:52:17 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/19 02:58:28 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void		init_chunk_context(t_ps *data);
 void		init_greedy_context(t_ps *data);
 void		init_k_sort_context(t_ps *data);
 void		init_radix_context(t_ps *data);
-
+bool		check_if_stack_is_empty(t_stack *stk);
 // Basic operations
 void		pa(t_ps *data);
 void		pb(t_ps *data);

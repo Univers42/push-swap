@@ -6,7 +6,7 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 00:00:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/19 02:44:08 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/19 03:01:52 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,20 +44,20 @@ static void	init_op_table(t_op_exec *table)
 
 t_op_exec *get_op_table(void)
 {
-	static t_op_exec table[12];
-	static int initialized = 0;
+	static t_op_exec	table[12];
+	static int			lazy = 0;
 
-	if (!initialized)
+	if (!lazy)
 	{
 		init_op_table(table);
-		initialized = 1;
+		lazy = 1;
 	}
-	return table;
+	return (table);
 }
 
 void	execute_checker_operation(t_ps *data, t_op operation)
 {
-	t_op_exec *op_table = get_op_table();
+	t_op_exec	*op_table = get_op_table();
 
 	if (operation <= OP_NULL || operation >= 12)
 		return ;
