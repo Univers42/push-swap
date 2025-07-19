@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checker_stack_ops_bonus.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
+/*   By: syzygy <syzygy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 23:15:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/19 02:44:46 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/19 14:28:44 by syzygy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	checker_r_rotate(t_stack *stk)
 	}
 }
 
-void checker_pa(t_ps *data)
+void	checker_pa(t_ps *data)
 {
 	checker_push(&data->b, &data->a);
 }

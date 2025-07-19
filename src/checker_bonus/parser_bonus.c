@@ -3,19 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parser_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
+/*   By: syzygy <syzygy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 13:27:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/19 03:32:57 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/19 14:21:28 by syzygy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 #include "checker_bonus.h"
-
-static int	calculate_value_range(int *numbers, int size);
-static bool	detect_duplicates_with_hash(int *numbers, int size,
-				char *hash_table, int range);
 
 bool	is_stack_sorted(t_ps *data)
 {
@@ -65,71 +61,4 @@ bool	validate_numeric_argument(char *arg)
 		arg++;
 	}
 	return (true);
-}
-
-bool	detect_duplicates_optimized(t_ps *data, int *numbers, int size)
-{
-	int		range;
-	char	*hash_table;
-	bool	has_duplicate;
-
-	(void)data;
-	range = calculate_value_range(numbers, size);
-	if (range > HASH_TABLE_THRESHOLD)
-		return (detect_dup(numbers, size));
-	hash_table = ft_calloc(range, sizeof(char));
-	if (!hash_table)
-		return (true);
-	has_duplicate = detect_duplicates_with_hash(numbers, size, hash_table,
-			range);
-	free(hash_table);
-	return (has_duplicate);
-}
-
-static int	calculate_value_range(int *numbers, int size)
-{
-	int	i;
-	int	min_val;
-	int	max_val;
-
-	min_val = numbers[0];
-	max_val = numbers[0];
-	i = 1;
-	while (i < size)
-	{
-		if (numbers[i] < min_val)
-			min_val = numbers[i];
-		if (numbers[i] > max_val)
-			max_val = numbers[i];
-		i++;
-	}
-	return (max_val - min_val + 1);
-}
-
-static bool	detect_duplicates_with_hash(int *numbers, int size,
-			char *hash_table, int range)
-{
-	int	i;
-	int	min_val;
-	int	index;
-
-	min_val = numbers[0];
-	i = 1;
-	while (i < size)
-	{
-		if (numbers[i] < min_val)
-			min_val = numbers[i];
-		i++;
-	}
-	i = 0;
-	while (i < size)
-	{
-		index = numbers[i] - min_val;
-		if (hash_table[index])
-			return (true);
-		hash_table[index] = 1;
-		i++;
-	}
-	(void)range;
-	return (false);
 }
