@@ -6,142 +6,94 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 23:15:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/21 21:21:09 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/21 22:37:21 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "checker_bonus.h"
-#include <assert.h>
 
 /**
- * moves the top element from `src` to `dest`
- * for instance from `stack_a` to `stack_b`based on `FIFO` system
- * Checks if `dest` is full `src` is empty, if so, does nothing
- * calculates new top positions for both stack
- * copies the top value from src to `dest`
- * updates the top and element count for both stacks
- * clears the value from `src`
- * if `dest` was empty before, sets its bottom to the new top.
+ * Push operation - moves the top element from src to dest
+ * In a simple array implementation, top element is at index 0
+ * We shift elements accordingly
+ * 1) we shift all elemments in dest down by one position
+ * 2) move top element from src to dest
+ * 3) shift all elements in src up  by one position
  */
 void	checker_push(t_stack *src, t_stack *dest)
 {
-	int	new_dest_top;
-	int	new_src_top;
+	int	i;
 
 	if (!src || !dest || !src->stack || !dest->stack)
 		return ;
-	if (dest->element_count == dest->capacity || src->element_count == 0)
+	if (src->element_count == 0 || dest->element_count >= dest->capacity)
 		return ;
-	if (src->top < 0 || src->top >= src->capacity)
-		return ;
-	if (dest->top < 0 || dest->top >= dest->capacity)
-		return ;
-	new_dest_top = move_up(dest, dest->top);
-	new_src_top = move_down(src, src->top);
-	if (new_dest_top < 0 || new_dest_top >= dest->capacity)
-		return ;
-	if (new_src_top < 0 || new_src_top >= src->capacity)
-		return ;
-	dest->stack[new_dest_top] = src->stack[src->top];
-	dest->top = new_dest_top;
+	i = dest->element_count;
+	while (i > 0)
+	{
+		dest->stack[i] = dest->stack[(i) - 1];
+		i--;
+	}
+	dest->stack[0] = src->stack[0];
 	dest->element_count++;
-	src->stack[src->top] = 0;
-	src->top = new_src_top;
+	i = -1;
+	while (++i < src->element_count - 1)
+		src->stack[i] = src->stack[i + 1];
 	src->element_count--;
-	if (dest->element_count == 1)
-		dest->bottom = new_dest_top;
 }
 
 /**
- * Swaps the top two elements of the stack.
- * - check if the stack has fewer than 2 elements : do nothing
- * - find the position of the second element
- * swap the top and second element usign my efficient function ft_swap()
+ * Swap the top two elements of the stack
+ * Top two elements are at indices 0 and 1
  */
 void	checker_swap(t_stack *stk)
 {
-	int	second_pos;
+	int	temp;
 
-	if (!stk || !stk->stack)
+	if (!stk || !stk->stack || stk->element_count < 2)
 		return ;
-	if (get_stack_size(stk) < 2)
-		return ;
-	if (stk->top < 0 || stk->top >= stk->capacity)
-		return ;
-	second_pos = move_down(stk, stk->top);
-	if (second_pos < 0 || second_pos >= stk->capacity)
-		return ;
-	ft_swap(&stk->stack[stk->top], &stk->stack[second_pos], sizeof(int));
+	temp = stk->stack[0];
+	stk->stack[0] = stk->stack[1];
+	stk->stack[1] = temp;
 }
 
 /**
- * Rotates the stack upwards (top element becomes bottom)
- * - check if the stack has fewer than 2 elemente: do nothing
- * - calculate teh new position
- * - is the stack is full:
- * - moves the top pointer down, bottom pointer up
- * if not full
- * 	- moves the top element to the new bottom position
- * 	- celar the old top
- *	- updates bottom and top pointers
- * 
+ * Rotate up - top element becomes bottom
+ * First element goes to the end, all others shift up
  */
 void	checker_rotate(t_stack *stk)
 {
-	int	new_top;
-	int	new_bottom;
+	int	temp;
+	int	i;
 
-	if (get_stack_size(stk) < 2)
+	if (!stk || !stk->stack || stk->element_count < 2)
 		return ;
-	new_top = move_down(stk, stk->top);
-	if (get_stack_size(stk) == stk->capacity)
-	{
-		stk->bottom = stk->top;
-		stk->top = new_top;
-	}
-	else
-	{
-		new_bottom = move_down(stk, stk->bottom);
-		stk->stack[new_bottom] = stk->stack[stk->top];
-		stk->stack[stk->top] = 0;
-		stk->bottom = new_bottom;
-		stk->top = new_top;
-	}
+	temp = stk->stack[0];
+	i = -1;
+	while (++i < stk->element_count - 1)
+		stk->stack[i] = stk->stack[i + 1];
+	stk->stack[stk->element_count - 1] = temp;
 }
 
 /**
- * Rotate the stack downwrds (bottom element becomes top elem)
- * - checks if the stack has fewer than 2elements, if so
- * does nothing
- * calculates the new bottom position
- * if the stack if full:
- * 	- moves teh bottom pointer up, top pointer to the old bottom
- * if the stack is not full:
- * 	- moves teh bottom element to the new top position
- * clears the old bottom
- * updates top and bottom pointers
+ * Reverse rotate - bottom element becomes top
+ * Last element goes to the beginning, all others shift down
  */
 void	checker_r_rotate(t_stack *stk)
 {
-	int	new_top;
-	int	new_bottom;
+	int	temp;
+	int	i;
 
-	if (get_stack_size(stk) < 2)
+	if (!stk || !stk->stack || stk->element_count < 2)
 		return ;
-	new_bottom = move_up(stk, stk->bottom);
-	if (get_stack_size(stk) == stk->capacity)
+	temp = stk->stack[stk->element_count - 1];
+	i = stk->element_count - 1;
+	while (i > 0)
 	{
-		stk->top = stk->bottom;
-		stk->bottom = new_bottom;
+		stk->stack[i] = stk->stack[i - 1];
+		i--;
 	}
-	else
-	{
-		new_top = move_up(stk, stk->top);
-		stk->stack[new_top] = stk->stack[stk->bottom];
-		stk->stack[stk->bottom] = 0;
-		stk->top = new_top;
-		stk->bottom = new_bottom;
-	}
+	stk->stack[0] = temp;
 }
 
 void	checker_pa(t_ps *data)

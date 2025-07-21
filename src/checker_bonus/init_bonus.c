@@ -6,7 +6,7 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 01:00:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/21 21:21:56 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/21 22:29:58 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,8 @@ static int	*parse_numbers(int argc, char **argv)
  */
 void	checker_setup_stacks(t_ps *data, int *raw_numbers, int argc)
 {
+	int	i;
+
 	data->a.stack = malloc(sizeof(int) * argc);
 	data->b.stack = malloc(sizeof(int) * argc);
 	if (!data->a.stack || !data->b.stack)
@@ -106,14 +108,19 @@ void	checker_setup_stacks(t_ps *data, int *raw_numbers, int argc)
 			free(data->a.stack);
 		if (data->b.stack)
 			free(data->b.stack);
-		(ft_putendl_fd("Error", 2), exit(255));
 	}
 	data->a.capacity = argc;
-	data->b.capacity = argc;
-	data->a.bottom = argc - 1;
 	data->a.element_count = argc;
+	data->a.top = 0;
+	data->a.bottom = argc - 1;
+	data->b.capacity = argc;
 	data->b.element_count = 0;
 	data->b.top = 0;
 	data->b.bottom = argc - 1;
-	convert_numbers_to_ranks(raw_numbers, data->a.stack, argc);
+	i = -1;
+	while (++i < argc)
+		data->a.stack[i] = raw_numbers[i];
+	i = -1;
+	while (++i < argc)
+		data->b.stack[i] = 0;
 }

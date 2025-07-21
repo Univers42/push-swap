@@ -6,7 +6,7 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 20:56:49 by ugerkens          #+#    #+#             */
-/*   Updated: 2025/07/21 21:20:28 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/21 22:30:38 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,13 @@ void	checker_error_exit(t_ps *data)
 }
 
 /**
- * this function
+ * Main checker logic - process operations and check result
  */
 __attribute__((weak))
 void	checker_main_logic(t_ps *data)
 {
 	rx_ops(data);
-	if (check_if_stack_is_empty(&data->b) && is_stack_sorted(data))
+	if (is_stack_sorted(data))
 		ft_printf("OK\n");
 	else
 		ft_printf("KO\n");

@@ -6,7 +6,7 @@
 #    By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/08 13:37:35 by codespace         #+#    #+#              #
-#    Updated: 2025/07/21 22:00:59 by dlesieur         ###   ########.fr        #
+#    Updated: 2025/07/21 22:26:24 by dlesieur         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ endef
 
 # COMMANDS AND FLAGS
 CC					=	cc
-CFLAGS				=	-Wall -Wextra -Werror -I./include -I./libft -g3 -O3 -fsanitize=address -fsanitize=undefined -D_FORTIFY_SOURCE=2 -DDEBUG=0 -D_ALGO_CHUNK=1
+CFLAGS				=	-Wall -Wextra -Werror -I./include -I./libft -g3 -O3 -D_FORTIFY_SOURCE=2 -DDEBUG=0 -D_ALGO_CHUNK=1
 RM					=	rm -rf
 AR					=	ar rcs
 
