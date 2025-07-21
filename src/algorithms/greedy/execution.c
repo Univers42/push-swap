@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 16:41:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/18 16:08:10 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/21 21:33:55 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ void	execute_move(t_ps *data, t_greedy_node *node)
 }
 
 /**
- * execute_combined_and_remaining - Performs combined and remaining rotations for a move.
+ * execute_combined_and_remaining - Performs combined and remaining
+ * rotations for a move.
  * @data: Pointer to the main push_swap data structure.
  * @moves_a: Number of rotations needed in stack A.
  * @moves_b: Number of rotations needed in stack B.
@@ -45,7 +46,8 @@ void	execute_move(t_ps *data, t_greedy_node *node)
  * in each stack individually.
  *
  * Example:
- *   If both rotate up, does rr; if both down, does rrr; then finishes with ra/rra or rb/rrb.
+ *   If both rotate up, does rr; if both down, does rrr;
+ * then finishes with ra/rra or rb/rrb.
  */
 void	execute_combined_and_remaining(t_ps *data, int moves_a,
 		int moves_b, t_greedy_node *node)

@@ -6,7 +6,7 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 14:14:38 by codespace         #+#    #+#             */
-/*   Updated: 2025/07/19 01:19:14 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/21 21:33:07 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ static void	handle_bottom_a(t_ps *data, t_chunk *to_sort);
 static void	handle_bottom_b(t_ps *data, t_chunk *to_sort);
 
 /**
- * fast_sort - Quickly sorts small chunks (usually 2 or 3 elements) in various stack locations.
+ * fast_sort - Quickly sorts small chunks (usually 2 or 3 elements)
+ * in various stack locations.
  * @data: Pointer to the main push_swap data structure.
  * @to_sort: Pointer to the chunk to sort (location and size).
  *
@@ -48,11 +49,13 @@ void	fast_sort(t_ps *data, t_chunk *to_sort)
 }
 
 /**
- * fast_sort_second - Handles the case where the second element in the chunk is next in order.
+ * fast_sort_second - Handles the case where the second element
+ * in the chunk is next in order.
  * @data: Pointer to the main push_swap data structure.
  * @to_sort: Pointer to the chunk to sort.
  *
- * Depending on the chunk's location, calls the appropriate handler to sort the
+ * Depending on the chunk's location, calls the appropriate
+ * handler to sort the
  * second element with minimal moves.
  */
 static void	fast_sort_second(t_ps *data, t_chunk *to_sort)
@@ -105,7 +108,6 @@ static void	handle_bottom_a(t_ps *data, t_chunk *to_sort)
 	else
 		ra(data);
 }
-
 
 /**
  * handle_bottom_b - Sorts two elements at the bottom of stack B and pushes to A.

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checker_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syzygy <syzygy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 20:56:49 by ugerkens          #+#    #+#             */
-/*   Updated: 2025/07/19 16:23:40 by syzygy           ###   ########.fr       */
+/*   Updated: 2025/07/21 21:20:28 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ void	checker_error_exit(t_ps *data)
 	ft_putendl_fd("Error", 2);
 	exit(FATAL_ERROR);
 }
-
 
 /**
  * this function

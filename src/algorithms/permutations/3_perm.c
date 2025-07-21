@@ -3,17 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   3_perm.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 07:28:06 by codespace         #+#    #+#             */
-/*   Updated: 2025/07/18 16:13:24 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/21 21:32:52 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
 /**
- * sort_three_simple - Sorts exactly three elements in stack A using minimal moves.
+ * sort_three_simple - Sorts exactly three elements in stack
+ * A using minimal moves.
  * @data: Pointer to the main push_swap data structure.
  *
  * This function checks all possible orderings of three elements and applies the

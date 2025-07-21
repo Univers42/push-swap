@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 14:46:15 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/18 16:23:33 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/21 21:12:05 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,17 @@
  * the values the more efficient way.
  */
 
- /**
-  * retrieves an element at a given position, wrapping aound using `modulo`
-  * (%) for circular access.
-  */
+/**
+ * retrieves an element at a given position, wrapping aound using `modulo`
+ * (%) for circular access.
+ */
 int	get_items(t_stack *stk, int position)
 {
 	int	target_index;
 
-	if (position <= 0 || stk->element_count == 0)
+	if (!stk || !stk->stack || stk->capacity <= 0
+		|| stk->element_count == 0 || position <= 0
+		|| position > stk->element_count)
 		return (0);
 	if (position == 1)
 		return (stk->stack[stk->top]);

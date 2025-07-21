@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   checker_stack_ops_bonus.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syzygy <syzygy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 23:15:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/19 15:39:07 by syzygy           ###   ########.fr       */
+/*   Updated: 2025/07/21 21:21:09 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "checker_bonus.h"
+#include <assert.h>
 
 /**
  * moves the top element from `src` to `dest`
@@ -27,11 +28,20 @@ void	checker_push(t_stack *src, t_stack *dest)
 	int	new_dest_top;
 	int	new_src_top;
 
-	if (get_stack_size(dest) == dest->capacity
-		|| get_stack_size(src) == 0)
+	if (!src || !dest || !src->stack || !dest->stack)
+		return ;
+	if (dest->element_count == dest->capacity || src->element_count == 0)
+		return ;
+	if (src->top < 0 || src->top >= src->capacity)
+		return ;
+	if (dest->top < 0 || dest->top >= dest->capacity)
 		return ;
 	new_dest_top = move_up(dest, dest->top);
 	new_src_top = move_down(src, src->top);
+	if (new_dest_top < 0 || new_dest_top >= dest->capacity)
+		return ;
+	if (new_src_top < 0 || new_src_top >= src->capacity)
+		return ;
 	dest->stack[new_dest_top] = src->stack[src->top];
 	dest->top = new_dest_top;
 	dest->element_count++;
@@ -52,9 +62,15 @@ void	checker_swap(t_stack *stk)
 {
 	int	second_pos;
 
+	if (!stk || !stk->stack)
+		return ;
 	if (get_stack_size(stk) < 2)
 		return ;
+	if (stk->top < 0 || stk->top >= stk->capacity)
+		return ;
 	second_pos = move_down(stk, stk->top);
+	if (second_pos < 0 || second_pos >= stk->capacity)
+		return ;
 	ft_swap(&stk->stack[stk->top], &stk->stack[second_pos], sizeof(int));
 }
 

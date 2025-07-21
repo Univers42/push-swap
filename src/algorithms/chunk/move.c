@@ -6,14 +6,12 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 00:57:12 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/19 01:10:32 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/21 21:55:21 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 #include "algorithms.h"
-
-typedef void (*move_func)(t_ps *data, t_loc to);
 
 static void	move_top_a(t_ps *data, t_loc to);
 static void	move_top_b(t_ps *data, t_loc to);
@@ -21,27 +19,20 @@ static void	move_bottom_a(t_ps *data, t_loc to);
 static void	move_bottom_b(t_ps *data, t_loc to);
 
 // Singleton accessor for jump table
-static move_func *get_move_table(void)
+t_move_func	*get_move_table(void)
 {
-	static move_func table[4];
-	static int initialized = 0;
+	static t_move_func	table[4];
+	static int			initialized = 0;
+
 	if (!initialized)
 	{
-		table[0] = move_top_a;
-		table[1] = move_top_b;
-		table[2] = move_bottom_a;
-		table[3] = move_bottom_b;
+		table[0] = &move_top_a;
+		table[1] = &move_top_b;
+		table[2] = &move_bottom_a;
+		table[3] = &move_bottom_b;
 		initialized = 1;
 	}
 	return (table);
-}
-
-int	transfer_chunk(t_ps *data, t_loc from, t_loc to)
-{
-	if (from < 0 || from > 3)
-		return (0);
-	get_move_table()[from](data, to);
-	return (1);
 }
 
 static void	move_top_a(t_ps *data, t_loc to)

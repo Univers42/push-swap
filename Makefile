@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: syzygy <syzygy@student.42.fr>              +#+  +:+       +#+         #
+#    By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/08 13:37:35 by codespace         #+#    #+#              #
-#    Updated: 2025/07/19 17:58:19 by syzygy           ###   ########.fr        #
+#    Updated: 2025/07/21 22:00:59 by dlesieur         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ endef
 
 # COMMANDS AND FLAGS
 CC					=	cc
-CFLAGS				=	-Wall -Wextra -Werror -I./include -I./libft -g3 -O3 -fsanitize=address -fsanitize=undefined -D_FORTIFY_SOURCE=2 -fno-omit-frame-pointer -DDEBUG=0 -D_ALGO_CHUNK=1
+CFLAGS				=	-Wall -Wextra -Werror -I./include -I./libft -g3 -O3 -fsanitize=address -fsanitize=undefined -D_FORTIFY_SOURCE=2 -DDEBUG=0 -D_ALGO_CHUNK=1
 RM					=	rm -rf
 AR					=	ar rcs
 
@@ -52,7 +52,8 @@ D_VISUALIZER		=	$(D_CHECKER_BONUS)/visualizer
 CHUNK_SRCS			=	$(D_CHUNK)/chunk_sort.c \
 						$(D_CHUNK)/divide_seg.c \
 						$(D_CHUNK)/helpers.c	\
-						$(D_CHUNK)/move.c
+						$(D_CHUNK)/move.c		\
+						$(D_CHUNK)/chunk_split.c
 
 GREEDY_SRCS			=	$(D_GREEDY)/greedy.c \
 						$(D_GREEDY)/execution.c \

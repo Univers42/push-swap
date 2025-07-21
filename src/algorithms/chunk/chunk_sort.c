@@ -6,7 +6,7 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 20:56:55 by ugerkens          #+#    #+#             */
-/*   Updated: 2025/07/19 01:32:22 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/21 21:43:43 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,4 +91,12 @@ void	chunk_sort_loop(t_ps *data, t_chunk *to_sort)
 		push_chunk(&stack, dest.mid);
 		push_chunk(&stack, dest.max);
 	}
+}
+
+t_stack	*loc_to_stack(t_ps *data, t_loc loc)
+{
+	if (loc == TOP_A || loc == BOTTOM_A)
+		return (&data->a);
+	else
+		return (&data->b);
 }

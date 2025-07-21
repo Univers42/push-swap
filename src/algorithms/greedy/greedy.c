@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   greedy.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 19:52:32 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/18 16:26:00 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/21 21:33:44 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@
  *   - Rotates A so the smallest element is on top (final_rotation()).
  *@note: There are broady to phase, one of them is to 
  * Example:
- *   For a stack of 5+ elements, this function will split, sort, and merge using the greedy strategy.
+ *   For a stack of 5+ elements, this function will split, sort,
+ * and merge using the greedy strategy.
  */
 void	greedy_sort(t_ps *data)
 {

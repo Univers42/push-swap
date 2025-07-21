@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syzygy <syzygy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 01:00:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/19 17:57:14 by syzygy           ###   ########.fr       */
+/*   Updated: 2025/07/21 21:21:56 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,10 +108,12 @@ void	checker_setup_stacks(t_ps *data, int *raw_numbers, int argc)
 			free(data->b.stack);
 		(ft_putendl_fd("Error", 2), exit(255));
 	}
-	ft_memset(data, 0, sizeof(t_ps *));
 	data->a.capacity = argc;
 	data->b.capacity = argc;
 	data->a.bottom = argc - 1;
 	data->a.element_count = argc;
+	data->b.element_count = 0;
+	data->b.top = 0;
+	data->b.bottom = argc - 1;
 	convert_numbers_to_ranks(raw_numbers, data->a.stack, argc);
 }

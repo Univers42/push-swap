@@ -6,7 +6,7 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 14:31:22 by codespace         #+#    #+#             */
-/*   Updated: 2025/07/19 00:55:07 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/21 21:39:25 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,12 +126,4 @@ int	chunk_max_value(t_ps *data, t_chunk *chunk)
 			i = move_up(stk, i);
 	}
 	return (max_value);
-}
-
-t_stack	*loc_to_stack(t_ps *data, t_loc loc)
-{
-	if (loc == TOP_A || loc == BOTTOM_A)
-		return (&data->a);
-	else
-		return (&data->b);
 }

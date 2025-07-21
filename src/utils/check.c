@@ -6,7 +6,7 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 14:45:52 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/19 02:58:10 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/21 20:42:16 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 bool	check_if_stack_is_empty(t_stack *stk)
 {
-	return ((stk->element_count ^= 0) == 0);
+	return (stk->element_count == 0);
 }

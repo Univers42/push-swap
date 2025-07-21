@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_algos.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 21:28:58 by codespace         #+#    #+#             */
-/*   Updated: 2025/07/18 15:50:08 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/21 21:13:24 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,10 @@
  * by setting all fields to know values (0,NULL), we avoid usign uninitialized
  * memory, which can cause unpredictable bugs or crashes
  * - algorithm readiness
- * Each sortin algorithm may need itw own data (chunk info,  node lists, counters)
- * to operate correctly. Initialization ensures the algorithm starts with a clean.
+ * Each sortin algorithm may need itw own data
+ * (chunk info,  node lists, counters)
+ * to operate correctly. Initialization ensures
+ * the algorithm starts with a clean.
  * - Reset states between runs
  * if we run multiple sorts algos, initiliazing can be used as resets 
  * suppose we don't  that the memory will continue to iteratet to prohibitted

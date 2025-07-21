@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   position.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 16:42:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/18 16:23:33 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/21 21:33:34 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,13 @@
 #include "algorithms.h"
 
 /**
- * find_target_position - Finds the optimal target position in stack A for a value from B.
+ * find_target_position - Finds the optimal target position in stack
+ * A for a value from B.
  * @data: Pointer to the main push_swap data structure.
  * @value: The value from stack B to insert.
  *
- * Returns the index in stack A where the value should be inserted to maintain order.
+ * Returns the index in stack A where the value should be inserted
+ * to maintain order.
  * If no suitable position is found, returns the position of the minimum value.
  */
 int	find_target_position(t_ps *data, int value)
@@ -34,7 +36,8 @@ int	find_target_position(t_ps *data, int value)
 }
 
 /**
- * find_best_target - Finds the best position in A for a value, where the next greater element is.
+ * find_best_target - Finds the best position in A for a value,
+ * where the next greater element is.
  * @data: Pointer to the main push_swap data structure.
  * @value: The value to insert.
  * @size_a: Size of stack A.

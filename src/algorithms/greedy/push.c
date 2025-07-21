@@ -6,7 +6,7 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 16:40:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/19 01:22:10 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/21 21:33:21 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 #include "algorithms.h"
 
 /**
- * push_element_strategically - Pushes an element from A to B with strategic rotation.
+ * push_element_strategically - Pushes an element from A to B
+ * with strategic rotation.
  * @data: Pointer to the main push_swap data structure.
  * @current: The value of the current element in A.
  * @total_size: The total size of the original stack A.
@@ -50,10 +51,12 @@ void	push_element_strategically(t_ps *data, int current,
 }
 
 /**
- * push_to_b - Pushes all but three elements from A to B, using strategic logic.
+ * push_to_b - Pushes all but three elements from A to B,
+ * using strategic logic.
  * @data: Pointer to the main push_swap data structure.
  *
- * Pushes two elements to B initially, then continues pushing until only three remain in A.
+ * Pushes two elements to B initially, then continues pushing
+ * until only three remain in A.
  * Uses push_element_strategically() for each push.
  * Finally, sorts the remaining three in A.
  */

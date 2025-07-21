@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unit_ctrl.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 00:00:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/18 15:37:43 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/21 21:14:09 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,9 @@ void	config_chunk(t_ps *data)
 	config_mask(data, chunk_sort, init_chunk_context, "Chunk Sort");
 }
 
-void config_greedy(t_ps *data) {
-    config_mask(data, greedy_sort, init_greedy_context, "Greedy Sort");
+void	config_greedy(t_ps *data)
+{
+	config_mask(data, greedy_sort, init_greedy_context, "Greedy Sort");
 }
 
 /**

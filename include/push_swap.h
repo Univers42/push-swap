@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syzygy <syzygy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 14:20:48 by ugerkens          #+#    #+#             */
-/*   Updated: 2025/07/19 14:19:00 by syzygy           ###   ########.fr       */
+/*   Updated: 2025/07/21 21:47:24 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,8 @@ typedef void	(*t_config_fn)(t_ps *data);
 // CORE INITIALIZATION
 void		init_engine_ps(t_ps *data, int argc, char **argv);
 void		allocate_and_init_stack(t_ps *data, t_stack *stk, int capacity);
-void config_mask(t_ps *data, void (*ctx_alg)(t_ps *),
-					void (*init)(t_ps *), t_string name);
+void		config_mask(t_ps *data, void (*ctx_alg)(t_ps *),
+				void (*init)(t_ps *), t_string name);
 void		config_queue(t_ps *data);
 void		config_lis(t_ps *data);
 void		config_radix(t_ps *data);
@@ -134,6 +134,5 @@ void		rr(t_ps *data);
 void		rra(t_ps *data);
 void		rrb(t_ps *data);
 void		rrr(t_ps *data);
-
 
 #endif

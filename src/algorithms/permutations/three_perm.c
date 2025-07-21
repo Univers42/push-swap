@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   three_perm.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 14:11:23 by codespace         #+#    #+#             */
-/*   Updated: 2025/07/18 16:05:50 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/21 21:32:33 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ static void	sort_three_bottom_b(t_ps *data, t_chunk *to_sort, t_stack *stk,
 				int max);
 
 /**
- * sort_three - Sorts three elements in a chunk, regardless of their location and stack.
+ * sort_three - Sorts three elements in a chunk, regardless of their
+ * location and stack.
  * @data: Pointer to the main push_swap data structure.
  * @to_sort: Pointer to the chunk to sort.
  *
@@ -151,7 +152,8 @@ static void	sort_three_bottom_a(t_ps *data, t_chunk *to_sort, t_stack *stk,
 }
 
 /**
- * sort_three_bottom_b - Sorts three elements at the bottom of stack B and pushes to A.
+ * sort_three_bottom_b - Sorts three elements at the bottom of
+ * stack B and pushes to A.
  * @data: Pointer to the main push_swap data structure.
  * @to_sort: Pointer to the chunk to sort.
  * @stk: Pointer to the stack structure.

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   compute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 09:13:42 by codespace         #+#    #+#             */
-/*   Updated: 2025/07/18 16:08:03 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/21 21:34:21 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,13 @@ void	calculate_move_costs(t_greedy_node *node, int size_a, int size_b)
 		node->cost_a = node->target_pos;
 	else
 		node->cost_a = size_a - node->target_pos;
-	node->total_cost =  calculate_total_cost(node->cost_a, node->cost_b,
+	node->total_cost = calculate_total_cost(node->cost_a, node->cost_b,
 			node->target_pos, node->index);
 }
 
 /**
- * calculate_costs - Fills an array of greedy nodes with move costs for all elements in stack B.
+ * calculate_costs - Fills an array of greedy nodes with move costs
+ * for all elements in stack B.
  * @data: Pointer to the main push_swap data structure.
  * @nodes: Array of greedy nodes to fill.
  * @size_b: Number of elements in stack B.
@@ -76,17 +77,20 @@ void	calculate_costs(t_ps *data, t_greedy_node *nodes, int size_b)
 }
 
 /**
- * calculate_total_cost - Determines the total cost to move an element from B to A.
+ * calculate_total_cost - Determines the total cost to move an
+ * element from B to A.
  * @cost_a: Rotations needed in stack A.
  * @cost_b: Rotations needed in stack B.
  * @pos_a: Target position in stack A.
  * @pos_b: Current index in stack B.
  *
- * If both stacks rotate in the same direction, the cost is the maximum of the two.
+ * If both stacks rotate in the same direction, the cost is
+ * the maximum of the two.
  * Otherwise, the cost is the sum.
  *
  * Example:
- *   If cost_a = 2, cost_b = 3, pos_a = 1, pos_b = 4, returns 5 if directions differ, else 3.
+ *   If cost_a = 2, cost_b = 3, pos_a = 1, pos_b = 4, returns 5
+ * if directions differ, else 3.
  */
 int	calculate_total_cost(int cost_a, int cost_b, int pos_a, int pos_b)
 {

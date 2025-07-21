@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 15:40:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/18 16:13:24 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/21 21:32:14 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,9 @@ void	radix_handle_small_arrays(t_ps *data)
 void	radix_rotate_to_position(t_ps *data, int min_pos, int size_a)
 {
 	int	i;
-	int first_half;
+	int	first_half;
 
 	first_half = (min_pos <= size_a / 2);
-
 	if (first_half)
 	{
 		i = 0;
