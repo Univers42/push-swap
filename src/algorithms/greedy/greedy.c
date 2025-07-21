@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   greedy.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 19:52:32 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/18 16:26:00 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/21 16:48:18 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,12 @@
  */
 void	greedy_sort(t_ps *data)
 {
+	// Use backtracking for all problems up to size 10
+	if (data && data->total_size <= 10)
+	{
+		if (backtrack_sort(data, data->total_size) && is_stack_sorted(data))
+			return;
+	}
 	if (!data || data->total_size <= 3)
 	{
 		if (data->total_size == 3)

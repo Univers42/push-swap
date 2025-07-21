@@ -6,7 +6,7 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 16:40:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/19 01:22:10 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/21 16:48:18 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,12 @@ void	push_to_b(t_ps *data)
 		current = get_items(&data->a, 1);
 		push_element_strategically(data, current, total_size);
 	}
-	if (get_stack_size(&data->a) == 3)
-		sort_three_simple(data);
+	// Use backtracking for the last chunk if size <= 10
+	if (get_stack_size(&data->a) <= 10)
+	{
+		if (!backtrack_sort(data, get_stack_size(&data->a)) || !is_stack_sorted(data))
+			sort_three_simple(data);
+	}
 }
 
 /**

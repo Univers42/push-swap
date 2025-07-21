@@ -6,7 +6,7 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 20:56:55 by ugerkens          #+#    #+#             */
-/*   Updated: 2025/07/19 01:32:22 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/21 16:37:02 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,11 @@
 
 void	chunk_sort(t_ps *data)
 {
-	if (data->total_size <= 3)
+	if (data->total_size <= 10)
 	{
+		if (backtrack_sort(data, data->total_size))
+			return ;
+		// fallback for legacy code if backtracking fails
 		if (data->total_size == 3)
 			sort_three_simple(data);
 		else if (data->total_size == 2)
@@ -75,7 +78,17 @@ void	chunk_sort_loop(t_ps *data, t_chunk *to_sort)
 	push_chunk(&stack, *to_sort);
 	while (pop_chunk(&stack, &current))
 	{
-		(loc_seg(data, &current), fast_sort(data, &current));
+		loc_seg(data, &current);
+		// Use backtracking for chunks up to size 10
+		if (current.size <= 10)
+		{
+			if (backtrack_sort(data, current.size))
+			{
+				current.size = 0;
+				continue;
+			}
+		}
+		fast_sort(data, &current);
 		if (current.size <= 3)
 		{
 			if (current.size == 3)

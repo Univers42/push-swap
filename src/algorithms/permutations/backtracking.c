@@ -6,7 +6,7 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 00:00:00 by backtrack         #+#    #+#             */
-/*   Updated: 2025/07/21 15:46:29 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/21 16:40:31 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 #include "algorithms.h"
 #include <stdlib.h>
 #include <string.h>
+#include <stdint.h>
+
+#define MAX_VISITED 4096
 
 // Forward declarations for internal helpers
 static int is_sorted_stack_a(t_ps *data);
@@ -23,6 +26,29 @@ static int backtrack_solve(t_backtrack_state *state, t_ps *current_data, int dep
 static void execute_best_sequence(t_ps *data, t_move_sequence *sequence);
 static int is_operation_useful(t_ps *data, t_op op);
 
+
+// Helper to check if op undoes prev_op
+static int is_undo_op(t_op prev_op, t_op op)
+{
+	// Only allow non-undoing moves
+	if ((prev_op == OP_RA && op == OP_RRA) || (prev_op == OP_RRA && op == OP_RA))
+		return 1;
+	if ((prev_op == OP_RB && op == OP_RRB) || (prev_op == OP_RRB && op == OP_RB))
+		return 1;
+	if ((prev_op == OP_PA && op == OP_PB) || (prev_op == OP_PB && op == OP_PA))
+		return 1;
+	return 0;
+}
+
+static uint64_t hash_stack_state(t_ps *data)
+{
+	uint64_t hash = 0;
+	for (int i = 0; i < data->a.element_count; i++)
+		hash = hash * 31 + data->a.stack[i];
+	for (int i = 0; i < data->b.element_count; i++)
+		hash = hash * 17 + data->b.stack[i];
+	return hash;
+}
 
 /**
  * backtrack_sort - Main backtracking function to find optimal sorting sequence
@@ -39,33 +65,33 @@ int backtrack_sort(t_ps *data, int max_size)
 {
     if (is_sorted_stack_a(data))
         return (1);
-    
-    // Only use backtracking for small enough problems
+
     int total_elements = get_stack_size(&data->a) + get_stack_size(&data->b);
-    if (total_elements > max_size || total_elements > 8)
+    if (total_elements > max_size || total_elements > 10)
         return (0);
-    
+
     t_backtrack_state state;
     t_ps temp_data;
-    
-    // Initialize backtracking state
+
     state.original_data = data;
     state.best_sequence.count = 0;
     state.best_sequence.score = INT_MAX;
-    state.max_depth = (total_elements <= 3) ? 6 : (total_elements <= 5) ? 10 : MAX_BACKTRACK_DEPTH;
+    state.max_depth = (total_elements <= 3) ? 6 : (total_elements <= 5) ? 12 : (total_elements <= 8) ? 18 : 24;
     state.current_depth = 0;
     state.move_count = 0;
-    
-    // Copy initial state for backtracking
+
     copy_stack_state(&temp_data, data);
-    
-    // Try to find optimal solution
+
     if (backtrack_solve(&state, &temp_data, 0))
     {
         execute_best_sequence(data, &state.best_sequence);
-        return (1);
+        // ADD THIS CHECK:
+        if (is_sorted_stack_a(data))
+            return (1);
+        // If not sorted, fallback to legacy code
+        return (0);
     }
-    
+
     return (0);
 }
 
@@ -101,6 +127,10 @@ void backtrack_sort_chunk(t_ps *data, t_chunk *to_sort)
         fast_sort(data, to_sort);  // For larger chunks
 }
 
+static int op_priority[OP_COUNT] = {
+	OP_PA, OP_RA, OP_RRA, OP_SA, OP_PB, OP_RB, OP_RRB, OP_SB, OP_SS, OP_RR, OP_RRR
+};
+
 /**
  * backtrack_solve - Recursive backtracking function
  * @state: Current backtracking state
@@ -112,6 +142,20 @@ void backtrack_sort_chunk(t_ps *data, t_chunk *to_sort)
  */
 static int backtrack_solve(t_backtrack_state *state, t_ps *current_data, int depth)
 {
+	static uint64_t visited[MAX_VISITED];
+	static int visited_count = 0;
+
+	// Reset visited for each top-level call
+	if (depth == 0)
+		visited_count = 0;
+
+	uint64_t h = hash_stack_state(current_data);
+	for (int i = 0; i < visited_count; i++)
+		if (visited[i] == h)
+			return 0;
+	if (visited_count < MAX_VISITED)
+		visited[visited_count++] = h;
+
     // Check if we found a solution
     if (is_sorted_stack_a(current_data))
     {
@@ -124,36 +168,34 @@ static int backtrack_solve(t_backtrack_state *state, t_ps *current_data, int dep
             return (1);
         }
     }
-    
-    // Pruning: if current depth >= best known solution, stop exploring
+
     if (depth >= state->max_depth || depth >= state->best_sequence.score)
         return (0);
-    
-    // Try all possible operations
-    for (int op = 0; op < OP_COUNT; op++)
+
+    // Try prioritized operations
+    for (int p = 0; p < OP_COUNT; p++)
     {
+        int op = op_priority[p];
         if (!is_operation_useful(current_data, (t_op)op))
             continue;
-            
-        // Make a copy to try this operation
+        if (depth > 0 && is_undo_op((t_op)state->moves_tried[depth - 1], (t_op)op))
+            continue;
+        if (depth > 1 && state->moves_tried[depth - 1] == op && state->moves_tried[depth - 2] == op)
+            continue;
+
         t_ps next_state;
         copy_stack_state(&next_state, current_data);
-        
-        // Apply operation
         apply_operation(&next_state, (t_op)op);
-        
-        // Add to move sequence
+
         state->moves_tried[state->move_count] = op;
         state->move_count++;
-        
-        // Recursive call
-        backtrack_solve(state, &next_state, depth + 1);
-        
-        // Backtrack
+
+        if (backtrack_solve(state, &next_state, depth + 1))
+            return (1);
+
         state->move_count--;
     }
-    
-    return (state->best_sequence.count > 0);
+    return (0);
 }
 
 /**

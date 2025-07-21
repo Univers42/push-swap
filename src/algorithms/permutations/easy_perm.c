@@ -6,7 +6,7 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 14:14:38 by codespace         #+#    #+#             */
-/*   Updated: 2025/07/21 16:31:09 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/21 16:48:17 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,10 @@ static void	handle_bottom_b(t_ps *data, t_chunk *to_sort);
  */
 void	fast_sort(t_ps *data, t_chunk *to_sort)
 {
-	// Use backtracking for small chunks
-	if (to_sort->size <= 6)
+	if (backtrack_sort(data, 10) && is_stack_sorted(data))
 	{
-		if (backtrack_sort(data, to_sort->size))
-		{
-			to_sort->size = 0;
-			return;
-		}
+		to_sort->size = 0;
+		return;
 	}
 	while (to_sort->loc != TOP_A && to_sort->size)
 	{

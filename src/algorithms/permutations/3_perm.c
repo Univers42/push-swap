@@ -6,7 +6,7 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 07:28:06 by codespace         #+#    #+#             */
-/*   Updated: 2025/07/21 15:49:47 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/21 16:48:17 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,32 @@ void	sort_three_simple(t_ps *data)
 	if (get_stack_size(&data->a) == 3 && get_stack_size(&data->b) == 0)
 	{
 		enhanced_sort_three_with_backtrack(data);
-		return;
+		if (is_stack_sorted(data))
+			return ;
 	}
+	int	first;
+	int	second;
+	int	third;
+
+	if (get_stack_size(&data->a) != 3)
+		return ;
+	first = get_items(&data->a, 1);
+	second = get_items(&data->a, 2);
+	third = get_items(&data->a, 3);
+	if (first > second && second < third && first < third)
+		sa(data);
+	else if (first > second && second > third)
+	{
+		sa(data);
+		rra(data);
+	}
+	else if (first > second && second < third && first > third)
+		ra(data);
+	else if (first < second && second > third && first < third)
+	{
+		sa(data);
+		ra(data);
+	}
+	else if (first < second && second > third && first > third)
+		rra(data);
 }

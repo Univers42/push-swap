@@ -6,7 +6,7 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 14:11:23 by codespace         #+#    #+#             */
-/*   Updated: 2025/07/21 15:43:52 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/21 16:48:17 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,10 @@ static void	sort_three_bottom_b(t_ps *data, t_chunk *to_sort, t_stack *stk,
  */
 void	sort_three(t_ps *data, t_chunk *to_sort)
 {
-	// Use backtracking for three elements if stack is very small
-	if (get_stack_size(&data->a) + get_stack_size(&data->b) <= 6)
+	if (backtrack_sort(data, 10) && is_stack_sorted(data))
 	{
-		if (backtrack_sort(data, 3))
-		{
-			to_sort->size -= 3;
-			return;
-		}
+		to_sort->size -= 3;
+		return;
 	}
 	t_stack	*stk;
 	int		max;
