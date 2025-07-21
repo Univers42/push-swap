@@ -13,7 +13,6 @@
 #include "push_swap.h"
 #include "algorithms.h"
 
-
 int	mig_chunk(t_ps *data, t_loc from, t_loc to)
 {
 	t_move_func	fn;
