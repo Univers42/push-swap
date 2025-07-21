@@ -6,12 +6,13 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 22:31:18 by codespace         #+#    #+#             */
-/*   Updated: 2025/07/19 01:01:36 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/21 15:49:13 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 #include "algorithms.h"
+#include "backtrack.h"
 
 /**
  * sort_two - Sorts two elements in a chunk, regardless of their location.
@@ -27,6 +28,15 @@
  */
 void	sort_two(t_ps *data, t_chunk *to_sort)
 {
+	// Use backtracking for two elements if stack is very small
+	if (get_stack_size(&data->a) + get_stack_size(&data->b) <= 6)
+	{
+		if (backtrack_sort(data, 2))
+		{
+			to_sort->size -= 2;
+			return;
+		}
+	}
 	if (to_sort->loc == BOTTOM_A || to_sort->loc == BOTTOM_B
 		|| to_sort->loc == TOP_B)
 	{

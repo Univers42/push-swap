@@ -6,12 +6,13 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 14:14:38 by codespace         #+#    #+#             */
-/*   Updated: 2025/07/19 01:19:14 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/21 16:31:09 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "algorithms.h"
 #include "push_swap.h"
+#include "backtrack.h"
 
 static void	fast_sort_second(t_ps *data, t_chunk *to_sort);
 static void	handle_top_b(t_ps *data, t_chunk *to_sort);
@@ -34,6 +35,15 @@ static void	handle_bottom_b(t_ps *data, t_chunk *to_sort);
  */
 void	fast_sort(t_ps *data, t_chunk *to_sort)
 {
+	// Use backtracking for small chunks
+	if (to_sort->size <= 6)
+	{
+		if (backtrack_sort(data, to_sort->size))
+		{
+			to_sort->size = 0;
+			return;
+		}
+	}
 	while (to_sort->loc != TOP_A && to_sort->size)
 	{
 		if (get_items(&data->a, 1)

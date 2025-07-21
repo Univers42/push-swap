@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syzygy <syzygy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 01:00:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/19 17:57:14 by syzygy           ###   ########.fr       */
+/*   Updated: 2025/07/20 19:12:47 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ static int	*parse_numbers(int argc, char **argv)
  */
 void	checker_setup_stacks(t_ps *data, int *raw_numbers, int argc)
 {
+	ft_memset(data, 0, sizeof(t_ps));
 	data->a.stack = malloc(sizeof(int) * argc);
 	data->b.stack = malloc(sizeof(int) * argc);
 	if (!data->a.stack || !data->b.stack)
@@ -108,7 +109,6 @@ void	checker_setup_stacks(t_ps *data, int *raw_numbers, int argc)
 			free(data->b.stack);
 		(ft_putendl_fd("Error", 2), exit(255));
 	}
-	ft_memset(data, 0, sizeof(t_ps *));
 	data->a.capacity = argc;
 	data->b.capacity = argc;
 	data->a.bottom = argc - 1;

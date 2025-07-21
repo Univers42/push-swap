@@ -6,7 +6,7 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 17:13:26 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/19 01:19:14 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/21 15:46:25 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "stack.h"
 
+# define BACKTRACK_SIZE_LIMIT 10
 // Forward declarations
 typedef struct s_ps		t_ps;
 
@@ -81,6 +82,39 @@ typedef struct s_greedy_node
 	int	cost_b;
 	int	total_cost;
 }	t_greedy_node;
+
+// Maximum depth for backtracking to prevent infinite loops
+#define MAX_BACKTRACK_DEPTH 12
+#define MAX_MOVES 100
+
+typedef struct s_move_sequence {
+    int moves[MAX_MOVES];
+    int count;
+    int score;
+} t_move_sequence;
+
+typedef struct s_backtrack_state {
+    t_ps *original_data;
+    t_move_sequence best_sequence;
+    int max_depth;
+    int current_depth;
+    int moves_tried[MAX_MOVES];
+    int move_count;
+} t_backtrack_state;
+
+// Remove this block:
+// typedef enum e_operation {
+//     OP_SA = 0, OP_SB, OP_SS,
+//     OP_PA, OP_PB,
+//     OP_RA, OP_RB, OP_RR,
+//     OP_RRA, OP_RRB, OP_RRR,
+//     OP_COUNT
+// } t_operation;
+
+// Instead, define OP_COUNT for backtracking logic:
+#define OP_COUNT 11 // Number of operations in t_op (from stack.h)
+
+// Function prototypes
 
 // MAIN ENTRIES ALGORITHM
 void		chunk_sort(t_ps *data);
@@ -168,4 +202,9 @@ void	chunk_sort_loop(t_ps *data, t_chunk *to_sort);
 
 const t_chunk_fsm	*get_chunk_fsm_table(void);
 
+// Backtracking integration
+int			backtrack_sort(t_ps *data, int max_size);
+void		backtrack_sort_chunk(t_ps *data, t_chunk *to_sort);
+void		enhanced_sort_three_with_backtrack(t_ps *data);
+int calculate_state_score(t_ps *data);
 #endif

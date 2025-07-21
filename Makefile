@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: syzygy <syzygy@student.42.fr>              +#+  +:+       +#+         #
+#    By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/08 13:37:35 by codespace         #+#    #+#              #
-#    Updated: 2025/07/19 17:58:19 by syzygy           ###   ########.fr        #
+#    Updated: 2025/07/21 15:45:24 by dlesieur         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,7 +81,8 @@ PERM_SRCS			=	$(D_PERMUTATIONS)/easy_perm.c \
 						$(D_PERMUTATIONS)/one_perm.c \
 						$(D_PERMUTATIONS)/three_perm.c \
 						$(D_PERMUTATIONS)/two_perm.c \
-						$(D_PERMUTATIONS)/3_perm.c
+						$(D_PERMUTATIONS)/3_perm.c \
+						$(D_PERMUTATIONS)/backtracking.c
 
 OPERATIONS_SRCS		=	$(D_OPERATIONS)/push.c \
 						$(D_OPERATIONS)/rotate.c \

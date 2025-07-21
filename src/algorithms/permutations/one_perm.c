@@ -6,12 +6,13 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 14:32:28 by codespace         #+#    #+#             */
-/*   Updated: 2025/07/19 01:01:36 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/21 15:43:52 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "algorithms.h"
 #include "push_swap.h"
+#include "backtrack.h"
 
 /**
  * sort_one - Moves a single element from its current location to the top of A.
@@ -27,6 +28,15 @@
  */
 void	sort_one(t_ps *data, t_chunk *to_sort)
 {
+	// Use backtracking for single element if stack is very small
+	if (get_stack_size(&data->a) + get_stack_size(&data->b) <= 6)
+	{
+		if (backtrack_sort(data, 1))
+		{
+			to_sort->size -= 1;
+			return;
+		}
+	}
 	if (to_sort->loc == BOTTOM_A || to_sort->loc == BOTTOM_B
 		|| to_sort->loc == TOP_B)
 		transfer_chunk(data, to_sort->loc, TOP_A);

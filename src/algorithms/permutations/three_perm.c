@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   three_perm.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 14:11:23 by codespace         #+#    #+#             */
-/*   Updated: 2025/07/18 16:05:50 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/21 15:43:52 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 #include "algorithms.h"
+#include "backtrack.h"
 
 static void	sort_three_top_a(t_ps *data, t_chunk *to_sort, t_stack *stk,
 				int max);
@@ -37,6 +38,15 @@ static void	sort_three_bottom_b(t_ps *data, t_chunk *to_sort, t_stack *stk,
  */
 void	sort_three(t_ps *data, t_chunk *to_sort)
 {
+	// Use backtracking for three elements if stack is very small
+	if (get_stack_size(&data->a) + get_stack_size(&data->b) <= 6)
+	{
+		if (backtrack_sort(data, 3))
+		{
+			to_sort->size -= 3;
+			return;
+		}
+	}
 	t_stack	*stk;
 	int		max;
 
