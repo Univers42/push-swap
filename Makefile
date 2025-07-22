@@ -6,7 +6,7 @@
 #    By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/22 01:49:55 by dlesieur          #+#    #+#              #
-#    Updated: 2025/07/22 02:13:35 by dlesieur         ###   ########.fr        #
+#    Updated: 2025/07/22 04:52:04 by dlesieur         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,38 @@ endef
 
 # COMMANDS AND FLAGS
 CC					=	cc
-CFLAGS				=	-Wall -Wextra -Werror -I./include -I./libft -g3 -O3 -D_FORTIFY_SOURCE=2 -DDEBUG=0 -D_ALGO_CHUNK=1
+
+CFLAGS = -Wall -Wextra -Werror \
+         -I./include -I./libft \
+         -g3 -O0 \
+         -fsanitize=address \
+         -fsanitize=undefined \
+         #-fsanitize=memory
+         -Wstack-usage=128 \
+         -Wl,--print-memory-usage \
+         -D_FORTIFY_SOURCE=2 \
+         -DDEBUG=0 \
+         -D_ALGO_CHUNK=1 \
+         -Wformat=2 \
+         -Wformat-security \
+         -Wformat-truncation \
+         -Wnull-dereference \
+         -Wduplicated-cond \
+         -Wshift-overflow=2 \
+         -Wcast-align=strict \
+         -Wpointer-arith \
+         -Wbad-function-cast \
+         -Wstrict-prototypes \
+         -Winline \
+         -Wdisabled-optimization \
+         -Wframe-larger-than=1024 \
+         -Wno-unused-parameter \
+         -Wno-missing-field-initializers \
+         -Wno-sign-compare \
+         -Wno-unused-but-set-variable \
+         -Wno-unused-variable \
+         -Wno-unused-function
+
 RM					=	rm -rf
 AR					=	ar rcs
 

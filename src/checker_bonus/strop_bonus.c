@@ -6,7 +6,7 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 01:47:57 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/22 04:18:21 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/22 04:42:56 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
  * if it finds a match, it returns the corresponding operation code.
  * if not match is found, it returns `OP_NULL`
  */
-t_op	ftr_ops_code(const char *str)
+t_op	tr_ops_code(const char *str)
 {
 	t_op_exec	*op_table;
 	int			i;
