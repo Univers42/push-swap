@@ -6,7 +6,7 @@
 #    By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/22 01:49:55 by dlesieur          #+#    #+#              #
-#    Updated: 2025/07/22 04:52:04 by dlesieur         ###   ########.fr        #
+#    Updated: 2025/07/22 05:04:20 by dlesieur         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,8 +23,8 @@ CC					=	cc
 CFLAGS = -Wall -Wextra -Werror \
          -I./include -I./libft \
          -g3 -O0 \
-         -fsanitize=address \
-         -fsanitize=undefined \
+         #-fsanitize=address
+         #-fsanitize=undefined
          #-fsanitize=memory
          -Wstack-usage=128 \
          -Wl,--print-memory-usage \
