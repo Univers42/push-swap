@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   chunk_split.c                                      :+:      :+:    :+:   */
+/*   data_migration_facility.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 01:45:16 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/22 02:11:45 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/22 04:35:15 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,10 @@
  * is then called to move the chunk to the desired destination (`to`).
  *
  * Example:
- *   mig_chunk(data, TOP_A, TOP_B)  // Moves top of stack A to top of stack B (pb)
- *   mig_chunk(data, BOTTOM_B, TOP_A) // Moves bottom of stack B to top of stack A (rrb + pa)
+ *   mig_chunk(data, TOP_A, TOP_B) 
+ * ========= Moves top of stack A to top of stack B (pb)
+ *   mig_chunk(data, BOTTOM_B, TOP_A)
+ * ========= Moves bottom of stack B to top of stack A (rrb + pa)
  *
  * Importance: This is a core helper for divide_seg and chunk_sort_loop,
  * enabling flexible chunk movement between stack locations.

@@ -6,18 +6,33 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 01:49:31 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/22 01:49:34 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/22 04:34:05 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
+static void	validate_and_convert_args(t_ps *data, int *raw_numbers,
+				int size, char **arg);
 static void	assign_element_ranks(int *numbers, int *rank, int *sorted,
 				int size);
 static int	binary_search_for_rank(int *sorted, int size, int target);
-static void	validate_and_convert_args(t_ps *data, int *raw_numbers,
-				int size, char **arg);
 
+/**
+ * @brief Populates a stack with rank values based on input arguments.
+ *
+ * This function parses the input arguments, validates them,
+ * checks for duplicates,
+ * and fills the stack with the rank (sorted order) of each number.
+ *
+ * Example:
+ *   Input: arg = ["40", "10", "30"]
+ *   After: stk->stack = [3, 1, 2]
+ * ======(since 10 is smallest, 30 is second, 40 is third)
+ *
+ * Importance: Ensures the stack contains normalized values
+ * for efficient sorting.
+ */
 void	populate_stack_with_ranks(t_ps *data, t_stack *stk, int size,
 		char **arg)
 {
@@ -28,16 +43,22 @@ void	populate_stack_with_ranks(t_ps *data, t_stack *stk, int size,
 		cleanup_and_exit_with_error(data);
 	validate_and_convert_args(data, raw_numbers, size, arg);
 	if (detect_dup(raw_numbers, size))
-	{
-		free(raw_numbers);
-		cleanup_and_exit_with_error(data);
-	}
+		(free(raw_numbers), cleanup_and_exit_with_error(data));
 	convert_numbers_to_ranks(raw_numbers, stk->stack, size);
 	stk->bottom = size - 1;
 	stk->element_count = size;
 	free(raw_numbers);
 }
 
+/**
+ * @brief Validates and converts argument strings to integers.
+ *
+ * Checks that each argument is a valid integer and converts it to int.
+ * If any argument is invalid, frees memory and exits.
+ *
+ * Example:
+ *   arg = ["42", "-7", "abc"] -> exits with error on "abc"
+ */
 static void	validate_and_convert_args(t_ps *data, int *raw_numbers,
 		int size, char **arg)
 {
@@ -47,15 +68,23 @@ static void	validate_and_convert_args(t_ps *data, int *raw_numbers,
 	while (i < size)
 	{
 		if (!validate_numeric_argument(arg[i]))
-		{
-			free(raw_numbers);
-			cleanup_and_exit_with_error(data);
-		}
+			(free(raw_numbers), cleanup_and_exit_with_error(data));
 		raw_numbers[i] = ft_atoi(arg[i]);
 		i++;
 	}
 }
 
+/**
+ * @brief Converts an array of numbers to their rank order.
+ *
+ * For each number, finds its position in the sorted array and assigns
+ * its rank (1-based) to the output array.
+ *
+ * Example:
+ *   numbers = [40, 10, 30]
+ *   sorted_numbers = [10, 30, 40]
+ *   Output: rank = [3, 1, 2]
+ */
 void	convert_numbers_to_ranks(int *numbers, int *rank, int size)
 {
 	int	*sorted_numbers;
@@ -69,6 +98,16 @@ void	convert_numbers_to_ranks(int *numbers, int *rank, int size)
 	free(sorted_numbers);
 }
 
+/**
+ * @brief Assigns rank values to each number based on sorted order.
+ *
+ * For each number in the input, finds its index in the sorted array and
+ * assigns rank = index + 1.
+ *
+ * Example:
+ *   numbers = [40, 10, 30], sorted = [10, 30, 40]
+ *   Output: rank = [3, 1, 2]
+ */
 static void	assign_element_ranks(int *numbers, int *rank, int *sorted,
 		int size)
 {
@@ -84,6 +123,14 @@ static void	assign_element_ranks(int *numbers, int *rank, int *sorted,
 	}
 }
 
+/**
+ * @brief Performs binary search to find the rank (index) of a target value.
+ *
+ * Searches for the target value in the sorted array and returns its index.
+ *
+ * Example:
+ *   sorted = [10, 30, 40], target = 30 -> returns 1
+ */
 static int	binary_search_for_rank(int *sorted, int size, int target)
 {
 	int	left;

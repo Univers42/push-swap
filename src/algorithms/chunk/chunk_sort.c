@@ -6,13 +6,12 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 01:45:11 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/22 02:10:28 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/22 04:35:47 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 #include "algorithms.h"
-
 
 /**
  * @brief Main entry for chunk-based sorting.
@@ -51,7 +50,8 @@ void	chunk_sort(t_ps *data)
 /**
  * @brief Pushes a chunk onto the chunk stack.
  *
- * Helper for managing the stack of chunks to process. Used in the chunk_sort_loop
+ * Helper for managing the stack of chunks to process.
+ * Used in the chunk_sort_loop
  * to keep track of sub-chunks that need further sorting.
  *
  * Example:

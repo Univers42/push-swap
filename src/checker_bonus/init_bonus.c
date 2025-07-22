@@ -6,7 +6,7 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 01:47:31 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/22 01:47:32 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/22 04:23:53 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ void	initialize_checker_data(t_ps *data, int argc, char **argv)
 	if (detect_dup(raw_numbers, argc))
 	{
 		free(raw_numbers);
-		ft_putendl_fd("Error", 2);
-		exit(255);
+		ft_putendl_fd("Error", STDERR_FILENO);
+		exit(FATAL_ERROR);
 	}
 	checker_setup_stacks(data, raw_numbers, argc);
 	free(raw_numbers);
@@ -57,7 +57,7 @@ static void	validate_arguments(int argc, char **argv)
 	while (++i < argc)
 	{
 		if (!validate_numeric_argument(argv[i]))
-			(ft_putendl_fd("Error", 2), exit(FATAL_ERROR));
+			(ft_putendl_fd("Error", STDERR_FILENO), exit(FATAL_ERROR));
 	}
 }
 
@@ -75,8 +75,8 @@ static int	*parse_numbers(int argc, char **argv)
 	raw_numbers = malloc(sizeof(int) * argc);
 	if (!raw_numbers)
 	{
-		ft_putendl_fd("Error", 2);
-		exit(255);
+		ft_putendl_fd("Error", STDERR_FILENO);
+		exit(FATAL_ERROR);
 	}
 	i = -1;
 	while (++i < argc)

@@ -6,7 +6,7 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 01:47:21 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/22 04:16:28 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/22 04:24:22 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	checker_error_exit(t_ps *data)
 {
 	destroy(data);
 	free_all_gnl();
-	ft_putendl_fd("Error", 2);
+	ft_putendl_fd("Error", STDERR_FILENO);
 	exit(FATAL_ERROR);
 }
 

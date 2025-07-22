@@ -6,7 +6,7 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 01:45:24 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/22 02:11:47 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/22 04:34:49 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 #include "algorithms.h"
 
 /**
- * @brief Updates the location of a chunk if its segment now covers the whole stack.
+ * @brief Updates the location of a chunk if its segment
+ * now covers the whole stack.
  *
  * This function checks if a chunk that was at the bottom of a stack now
  * occupies the entire stack (size matches stack size). If so, it updates
@@ -98,13 +99,15 @@ const t_chunk_fsm	*get_chunk_fsm_table(void)
 }
 
 /**
- * @brief Returns the nth value in a chunk, respecting its location and direction.
+ * @brief Returns the nth value in a chunk, respecting its locatio
+ * and direction.
  *
  * This function retrieves the nth value from a chunk, counting from the
  * top or bottom depending on the chunk's location.
  *
  * Example:
- *   chunk_value(data, chunk, 1) // returns the value at the "front" of the chunk
+ *   chunk_value(data, chunk, 1) // returns the value at the "front"
+ * of the chunk
  *
  * Importance: Used by divide_seg to determine where to send each value.
  */

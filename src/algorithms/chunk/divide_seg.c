@@ -6,7 +6,7 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 01:45:20 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/22 02:26:42 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/22 04:36:38 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 static void	innit_size(t_chunk *min, t_chunk *mid, t_chunk *max);
 static void	set_split_loc(t_loc loc, t_chunk *min, t_chunk *mid, t_chunk *max);
 static void	set_third_pivots(t_loc loc, int crt_size, int *pivot_1,
-								int *pivot_2);
+				int *pivot_2);
+
 /**
  * @brief Splits a chunk into three subchunks using two pivots.
  *
