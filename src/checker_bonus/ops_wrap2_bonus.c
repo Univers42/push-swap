@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ops_wrap2_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syzygy <syzygy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/15 15:30:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/19 15:47:36 by syzygy           ###   ########.fr       */
+/*   Created: 2025/07/22 01:47:48 by dlesieur          #+#    #+#             */
+/*   Updated: 2025/07/22 01:47:49 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "checker_bonus.h"
 

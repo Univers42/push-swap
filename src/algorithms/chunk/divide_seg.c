@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   divide_seg.c                                      :+:      :+:    :+:   */
+/*   divide_seg.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/27 20:57:19 by ugerkens          #+#    #+#             */
-/*   Updated: 2025/07/19 00:35:57 by dlesieur         ###   ########.fr       */
+/*   Created: 2025/07/22 01:45:20 by dlesieur          #+#    #+#             */
+/*   Updated: 2025/07/22 02:26:42 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,32 @@
 static void	innit_size(t_chunk *min, t_chunk *mid, t_chunk *max);
 static void	set_split_loc(t_loc loc, t_chunk *min, t_chunk *mid, t_chunk *max);
 static void	set_third_pivots(t_loc loc, int crt_size, int *pivot_1,
-				int *pivot_2);
-
+								int *pivot_2);
+/**
+ * @brief Splits a chunk into three subchunks using two pivots.
+ *
+ * This function is the core of the chunk splitting logic. It divides the
+ * chunk pointed to by `to_split` into three subchunks (min, mid, max) based
+ * on two pivot values. Each element is compared to the pivots and migrated
+ * to the appropriate subchunk/location using mig_chunk.
+ *
+ * Example:
+ *   Suppose chunk = [15, 3, 22, 8, 25, 1, 18], size=7, loc=TOP_A
+ *   - max_value = 25
+ *   - pivots: pivot_1 = 14, pivot_2 = 7
+ *   - For each value:
+ *       > max_value - pivot_2 (18): goes to max
+ *       > max_value - pivot_1 (11): goes to mid
+ *       else: goes to min
+ *   - After loop, dest->max, dest->mid, dest->min have updated sizes/locations
+ *
+ * Importance: This is a core logic function for chunk_sort_loop, enabling
+ * recursive partitioning of the stack into smaller, more sortable chunks.
+ *
+ * @param data     The push_swap context.
+ * @param to_split The chunk to split.
+ * @param dest     Output: the resulting subchunks (min, mid, max).
+ */
 void	divide_seg(t_ps *data, t_chunk *to_split, t_split_dest *dest)
 {
 	int	pivot_1;
@@ -46,6 +70,11 @@ void	divide_seg(t_ps *data, t_chunk *to_split, t_split_dest *dest)
 	}
 }
 
+/**
+ * @brief Initializes the sizes of min, mid, and max chunks to zero.
+ *
+ * Helper for divide_seg.
+ */
 static void	innit_size(t_chunk *min, t_chunk *mid, t_chunk *max)
 {
 	min->size = 0;
@@ -53,6 +82,12 @@ static void	innit_size(t_chunk *min, t_chunk *mid, t_chunk *max)
 	max->size = 0;
 }
 
+/**
+ * @brief Sets the locations for the min, mid, and max subchunks based on FSM.
+ *
+ * Helper for divide_seg. Uses the chunk FSM table to determine where each
+ * subchunk should be placed (e.g., TOP_A, BOTTOM_B, etc).
+ */
 static void	set_split_loc(t_loc loc, t_chunk *min, t_chunk *mid, t_chunk *max)
 {
 	const t_chunk_fsm	*fsm = &get_chunk_fsm_table()[loc];
@@ -62,6 +97,19 @@ static void	set_split_loc(t_loc loc, t_chunk *min, t_chunk *mid, t_chunk *max)
 	max->loc = fsm->locs.max;
 }
 
+/**
+ * Part of partitionning algorithm above
+ * @brief Calculates the two pivot values for splitting a chunk.
+ * base calculation
+ * pivot are fract(size) = (1/2 | 1/3 || 2/3 | 1/2)
+ * override mechanism: If the current size is below certain thresholds, 
+ * pivots are get adjusted:
+ * `pivot 1` override sets it to the full size
+ * `pivot 2` override sets it to half the size
+ * The function also adapts pivot placement based on
+ * placeholder data size, likely to optimize performance
+ * for small vs. large datasets
+ */
 static void	set_third_pivots(t_loc loc, int crt_size, int *pivot_1,
 								int *pivot_2)
 {

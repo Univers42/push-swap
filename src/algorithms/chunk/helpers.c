@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/08 14:31:22 by codespace         #+#    #+#             */
-/*   Updated: 2025/07/21 21:39:25 by dlesieur         ###   ########.fr       */
+/*   Created: 2025/07/22 01:45:24 by dlesieur          #+#    #+#             */
+/*   Updated: 2025/07/22 02:11:47 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,18 @@
 #include "algorithms.h"
 
 /**
-this function updates the location field (loc) of a t_chunk structure
-(to_sort) ased on its current position and size in a push_swap stack.
-if to_sort->loc is BOTTOM_B and the current size b equals to sort->size,
-it set to_sort->loc to TOP_B and so on...
-
-@note this is used to track if a chunk has been moved to the top oof
-a stack,, based on its size and position
-*/
+ * @brief Updates the location of a chunk if its segment now covers the whole stack.
+ *
+ * This function checks if a chunk that was at the bottom of a stack now
+ * occupies the entire stack (size matches stack size). If so, it updates
+ * its location to the top for easier access in future operations.
+ *
+ * Example:
+ *   If chunk->loc == BOTTOM_B and stack B has only this chunk,
+ *   set chunk->loc = TOP_B.
+ *
+ * Importance: Helper for chunk_sort_loop and chunk migration.
+ */
 void	loc_seg(t_ps *data, t_chunk *to_sort)
 {
 	if (to_sort->loc == BOTTOM_B
@@ -32,7 +36,11 @@ void	loc_seg(t_ps *data, t_chunk *to_sort)
 		to_sort->loc = TOP_A;
 }
 
-// Mask function for FSM node initialization (4 parameters)
+/**
+ * @brief FSM mask helper for chunk splitting configuration.
+ *
+ * Used internally to initialize the chunk FSM table.
+ */
 static t_chunk_fsm	chunk_fsm_mask( t_chunk_locs locs, int pivot_1_factor,
 									int pivot_2_factor,
 									const int *pivot_overrides_and_mins)
@@ -49,7 +57,17 @@ static t_chunk_fsm	chunk_fsm_mask( t_chunk_locs locs, int pivot_1_factor,
 	return (fsm);
 }
 
-// Singleton accessor for FSM table using mask and runtime initialization
+/**
+ * @brief Returns the chunk FSM table (singleton).
+ *
+ * This table encodes the rules for how chunks are split and where
+ * subchunks are placed, depending on their current location.
+ *
+ * Example:
+ *   get_chunk_fsm_table()[TOP_A] gives FSM for splitting from TOP_A.
+ *
+ * Importance: Core configuration for divide_seg and chunk_sort_loop.
+ */
 const t_chunk_fsm	*get_chunk_fsm_table(void)
 {
 	static t_chunk_fsm	table[4];
@@ -79,6 +97,17 @@ const t_chunk_fsm	*get_chunk_fsm_table(void)
 	return (table);
 }
 
+/**
+ * @brief Returns the nth value in a chunk, respecting its location and direction.
+ *
+ * This function retrieves the nth value from a chunk, counting from the
+ * top or bottom depending on the chunk's location.
+ *
+ * Example:
+ *   chunk_value(data, chunk, 1) // returns the value at the "front" of the chunk
+ *
+ * Importance: Used by divide_seg to determine where to send each value.
+ */
 int	chunk_value(t_ps *data, t_chunk *chunk, int n)
 {
 	t_loc	loc;
@@ -101,6 +130,15 @@ int	chunk_value(t_ps *data, t_chunk *chunk, int n)
 	return (stk->stack[i]);
 }
 
+/**
+ * @brief Returns the maximum value in a chunk.
+ *
+ * Iterates through the chunk and finds the maximum value, used for
+ * pivot calculation in divide_seg.
+ *
+ * Example:
+ *   chunk_max_value(data, chunk) // returns the largest value in the chunk
+ */
 int	chunk_max_value(t_ps *data, t_chunk *chunk)
 {
 	t_stack	*stk;

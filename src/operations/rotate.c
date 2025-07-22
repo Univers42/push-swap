@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rotate.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/27 21:08:52 by ugerkens          #+#    #+#             */
-/*   Updated: 2025/07/18 16:10:20 by codespace        ###   ########.fr       */
+/*   Created: 2025/07/22 01:48:06 by dlesieur          #+#    #+#             */
+/*   Updated: 2025/07/22 02:25:53 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,42 @@
 
 static void	rotate(t_stack *stk);
 
+/**
+ * @brief Rotates stack A upwards (top element becomes bottom).
+ * 
+ * Example trace:
+ *   Before: A = [3, 2, 1] (top = 3)
+ *   ra()
+ *   After:  A = [2, 1, 3] (top = 2)
+ */
 void	ra(t_ps *data)
 {
 	rotate(&data->a);
 	save_op(data, OP_RA);
 }
 
+/**
+ * @brief Rotates stack B upwards (top element becomes bottom).
+ * 
+ * Example trace:
+ *   Before: B = [5, 4, 6] (top = 5)
+ *   rb()
+ *   After:  B = [4, 6, 5] (top = 4)
+ */
 void	rb(t_ps *data)
 {
 	rotate(&data->b);
 	save_op(data, OP_RB);
 }
 
+/**
+ * @brief Rotates both stacks A and B upwards.
+ * 
+ * Example trace:
+ *   Before: A = [3, 2, 1], B = [5, 4, 6]
+ *   rr()
+ *   After:  A = [2, 1, 3], B = [4, 6, 5]
+ */
 void	rr(t_ps *data)
 {
 	rotate(&data->a);
@@ -33,6 +57,16 @@ void	rr(t_ps *data)
 	save_op(data, OP_RR);
 }
 
+/**
+ * @brief Rotates a stack upwards (top element becomes bottom).
+ * 
+ * Detailed trace:
+ *   stk: [T, X, Y, Z] (top = T)
+ *   rotate(stk)
+ *   Result: [X, Y, Z, T] (top = X)
+ * 
+ * Handles circular buffer indices and updates top/bottom.
+ */
 static void	rotate(t_stack *stk)
 {
 	int	new_top;

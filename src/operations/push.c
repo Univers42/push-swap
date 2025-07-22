@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/27 21:08:41 by ugerkens          #+#    #+#             */
-/*   Updated: 2025/07/18 16:10:12 by codespace        ###   ########.fr       */
+/*   Created: 2025/07/22 01:48:02 by dlesieur          #+#    #+#             */
+/*   Updated: 2025/07/22 02:25:40 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,47 @@
 
 static void	push(t_stack *src, t_stack *dest);
 
+/**
+ * @brief Pushes the top element from stack B to stack A.
+ * 
+ * Example trace:
+ *   Before: A = [3, 2], B = [5, 4] (top on the left)
+ *   pa()
+ *   After:  A = [5, 3, 2], B = [4]
+ */
 void	pa(t_ps *data)
 {
 	push(&data->b, &data->a);
 	save_op(data, OP_PA);
 }
 
+/**
+ * @brief Pushes the top element from stack A to stack B.
+ * 
+ * Example trace:
+ *   Before: A = [3, 2], B = [5, 4] (top on the left)
+ *   pb()
+ *   After:  A = [2], B = [3, 5, 4]
+ */
 void	pb(t_ps *data)
 {
 	push(&data->a, &data->b);
 	save_op(data, OP_PB);
 }
 
+/**
+ * @brief Moves the top element from src stack to dest stack.
+ * 
+ * Detailed trace:
+ *   src:  [S1, S2, S3] (top = S1)
+ *   dest: [D1, D2]     (top = D1)
+ *   push(src, dest)
+ *   Result:
+ *     src:  [S2, S3]         (top = S2)
+ *     dest: [S1, D1, D2]     (top = S1)
+ * 
+ * Handles circular buffer indices and updates element counts.
+ */
 static void	push(t_stack *src, t_stack *dest)
 {
 	int	new_dest_top;

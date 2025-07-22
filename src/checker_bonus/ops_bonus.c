@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ops_bonus.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syzygy <syzygy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/16 00:00:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/19 15:07:31 by syzygy           ###   ########.fr       */
+/*   Created: 2025/07/22 01:47:42 by dlesieur          #+#    #+#             */
+/*   Updated: 2025/07/22 04:21:19 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,35 @@ static t_op_exec	op_mask(t_string name,
 		});
 }
 
+/**
+ * @brief Initializes the operation table with operation names, function pointers, and bitmasks.
+ *
+ * The bitmask (stack_mask) is used to encode which stack(s) an operation affects and
+ * whether it is a dual operation. This allows for efficient checks and flexible logic
+ * elsewhere in the code (for example, to know if an operation is valid for a given stack,
+ * or to apply optimizations for dual operations).
+ *
+ * Typical bitmask values:
+ *   - STACK_A_BIT:   Operation affects stack A (e.g., "sa", "pa", "ra", "rra")
+ *   - STACK_B_BIT:   Operation affects stack B (e.g., "sb", "pb", "rb", "rrb")
+ *   - DUAL_OP_BIT:   Operation affects both stacks simultaneously (e.g., "ss", "rr", "rrr")
+ *
+ * Examples:
+ *   - "sa" (swap A):      stack_mask = STACK_A_BIT
+ *   - "sb" (swap B):      stack_mask = STACK_B_BIT
+ *   - "ss" (swap both):   stack_mask = STACK_A_BIT | STACK_B_BIT | DUAL_OP_BIT
+ *   - "pa" (push A):      stack_mask = STACK_A_BIT (since it pushes to A)
+ *   - "pb" (push B):      stack_mask = STACK_A_BIT (since it pushes from A)
+ *   - "ra" (rotate A):    stack_mask = STACK_A_BIT
+ *   - "rr" (rotate both): stack_mask = STACK_A_BIT | STACK_B_BIT | DUAL_OP_BIT
+ *
+ * Usage:
+ *   - The bitmask can be used to filter or identify operations by the stack(s) they affect.
+ *   - For example, to check if an operation is a dual operation:
+ *         if (stack_mask & DUAL_OP_BIT) { ... }
+ *   - Or to check if it affects stack A:
+ *         if (stack_mask & STACK_A_BIT) { ... }
+ */
 static void	init_op_table(t_op_exec *table)
 {
 	table[OP_PA] = op_mask("pa", checker_pa, STACK_A_BIT);

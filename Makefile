@@ -5,10 +5,12 @@
 #                                                     +:+ +:+         +:+      #
 #    By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/07/08 13:37:35 by codespace         #+#    #+#              #
-#    Updated: 2025/07/21 22:26:24 by dlesieur         ###   ########.fr        #
+#    Created: 2025/07/22 01:49:55 by dlesieur          #+#    #+#              #
+#    Updated: 2025/07/22 02:13:35 by dlesieur         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+
 
 # DEFINES AND MACROS CONFIGURATIONS
 define cmd_build
@@ -53,7 +55,7 @@ CHUNK_SRCS			=	$(D_CHUNK)/chunk_sort.c \
 						$(D_CHUNK)/divide_seg.c \
 						$(D_CHUNK)/helpers.c	\
 						$(D_CHUNK)/move.c		\
-						$(D_CHUNK)/chunk_split.c
+						$(D_CHUNK)/data_migration_facility.c
 
 GREEDY_SRCS			=	$(D_GREEDY)/greedy.c \
 						$(D_GREEDY)/execution.c \
