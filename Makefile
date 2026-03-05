@@ -164,66 +164,72 @@ CHECKER_OBJS		=	$(CHECKER_SRCS:%.c=$(OBJ_DIR)/%.o)
 VISUALIZER_OBJS		=	$(CHECKER_SRCS:%.c=$(OBJ_DIR)/%.o)
 
 # DEFAULT TARGET (chunk algorithm)
-all: build_libft $(PUSH_SWAP)
+all: setup build_libft $(PUSH_SWAP)
 
 # Main targets
 $(PUSH_SWAP): $(CHUNK_OBJS)
 	$(CC) $(CFLAGS) $(CHUNK_OBJS) -L$(D_LIBFT) -lft -o $(PUSH_SWAP)
 
-chunk: build_libft
+chunk: setup build_libft
 	$(CC) $(CFLAGS) -DALGORITHM=ALGO_CHUNK $(CHUNK_ALL_SRCS) -L$(D_LIBFT) -lft -o $(PUSH_SWAP)
 
-greedy: build_libft
+greedy: setup build_libft
 	$(CC) $(CFLAGS) -DALGORITHM=ALGO_GREEDY $(GREEDY_ALL_SRCS) -L$(D_LIBFT) -lft -o $(PUSH_SWAP)
 
-k_sort: build_libft
+k_sort: setup build_libft
 	$(CC) $(CFLAGS) -DALGORITHM=ALGO_K_SORT $(K_ALL_SRCS) -L$(D_LIBFT) -lft -o $(PUSH_SWAP)
 
-lis: build_libft
+lis: setup build_libft
 	$(CC) $(CFLAGS) -DALGORITHM=ALGO_LIS $(LIS_ALL_SRCS) -L$(D_LIBFT) -lft -o $(PUSH_SWAP)
 
-radix: build_libft
+radix: setup build_libft
 	$(CC) $(CFLAGS) -DALGORITHM=ALGO_RADIX $(RADIX_ALL_SRCS) -L$(D_LIBFT) -lft -o $(PUSH_SWAP)
 
-queue: build_libft
+queue: setup build_libft
 	$(CC) $(CFLAGS) -DALGORITHM=ALGO_QUEUE $(QUEUE_ALL_SRCS) -L$(D_LIBFT) -lft -o $(PUSH_SWAP)
 
 # Debug versions
-chunk_debug: build_libft
+chunk_debug: setup build_libft
 	$(CC) $(CFLAGS) -DALGORITHM=ALGO_CHUNK -DDEBUG=1 $(CHUNK_ALL_SRCS) -L$(D_LIBFT) -lft -o $(PUSH_SWAP)
 
-greedy_debug: build_libft
+greedy_debug: setup build_libft
 	$(CC) $(CFLAGS) -DALGORITHM=ALGO_GREEDY -DDEBUG=1 $(GREEDY_ALL_SRCS) -L$(D_LIBFT) -lft -o $(PUSH_SWAP)
 
-k_sort_debug: build_libft
+k_sort_debug: setup build_libft
 	$(CC) $(CFLAGS) -DALGORITHM=ALGO_K_SORT -DDEBUG=1 $(K_ALL_SRCS) -L$(D_LIBFT) -lft -o $(PUSH_SWAP)
 
-lis_debug: build_libft
+lis_debug: setup build_libft
 	$(CC) $(CFLAGS) -DALGORITHM=ALGO_LIS -DDEBUG=1 $(LIS_ALL_SRCS) -L$(D_LIBFT) -lft -o $(PUSH_SWAP)
 
-radix_debug: build_libft
+radix_debug: setup build_libft
 	$(CC) $(CFLAGS) -DALGORITHM=ALGO_RADIX -DDEBUG=1 $(RADIX_ALL_SRCS) -L$(D_LIBFT) -lft -o $(PUSH_SWAP)
 
-queue_debug: build_libft
+queue_debug: setup build_libft
 	$(CC) $(CFLAGS) -DALGORITHM=ALGO_QUEUE -DDEBUG=1 $(QUEUE_ALL_SRCS) -L$(D_LIBFT) -lft -o $(PUSH_SWAP)
 
 # Bonus target
-bonus: build_libft $(CHECKER)
+bonus: setup build_libft $(CHECKER)
 
 $(CHECKER): $(CHECKER_OBJS)
 	$(CC) $(CFLAGS) $(CHECKER_OBJS) -L$(D_LIBFT) -lft -o $(CHECKER)
 
 # Visualization versions
-visualize: build_libft
+visualize: setup build_libft
 	$(CC) $(CFLAGS) -DALGORITHM=ALGO_CHUNK -DVISUALIZE=1 $(CHUNK_ALL_SRCS) $(D_CHECKER_BONUS)/visualizer_bonus.c -L$(D_LIBFT) -lft -o $(PUSH_SWAP)
 
-checker_visual: build_libft
+checker_visual: setup build_libft
 	$(CC) $(CFLAGS) -DVISUALIZE=1 -DOVERRIDE_MAIN_LOGIC $(CHECKER_SRCS) $(VISUALIZER_SRCS) -L$(D_LIBFT) -lft -o $(CHECKER)
 
 # Object compilation rule
 $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
+
+# Setup: rewrite SSH→HTTPS for all git submodules (fixes environments without SSH keys)
+setup:
+	@git config --global url."https://github.com/".insteadOf "git@github.com:" 2>/dev/null || true
+	@git submodule sync --recursive
+	@git submodule update --init --recursive
 
 # Build libft
 build_libft:
@@ -246,7 +252,8 @@ test: $(PUSH_SWAP)
 
 help:
 	@echo "Available targets:"
-	@echo "  all          - Build default (chunk algorithm)"
+	@echo "  all          - Setup submodules + build default (chunk algorithm)"
+	@echo "  setup        - Rewrite SSH→HTTPS, sync and init all submodules"
 	@echo "  chunk        - Build with chunk algorithm"
 	@echo "  greedy       - Build with greedy algorithm"
 	@echo "  k_sort       - Build with k-sort algorithm"
@@ -261,4 +268,4 @@ help:
 	@echo "  fclean       - Remove all built files"
 	@echo "  re           - Rebuild everything"
 
-.PHONY: all chunk greedy k_sort lis radix queue bonus clean fclean re build_libft test help visualize checker_visual chunk_debug greedy_debug k_sort_debug lis_debug radix_debug queue_debug
+.PHONY: all setup chunk greedy k_sort lis radix queue bonus clean fclean re build_libft test help visualize checker_visual chunk_debug greedy_debug k_sort_debug lis_debug radix_debug queue_debug
