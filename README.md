@@ -5,6 +5,29 @@
 Push Swap is a classic algorithm project from the 42 School curriculum, designed to deepen your understanding of sorting algorithms, data structures, and optimization techniques. The goal is to sort a stack of integers using a limited set of operations and two stacks, Stack A and Stack B, with the fewest moves possible. This project challenges you to think critically about algorithm efficiency, not in terms of computational time but in terms of minimizing the number of operations.
 
 ---
+## Getting Started
+
+> [!IMPORTANT]
+> This project uses nested git submodules. Some of those submodules (inside `libft`) still reference SSH URLs (`git@github.com:`). If you don't have an SSH key configured for GitHub, run this **once** before cloning to automatically rewrite SSH URLs to HTTPS:
+>
+> ```sh
+> git config --global url."https://github.com/".insteadOf "git@github.com:"
+> ```
+>
+> Then clone with all submodules:
+>
+> ```sh
+> git clone --recurse-submodules https://github.com/Univers42/push-swap.git
+> ```
+>
+> If you already cloned without submodules, run:
+>
+> ```sh
+> git submodule update --init --recursive
+> ```
+
+---
+
 ## Understanding the Push Swap Problem
 The project restricts you to a specific set of operations to manipulate the stacks:
 ![visual_debugger](assert/test.webp)
